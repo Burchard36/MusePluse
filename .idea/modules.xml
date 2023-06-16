@@ -4,12 +4,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutoCompressor/AutoCompressor.iml" filepath="$PROJECT_DIR$/AutoCompressor/AutoCompressor.iml" />
       <module fileurl="file://$PROJECT_DIR$/BlockDropsEditor/BlockDropsEditor.iml" filepath="$PROJECT_DIR$/BlockDropsEditor/BlockDropsEditor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CloudliteCore/CloudLiteCore.iml" filepath="$PROJECT_DIR$/CloudliteCore/CloudLiteCore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CloudliteMusicPlayer/CloudLiteMusicPlayer.iml" filepath="$PROJECT_DIR$/CloudliteMusicPlayer/CloudLiteMusicPlayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CloudliteMCServerCore.iml" filepath="$PROJECT_DIR$/CloudliteMCServerCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MusePlusePlugin/CloudLiteServerPlugin.iml" filepath="$PROJECT_DIR$/MusePlusePlugin/CloudLiteServerPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/CropRegrower/CropRegrower.iml" filepath="$PROJECT_DIR$/CropRegrower/CropRegrower.iml" />
       <module fileurl="file://$PROJECT_DIR$/MMOItemsLevelUp/MMOItemsLevelUp.iml" filepath="$PROJECT_DIR$/MMOItemsLevelUp/MMOItemsLevelUp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ServerPlugin/ServerPlugin.iml" filepath="$PROJECT_DIR$/ServerPlugin/ServerPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MusePluseBase/MusePluseBase.iml" filepath="$PROJECT_DIR$/MusePluseBase/MusePluseBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MusePluseMusicPlayer/MusePluseMusicPlayer.iml" filepath="$PROJECT_DIR$/MusePluseMusicPlayer/MusePluseMusicPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MusePluseProject.iml" filepath="$PROJECT_DIR$/MusePluseProject.iml" />
     </modules>
   </component>
 </project>

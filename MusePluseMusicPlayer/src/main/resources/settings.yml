@@ -1,0 +1,49 @@
+Notifications:
+  SongStarted:
+    # Set to false if you never want the player to be notified that they
+    # are listening to a new song
+    Send: true
+    # You may have either ActionBar, or Text
+    # however BOTH are not possible.
+    #
+    # For Text types, putting <center> at the START will send the message centered in chat
+    # You can use the following placeholders
+    # %song_name% - the name of the song playing
+    # %song_artist% - the name of the song artist
+    Text:
+      - "<center>&fNow Playing:&b %song_name%"
+      - "<center>&fby:&b %song_artist%"
+      - "<center>&7(( &b&oMute songs by turning &eVoices&b&o to &eOFF&7 ))"
+      - "<center>&7(( &b&oFor the best experience, turn your &eMusic&b&o volume to &eOFF&7 ))"
+      - "<center>&fDon't like this song (or don't hear anything)? &b/skipsong"
+
+# IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
+# IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
+# IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
+# USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
+# USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
+# USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
+ResourcePack: "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.0.zip"
+
+# Settings for when the player joins the server
+JoinSettings:
+  # If set to true, the player will get all songs they have permission to (if any are set in the songs.yml)
+  # and have the shuffled into a private queue for them to listen to after they're resource pack loads in
+  PlayOnJoin: true
+  # If set to true and PlayOnJoin is true, the player will need the musepluse.playonjoin to have music automatically
+  # play on join
+  #
+  # NOTE: Currently, there is a limitation to where the pack will not be downloaded if you set this to false and the player
+  # does not have the musepluse.playonjoin permission. This will be fixed in future versions! For now /downloadresources exists!
+  NeedsPermission: true
+  # Should the player be disconnected if they reject the resource pack?
+  # I reccomend you leave this to false unless you really know how
+  # resource packs works
+  DisconnectOnReject: false
+QueueSettings:
+  # Should the player needs the permission "musepluse.queue.skip" to use skipping features such as /skipqueue?
+  # This will also disable the right click feature in the music gui, and the right click prompt from the item from said menu
+  NeedsSkipPermission: false
+  # Should the player need the permission "musepluse.queue.force" to use the force play features such as the left click
+  # feature in the gui? This will also disable the left click feature in the music gui, and the left click prompt from the item from said menu
+  NeedsForcePlayPermission: false
