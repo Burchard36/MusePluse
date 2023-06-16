@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="CropRegrower" />
+        <module name="AutoCompressor" />
+        <module name="BlockDropsEditor" />
+        <module name="CloudLiteMusicPlayer" />
+        <module name="CloudLiteCore" />
+        <module name="ServerPlugin" />
+        <module name="MMOItemsLevelUp" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AutoCompressor" target="17" />
+      <module name="BlockDropsEditor" target="17" />
+      <module name="CloudLiteCore" target="17" />
+      <module name="CloudliteMCServerCore" target="17" />
+      <module name="CloudLiteMusicPlayer" target="17" />
+      <module name="CropRegrower" target="17" />
+      <module name="MMOItemsLevelUp" target="17" />
+      <module name="RapidCropRegrowth" target="1.8" />
+      <module name="ServerPlugin" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
