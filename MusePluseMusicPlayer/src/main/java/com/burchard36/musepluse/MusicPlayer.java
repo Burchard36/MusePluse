@@ -45,6 +45,7 @@ public class MusicPlayer {
         this.currentSongsPlaying = new HashMap<>();
         this.songTimers = new HashMap<>();
         this.queuedPlayerSongs = new HashMap<>();
+
     }
 
     /**
@@ -61,6 +62,7 @@ public class MusicPlayer {
             this.stopFor(player); //NOTE: Yes this removed them from the hashmap of timers to
         }
         final List<SongData> songs = this.getSongQueueFor(player);
+        Bukkit.broadcastMessage("Permissible song size: %s".formatted(songs.size()));
         this.queuedPlayerSongs.put(playerUUID, songs);
         this.playNextSong(player);
     }
@@ -191,9 +193,13 @@ public class MusicPlayer {
      */
     public List<SongData> getPermissibleSongsFor(final @NonNull Player player) {
         final List<SongData> songs = new ArrayList<>();
+        Bukkit.broadcastMessage("Available songs: %s".formatted(this.musicConfig.getSongDataList().size()));
         this.musicConfig.getSongDataList().forEach(song -> {
-            if (song.getPermission() != null && player.hasPermission(song.getPermission()))
+            if (song.getPermission() != null && player.hasPermission(song.getPermission())) {
                 songs.add(song);
+            } else if (song.getPermission() == null) {
+                songs.add(song);
+            }
         });
         return songs;
     }

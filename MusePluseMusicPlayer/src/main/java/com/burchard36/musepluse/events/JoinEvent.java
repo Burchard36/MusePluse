@@ -22,6 +22,6 @@ public class JoinEvent implements Listener {
 
         if (!this.musePluseSettings.isPlayOnJoin()) return;
         if (this.musePluseSettings.isNeedsPermissionToPlayOnJoin() && !player.hasPermission("musepluse.playonjoin")) return;
-        player.setResourcePack(this.moduleInstance.getMusicListConfig().getResourcePackURL());
+        player.setResourcePack(this.musePluseSettings.getResourcePack());
     }
 }

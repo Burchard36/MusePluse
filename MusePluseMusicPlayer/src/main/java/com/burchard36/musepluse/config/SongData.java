@@ -2,6 +2,7 @@ package com.burchard36.musepluse.config;
 
 import com.burchard36.musepluse.utils.ItemUtils;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -36,7 +37,7 @@ public class SongData {
         this.songDisplayName = config.getString("Details.SongName");
         this.artistName = config.getString("Details.Artist");
         this.guiMaterial = Material.valueOf(config.getString("Details.GuiMaterial"));
-        this.permission = config.getString(config.getString("Details.Permission"));
+        this.permission = config.getString("Details.Permission");
         this.localKey = songLocalKey;
     }
 

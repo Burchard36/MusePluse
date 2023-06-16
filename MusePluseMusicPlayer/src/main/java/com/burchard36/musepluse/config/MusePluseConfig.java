@@ -12,8 +12,6 @@ public class MusePluseConfig implements Config {
 
     @Getter
     protected final List<SongData> songDataList;
-    @Getter
-    private String resourcePackURL;
 
     public MusePluseConfig() {
         this.songDataList = new ArrayList<>();
@@ -27,11 +25,8 @@ public class MusePluseConfig implements Config {
     @Override
     public void deserialize(FileConfiguration config) {
         this.songDataList.clear();
-        final ConfigurationSection songsConfig = config.getConfigurationSection("MusicPlayer");
-        this.resourcePackURL = config.getString("ResourcePack");
-        assert songsConfig != null;
-        for (String songLocalKey : songsConfig.getKeys(false)) {
-            final ConfigurationSection songConfig = songsConfig.getConfigurationSection(songLocalKey);
+        for (String songLocalKey : config.getKeys(false)) {
+            final ConfigurationSection songConfig = config.getConfigurationSection(songLocalKey);
             assert songConfig != null;
             this.songDataList.add(new SongData(songConfig, songLocalKey));
         }
