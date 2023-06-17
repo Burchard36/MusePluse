@@ -47,11 +47,11 @@ public class MusePluseSettings implements Config {
     public void deserialize(FileConfiguration configuration) {
         this.autoUpdateResourcePack = configuration.getBoolean("AutoUpdateResourcePack", true);
         if (this.autoUpdateResourcePack) {
-            this.resourcePack = "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.1.zip";
+            this.resourcePack = "https://github.com/Burchard36/MusePluse/blob/main/MusePluseResources1.0.1-SNAPSHOT.zip";
             configuration.set("ResourcePack", this.resourcePack);
             configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
         } else {
-            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.1.zip");
+            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip");
         }
         this.playOnJoin = configuration.getBoolean("JoinSettings.PlayOnJoin", true);
         this.sendNextSongMessage = configuration.getBoolean("Notifications.SongStarted.Send");
