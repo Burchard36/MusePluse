@@ -7,10 +7,10 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.burchard36.musepluse.utils.StringUtils.convert;
@@ -46,10 +46,14 @@ public class MusePluseSettings implements Config {
     @Override
     public void deserialize(FileConfiguration configuration) {
         this.autoUpdateResourcePack = configuration.getBoolean("AutoUpdateResourcePack", true);
+        if (!configuration.isSet("AutoUpdateResourcePack")) {
+            configuration.set("AutoUpdateResourcePack", true);
+            configuration.setComments("AutoUpdateResourcePack", List.of("Should the resource pack url be force updated every update?"));
+        }
+
         if (this.autoUpdateResourcePack) {
-            this.resourcePack = "https://github.com/Burchard36/MusePluse/blob/main/MusePluseResources1.0.1-SNAPSHOT.zip";
+            this.resourcePack = "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip";
             configuration.set("ResourcePack", this.resourcePack);
-            configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
         } else {
             this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip");
         }
@@ -59,6 +63,8 @@ public class MusePluseSettings implements Config {
         this.needsSkipPermission = configuration.getBoolean("QueueSettings.NeedsSkipPermission", false);
         this.needsForcePlayPermission = configuration.getBoolean("QueueSettings.NeedsForcePlayPermission", false);
         this.loadNextSongMessage(configuration);
+
+        configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
     }
 
     protected void loadNextSongMessage(final FileConfiguration configuration) {

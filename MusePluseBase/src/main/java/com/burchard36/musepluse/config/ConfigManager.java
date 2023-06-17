@@ -29,7 +29,9 @@ public class ConfigManager {
             Bukkit.getConsoleSender().sendMessage(StringUtils.convert("&bCreating new config file&f%s&b...").formatted(config.getFileName()));
             return this.getConfig(config, overwrite);
         } else if (overwrite) {
-            this.pluginInstance.saveResource(config.getFileName(), false);
+            if (configFile.delete()) {
+                this.pluginInstance.saveResource(config.getFileName(), false);
+            } else throw new RuntimeException("Failed to delete songs.yml while having the overwrite set to true in config (This may be hard coded)! Try restarting your server and if the issue persists contact a developer!");
         }
 
         final FileConfiguration configData = YamlConfiguration.loadConfiguration(configFile);

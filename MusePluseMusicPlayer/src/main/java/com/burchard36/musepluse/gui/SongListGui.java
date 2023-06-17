@@ -137,22 +137,21 @@ public class SongListGui extends PaginatedInventory {
     }
 
     private ItemStack getNextButton() {
-        final SongData nextSong = this.musicPlayer.getNextSong(this.player);
-        String nextSongName;
-        if (nextSong != null) {
-            nextSongName = this.musicPlayer.getNextSong(this.player).getSongDisplayName();
-        } else nextSongName = "&cNone Queued!";
-
-        return ItemUtils.createSkull("ff9e19e5f2ce3488c29582b6d2601500626e8db2a88cd18164432fef2e34de6b", "&a&lNEXT PAGE",
-                "&f ",
-                "&fNext Song: &b%s".formatted(nextSongName));
+        return ItemUtils.createSkull("ff9e19e5f2ce3488c29582b6d2601500626e8db2a88cd18164432fef2e34de6b", "&a&lNEXT PAGE", null);
     }
     private ItemStack getPreviousButton() {
         return ItemUtils.createSkull("f006ec1eca2f2685f70e65411cfe8808a088f7cf08087ad8eece9618361070e3", "&a&lPREVIOUS PAGE", null);
     }
 
     private ItemStack getNextSongButton() {
-        return ItemUtils.createSkull("f0a606361ca311961de49a7d0b977108ff33d717ba13dfa8b70ec09cd7512c86", "&b&lPLAY NEXT SONG", null);
+        final SongData nextSong = this.musicPlayer.getNextSong(this.player);
+        String nextSongName;
+        if (nextSong != null) {
+            nextSongName = this.musicPlayer.getNextSong(this.player).getSongDisplayName();
+        } else nextSongName = "&cNone Queued!";
+        return ItemUtils.createSkull("f0a606361ca311961de49a7d0b977108ff33d717ba13dfa8b70ec09cd7512c86", "&b&lPLAY NEXT SONG",
+                "&f ",
+                "&fNext Song: &b%s".formatted(nextSongName));
     }
 
     private ItemStack getSongDataDisplayItem(final ItemStack displayItem) {
