@@ -58,7 +58,7 @@ public class SongData {
     public final ItemStack getDisplayItem() {
         final ItemStack itemStack = ItemUtils.createItemStack(
                 this.guiMaterial,
-                convert("Song: &b%s".formatted(this.songDisplayName)),
+                convert("&fSong: &b%s".formatted(this.songDisplayName)),
                 "&f ",
                 "&eSong By: &f%s".formatted(this.artistName),
                 "&eSong Length: &f%sm %ss".formatted(this.minutes, this.seconds),

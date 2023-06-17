@@ -152,10 +152,21 @@ public class MusicPlayer {
 
     /**
      * @param player {@link Player} to get current song of from
-     * @return SongData of the currently playing song the player is listening to
+     * @return SongData of the currently playing song the player is listening to, may be null if they currently have the music player stopped
      */
     public final @Nullable SongData getCurrentSong(final Player player) {
         return this.currentSongsPlaying.get(player.getUniqueId());
+    }
+
+    /**
+     * Gets the next song in queue for the player
+     * @param player {@link Player}
+     * @return {@link SongData}
+     */
+    public final @Nullable SongData getNextSong(final Player player) {
+        final List<SongData> songDatas = this.queuedPlayerSongs.get(player.getUniqueId());
+        if (songDatas == null) return null;
+        return songDatas.get(0);
     }
 
     /**

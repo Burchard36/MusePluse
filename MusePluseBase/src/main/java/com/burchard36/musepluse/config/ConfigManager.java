@@ -21,13 +21,15 @@ public class ConfigManager {
     }
 
     @SneakyThrows
-    public <T extends Config> T getConfig(final T config) {
+    public <T extends Config> T getConfig(final T config, final boolean overwrite) {
         if (this.configurationFiles.contains(config)) throw new IllegalStateException("Config %s is already registered".formatted(config.getClass().getName()));
         final File configFile = new File(this.pluginInstance.getDataFolder(), config.getFileName());
         if (!configFile.exists()) {
             this.pluginInstance.saveResource(config.getFileName(), false);
-            Bukkit.getLogger().info(StringUtils.convert("&bCreating new config file&f%s&b...").formatted(config.getFileName()));
-            return this.getConfig(config);
+            Bukkit.getConsoleSender().sendMessage(StringUtils.convert("&bCreating new config file&f%s&b...").formatted(config.getFileName()));
+            return this.getConfig(config, overwrite);
+        } else if (overwrite) {
+            this.pluginInstance.saveResource(config.getFileName(), false);
         }
 
         final FileConfiguration configData = YamlConfiguration.loadConfiguration(configFile);

@@ -1,11 +1,15 @@
 package com.burchard36.musepluse.config;
 
+import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.musepluse.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,15 +35,24 @@ public class MusePluseSettings implements Config {
     protected boolean needsSkipPermission;
     @Getter
     protected boolean needsForcePlayPermission;
+    protected boolean autoUpdateResourcePack;
 
     @Override
     public @NonNull String getFileName() {
         return "settings.yml";
     }
 
+    @SneakyThrows
     @Override
     public void deserialize(FileConfiguration configuration) {
-        this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.0.zip");
+        this.autoUpdateResourcePack = configuration.getBoolean("AutoUpdateResourcePack", true);
+        if (this.autoUpdateResourcePack) {
+            this.resourcePack = "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.1.zip";
+            configuration.set("ResourcePack", this.resourcePack);
+            configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
+        } else {
+            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.1.zip");
+        }
         this.playOnJoin = configuration.getBoolean("JoinSettings.PlayOnJoin", true);
         this.sendNextSongMessage = configuration.getBoolean("Notifications.SongStarted.Send");
         this.needsPermissionToPlayOnJoin = configuration.getBoolean("JoinSettings.NeedsPermission", true);

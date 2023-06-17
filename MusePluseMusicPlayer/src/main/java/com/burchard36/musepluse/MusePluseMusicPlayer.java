@@ -23,8 +23,8 @@ public final class MusePluseMusicPlayer implements PluginModule {
     @Override
     public void loadModule(final MusePlusePlugin coreInstance) {
         this.pluginInstance = coreInstance;
-        this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings());
-        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig());
+        this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings(), false);
+        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), true);
         this.musicPlayer = new MusicPlayer(this);
     }
 
@@ -44,7 +44,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
 
     @Override
     public void reload() {
-        this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings());
-        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig());
+        this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings(), false);
+        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), true);
     }
 }

@@ -170,3 +170,35 @@ breathofthewild:
     SongName: Breath of the Wild (Main Theme)
     Artist: The Legend of Zelda Breath of the Wild
     GuiMaterial: MUSIC_DISC_STAL
+thegreatest:
+  Length:
+    Minutes: 3
+    Seconds: 29
+  Details:
+    SongName: The Greatest
+    Artist: Sia
+    GuiMaterial: MUSIC_DISC_FAR
+loveneverfeltsogood:
+  Length:
+    Minutes: 4
+    Seconds: 6
+  Details:
+    SongName: Love Never Felt So Good
+    Artist: Michael Jackson & Justin Timerlake
+    GuiMaterial: MUSIC_DISC_STRAD
+justthetwoofus:
+  Length:
+    Minutes: 7
+    Seconds: 19
+  Details:
+    SongName: Just the Two of Us
+    Artist: Grover Washington Jr.
+    GuiMaterial: MUSIC_DISC_STRAD
+verbatim:
+  Length:
+    Minutes: 2
+    Seconds: 48
+  Details:
+    SongName: Verbatim
+    Artist: Mother Mother
+    GuiMaterial: MUSIC_DISC_MALL

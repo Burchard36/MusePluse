@@ -19,11 +19,9 @@ public final class MusePluse extends MusePlusePlugin {
 
     /**
      * Basic getter method to get the singleton from {@link MusePluseMusicPlayer}
-     * <br>
-     * No, I will not rename it.
      * @return {@link MusePluseMusicPlayer}
      */
-    public static MusePluseMusicPlayer getMuseyPluseyMusicPlayer() {
+    public static MusePluseMusicPlayer getMusicPlayer() {
         return (MusePluseMusicPlayer) INSTANCE.getModuleLoader().getModule(MusePluseMusicPlayer.class);
     }
 
@@ -33,7 +31,7 @@ public final class MusePluse extends MusePlusePlugin {
      * ANYONE MAKING A PR SHOULD NOT USE THIS METHOD!
      * @return instance of this class
      */
-    public static MusePluse getMuseyPlusey() {
+    public static MusePluse getMusePluse() {
         return INSTANCE;
     }
 }

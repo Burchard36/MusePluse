@@ -43,7 +43,7 @@ public class MusicGuiCommand implements CommandExecutor {
             player.sendMessage(convert("&cYou do not have permission to use this command!"));
             return false;
         }
-        Bukkit.getLogger().info(convert("&fOpening a &bSongListGui&f for player &e%s".formatted(player.getName())));
+
         this.moduleInstance.getPluginInstance().getGuiManager()
                 .openPaginatedTo((Player) sender, 0, new SongListGui(this.moduleInstance, player));
         return false;

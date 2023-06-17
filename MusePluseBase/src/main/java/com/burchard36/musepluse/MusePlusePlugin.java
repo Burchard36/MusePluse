@@ -39,26 +39,26 @@ public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
         random = new Random();
         /* use this time to load things that don't need ant major spigot/world implementations */
         /* Looking at your worldguard */
-        Bukkit.getLogger().info(convert("&fInitializing &bConfigManager&f..."));
+        Bukkit.getConsoleSender().sendMessage(convert("&fInitializing &bConfigManager&f..."));
         this.configManager = new ConfigManager(this);
-        Bukkit.getLogger().info(convert("&aDone!"));
-        Bukkit.getLogger().info(convert("&fInitializing &bGuiManager&f..."));
+        Bukkit.getConsoleSender().sendMessage(convert("&aDone!"));
+        Bukkit.getConsoleSender().sendMessage(convert("&fInitializing &bGuiManager&f..."));
         this.guiManager = new GuiManager();
-        Bukkit.getLogger().info(convert("&aDone!"));
-        Bukkit.getLogger().info(convert("&fSending &bonServerLoadUp&f to registered modules..."));
+        Bukkit.getConsoleSender().sendMessage(convert("&aDone!"));
+        Bukkit.getConsoleSender().sendMessage(convert("&fSending &bonServerLoadUp&f to registered modules..."));
         this.moduleLoader.onServerLoadUp(this);
-        Bukkit.getLogger().info(convert("&aDone&f! &bCloudLiteCore&f has finished its onLoad initialization!"));
-        Bukkit.getLogger().info(convert("&fIf there was any &cerrors&f please contact a &bdeveloper&f."));
+        Bukkit.getConsoleSender().sendMessage(convert("&aDone&f! &bCloudLiteCore&f has finished its onLoad initialization!"));
+        Bukkit.getConsoleSender().sendMessage(convert("&fIf there was any &cerrors&f please contact a &bdeveloper&f."));
     }
     @Override
     public void onEnable() {
         registerEvent(this); // listen for HeadDatabase
         this.guiEvents = new GuiEvents(guiManager);
         registerEvent(this.guiEvents);
-        Bukkit.getLogger().info(convert("&fSending &bonEnable&f to all registered modules..."));
+        Bukkit.getConsoleSender().sendMessage(convert("&fSending &bonEnable&f to all registered modules..."));
         this.moduleLoader.onServerEnable();
-        Bukkit.getLogger().info(convert("&aDone&f! &bCloudLiteCore&f has finished its onEnable initialization!"));
-        Bukkit.getLogger().info(convert("&fIf there was any &cerrors&f please review your configs before contacting a &bdeveloper&f."));
+        Bukkit.getConsoleSender().sendMessage(convert("&aDone&f! &bCloudLiteCore&f has finished its onEnable initialization!"));
+        Bukkit.getConsoleSender().sendMessage(convert("&fIf there was any &cerrors&f please review your configs before contacting a &bdeveloper&f."));
     }
 
     @Override
@@ -67,12 +67,12 @@ public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
     }
 
     public static void registerEvent(final Listener eventListener) {
-        Bukkit.getLogger().info(convert("Registering event &b%s&f.".formatted(eventListener.getClass().getName())));
+        Bukkit.getConsoleSender().sendMessage(convert("Registering event &b%s&f.".formatted(eventListener.getClass().getName())));
         INSTANCE.getServer().getPluginManager().registerEvents(eventListener, INSTANCE);
     }
 
     public static void registerCommand(final String commandName, final CommandExecutor executor) {
-        Bukkit.getLogger().info(convert("&fAttempting to register command&b%s".formatted(commandName)));
+        Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to register command&b%s".formatted(commandName)));
         INSTANCE.getCommand(commandName).setExecutor(executor);
     }
 }
