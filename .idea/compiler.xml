@@ -9,7 +9,7 @@
         <module name="CropRegrower" />
         <module name="AutoCompressor" />
         <module name="MusePluseBase" />
-        <module name="CloudLiteServerPlugin" />
+        <module name="MusePlusePlugin" />
         <module name="BlockDropsEditor" />
         <module name="MusePluseMusicPlayer" />
         <module name="MMOItemsLevelUp" />
@@ -18,13 +18,12 @@
     <bytecodeTargetLevel>
       <module name="AutoCompressor" target="17" />
       <module name="BlockDropsEditor" target="17" />
-      <module name="CloudLiteServerPlugin" target="17" />
       <module name="CropRegrower" target="17" />
       <module name="MMOItemsLevelUp" target="17" />
+      <module name="MusePluse" target="17" />
       <module name="MusePluseBase" target="17" />
       <module name="MusePluseMusicPlayer" target="17" />
       <module name="MusePlusePlugin" target="17" />
-      <module name="MusePluseProject" target="17" />
       <module name="RapidCropRegrowth" target="1.8" />
     </bytecodeTargetLevel>
   </component>
