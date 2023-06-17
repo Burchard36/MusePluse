@@ -167,13 +167,20 @@ public class SongListGui extends PaginatedInventory {
 
     private ItemStack getNextSongButton() {
         final SongData nextSong = this.musicPlayer.getNextSong(this.player);
+        final SongData currentSong = this.musicPlayer.getCurrentSong(this.player);
         String nextSongName;
         if (nextSong != null) {
-            nextSongName = this.musicPlayer.getNextSong(this.player).getSongDisplayName();
+            nextSongName = nextSong.getSongDisplayName();
         } else nextSongName = "&cNone Queued!";
+        String currentSongName;
+        if (currentSong != null) {
+            currentSongName = currentSong.getSongDisplayName();
+        } else currentSongName = "&cNone!";
+
         return ItemUtils.createSkull("f0a606361ca311961de49a7d0b977108ff33d717ba13dfa8b70ec09cd7512c86", "&b&lPLAY NEXT SONG",
                 "&f ",
-                "&fNext Song: &b%s".formatted(nextSongName));
+                "&fNext Song: &b%s".formatted(nextSongName),
+                "&fCurrently Playing: &b%s".formatted(currentSongName));
     }
 
     private ItemStack getSongDataDisplayItem(final ItemStack displayItem) {
