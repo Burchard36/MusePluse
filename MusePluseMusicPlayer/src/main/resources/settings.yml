@@ -24,7 +24,7 @@ Notifications:
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
-ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip"
+ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip"
 
 # Should the resource pack string above be force updated every update?
 AutoUpdateResourcePack: true

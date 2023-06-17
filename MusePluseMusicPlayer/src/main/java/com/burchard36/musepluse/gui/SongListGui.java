@@ -116,7 +116,12 @@ public class SongListGui extends PaginatedInventory {
                     this.addButton(49, new InventoryButton(getNextSongButton()) {
                         @Override
                         public void onClick(InventoryClickEvent clickEvent) {
-                            musicPlayer.playNextSong((Player) clickEvent.getWhoClicked());
+                            final Player player = ((Player) clickEvent.getWhoClicked());
+                            final Inventory clickedInventory = clickEvent.getClickedInventory();
+                            assert clickedInventory != null;
+                            clickedInventory.setItem(clickEvent.getSlot(), getNextSongButton());
+                            musicPlayer.playNextSong(player);
+                            player.updateInventory();
                         }
                     });
 

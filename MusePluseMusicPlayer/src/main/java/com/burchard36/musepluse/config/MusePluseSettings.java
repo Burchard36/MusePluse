@@ -52,10 +52,10 @@ public class MusePluseSettings implements Config {
         }
 
         if (this.autoUpdateResourcePack) {
-            this.resourcePack = "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip";
+            this.resourcePack = "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip";
             configuration.set("ResourcePack", this.resourcePack);
         } else {
-            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.1-SNAPSHOT.zip");
+            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip");
         }
         this.playOnJoin = configuration.getBoolean("JoinSettings.PlayOnJoin", true);
         this.sendNextSongMessage = configuration.getBoolean("Notifications.SongStarted.Send");
