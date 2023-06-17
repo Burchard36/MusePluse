@@ -80,7 +80,7 @@ public class MusicPlayer {
             return;
         }
 
-        if (songs.size() <= 0) {
+        if (songs.size() == 0) {
             this.playRandomQueueFor(player);
             return;
         }
@@ -166,6 +166,10 @@ public class MusicPlayer {
     public final @Nullable SongData getNextSong(final Player player) {
         final List<SongData> songDatas = this.queuedPlayerSongs.get(player.getUniqueId());
         if (songDatas == null) return null;
+        if (songDatas.size() == 0) {
+            this.queuedPlayerSongs.put(player.getUniqueId(), this.getSongQueueFor(player));
+            return this.getNextSong(player);
+        }
         return songDatas.get(0);
     }
 
