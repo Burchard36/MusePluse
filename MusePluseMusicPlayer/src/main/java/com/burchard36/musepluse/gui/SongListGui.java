@@ -76,6 +76,8 @@ public class SongListGui extends PaginatedInventory {
                                                 && !player.hasPermission("musepluse.queue.skip")) return;
 
                                         musicPlayer.playSongTo(player, songData);
+                                        clickedInventory.setItem(49, getNextSongButton());
+                                        player.updateInventory();
                                     }
 
                                     case RIGHT -> {
@@ -134,8 +136,8 @@ public class SongListGui extends PaginatedInventory {
                             final Player player = ((Player) clickEvent.getWhoClicked());
                             final Inventory clickedInventory = clickEvent.getClickedInventory();
                             assert clickedInventory != null;
-                            clickedInventory.setItem(clickEvent.getSlot(), getNextSongButton());
                             musicPlayer.playNextSong(player);
+                            clickedInventory.setItem(clickEvent.getSlot(), getNextSongButton());
                             player.updateInventory();
                         }
                     });
