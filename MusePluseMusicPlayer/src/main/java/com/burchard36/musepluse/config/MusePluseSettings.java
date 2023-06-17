@@ -67,8 +67,8 @@ public class MusePluseSettings implements Config {
         }
 
         if (configuration.isSet("Notifications.SongStarted.ActionBar")) {
-            String textMessageRaw = configuration.getString("Notifications.SongStarted.Text");
-            if (textMessageRaw == null) throw new MusePluseConfigurationException("Uh Ohh! Why is \"Notifications.SongStarted.Text\" not a string? Silly! Only one string!");
+            String textMessageRaw = configuration.getString("Notifications.SongStarted.ActionBar");
+            if (textMessageRaw == null) throw new MusePluseConfigurationException("Uh Ohh! Why is \"Notifications.SongStarted.ActionBar\" not a string? Silly! Only one string!");
             this.nextSongMessage = convert(textMessageRaw);
         }
     }

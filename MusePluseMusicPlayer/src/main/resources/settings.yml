@@ -10,12 +10,13 @@ Notifications:
     # You can use the following placeholders
     # %song_name% - the name of the song playing
     # %song_artist% - the name of the song artist
-    Text:
-      - "<center>&fNow Playing:&b %song_name%"
-      - "<center>&fby:&b %song_artist%"
-      - "<center>&7(( &b&oMute songs by turning &eVoices&b&o to &eOFF&7 ))"
-      - "<center>&7(( &b&oFor the best experience, turn your &eMusic&b&o volume to &eOFF&7 ))"
-      - "<center>&fDon't like this song (or don't hear anything)? &b/skipsong"
+    ActionBar: "&aNow Playing: &r%song_name%"
+    #Text:
+    #  - "<center>&fNow Playing:&b %song_name%"
+    #  - "<center>&fby:&b %song_artist%"
+    #  - "<center>&7(( &b&oMute songs by turning &eVoices&b&o to &eOFF&7 ))"
+    #  - "<center>&7(( &b&oFor the best experience, turn your &eMusic&b&o volume to &eOFF&7 ))"
+    #  - "<center>&fDon't like this song (or don't hear anything)? &b/skipsong"
 
 # IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
 # IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
@@ -23,7 +24,7 @@ Notifications:
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
 # USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
-ResourcePack: "https://github.com/Burchard36/cloudlitemc-resourcepack/raw/main/CloudLiteMCMusicPack-1.0.0.zip"
+ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.0-SNAPSHOT.zip"
 
 # Settings for when the player joins the server
 JoinSettings:

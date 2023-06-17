@@ -62,7 +62,6 @@ public class MusicPlayer {
             this.stopFor(player); //NOTE: Yes this removed them from the hashmap of timers to
         }
         final List<SongData> songs = this.getSongQueueFor(player);
-        Bukkit.broadcastMessage("Permissible song size: %s".formatted(songs.size()));
         this.queuedPlayerSongs.put(playerUUID, songs);
         this.playNextSong(player);
     }
@@ -112,9 +111,14 @@ public class MusicPlayer {
         if (!this.musePluseSettings.isSendNextSongMessage()) return;
         if (this.musePluseSettings.getNextSongMessages() == null) {
             if (this.musePluseSettings.getNextSongMessage() == null) throw new MusePluseConfigurationException("\"Notifications.SongStarted.ActionBar\" was null during runtime! WHAT THE FUCK!!!!??????!!!!!????!!!");
+            String message = convert(this.musePluseSettings.getNextSongMessage());
+            message = message.replace("%song_name%", convert(songData.getSongDisplayName()));
+            message = message.replace("%song_artist%", convert(songData.getArtistName()));
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText(convert(this.musePluseSettings.getNextSongMessage())));
+                    TextComponent.fromLegacyText(message));
         } else this.musePluseSettings.getNextSongMessages().forEach(message -> {
+                message = message.replace("%song_name%", convert(songData.getSongDisplayName()));
+                message = message.replace("%song_artist%", convert(songData.getArtistName()));
                 player.sendMessage(convert(message));
             });
     }
@@ -193,7 +197,6 @@ public class MusicPlayer {
      */
     public List<SongData> getPermissibleSongsFor(final @NonNull Player player) {
         final List<SongData> songs = new ArrayList<>();
-        Bukkit.broadcastMessage("Available songs: %s".formatted(this.musicConfig.getSongDataList().size()));
         this.musicConfig.getSongDataList().forEach(song -> {
             if (song.getPermission() != null && player.hasPermission(song.getPermission())) {
                 songs.add(song);

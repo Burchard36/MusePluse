@@ -2,7 +2,6 @@ package com.burchard36.musepluse.config;
 
 import com.burchard36.musepluse.utils.ItemUtils;
 import lombok.Getter;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -67,9 +66,9 @@ public class SongData {
         );
         final ItemMeta itemMeta = itemStack.getItemMeta();
         assert itemMeta != null;
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        if (this.guiMaterial.name().startsWith("MUSIC"))
+            itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         itemStack.setItemMeta(itemMeta);
-
         return itemStack;
     }
 }
