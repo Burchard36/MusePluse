@@ -67,10 +67,25 @@ public class SongListGui extends PaginatedInventory {
                             public void onClick(InventoryClickEvent clickEvent) {
                                 final Player player = ((Player) clickEvent.getWhoClicked());
                                 final ClickType clickType = clickEvent.getClick();
-                                if (clickType.isLeftClick()) {
-                                    musicPlayer.playSongTo(player, songData);
-                                } else if (clickType.isRightClick()) {
-                                    musicPlayer.insertSongIntoQueue(player, songData);
+                                final Inventory clickedInventory = clickEvent.getClickedInventory();
+                                assert clickedInventory != null;
+
+                                switch (clickType) {
+                                    case LEFT -> {
+                                        if (musePluseSettings.isNeedsSkipPermission()
+                                                && !player.hasPermission("musepluse.queue.skip")) return;
+
+                                        musicPlayer.playSongTo(player, songData);
+                                    }
+
+                                    case RIGHT -> {
+                                        if (musePluseSettings.isNeedsSkipPermission()
+                                                && !player.hasPermission("musepluse.queue.skip")) return;
+
+                                        musicPlayer.insertSongIntoQueue(player, songData);
+                                        clickedInventory.setItem(49, getNextSongButton());
+                                        player.updateInventory();
+                                    }
                                 }
                             }
                         });
