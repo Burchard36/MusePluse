@@ -3,6 +3,7 @@ package com.burchard36.musepluse.config;
 import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.musepluse.utils.ItemUtils;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -16,9 +17,8 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 public class SongData {
 
     @Getter
-    protected final int minutes;
-    @Getter
-    protected final int seconds;
+    @Setter
+    protected int seconds;
     @Getter
     protected final String localKey;
     @Getter
@@ -34,8 +34,6 @@ public class SongData {
     protected final String youTubeLink;
 
     public SongData(final ConfigurationSection config, final String songLocalKey) {
-        this.minutes = config.getInt("Length.Minutes");
-        this.seconds = config.getInt("Length.Seconds");
         this.songDisplayName = config.getString("Details.SongName");
         this.artistName = config.getString("Details.Artist");
         this.guiMaterial = Material.valueOf(config.getString("Details.GuiMaterial"));
@@ -50,9 +48,7 @@ public class SongData {
      * @return total tick length of the song
      */
     public final long getTotalTicks() {
-        final int tickSeconds = this.getSeconds() * 20;
-        final int tickMinutes = (this.minutes * 60) * 20;
-        return tickSeconds + tickMinutes;
+        return this.getSeconds() * 20L;
     }
 
     /**

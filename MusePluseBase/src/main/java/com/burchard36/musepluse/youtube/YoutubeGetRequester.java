@@ -114,7 +114,7 @@ public abstract class YoutubeGetRequester implements Listener {
     @SneakyThrows
     private void onInformationReceived(final VideoInformationReceivedEvent receivedEvent) {
         final VideoInfo videoInfo = receivedEvent.getVideoInfo();
-        Bukkit.getConsoleSender().sendMessage(convert("Information for video &b%s&f received! Downloading Audio...").formatted(receivedEvent.getOutputFileName()));
+        Bukkit.getConsoleSender().sendMessage(convert("Information for video &b%s&f received! Downloading Audio... This song is %s seconds long").formatted(receivedEvent.getOutputFileName(), videoInfo.details().lengthSeconds()));
 
         final File outputFile = new File(this.outputDirectory, "/m4a/" + receivedEvent.getOutputFileName() + ".m4a");
         final File outputDirectory = new File(this.outputDirectory, "/m4a");

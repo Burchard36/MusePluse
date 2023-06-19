@@ -19,7 +19,7 @@ public class MusePluseConfig implements Config {
 
     @Override
     public @NonNull String getFileName() {
-        return "music/songs.yml";
+        return "songs.yml";
     }
 
     @Override
