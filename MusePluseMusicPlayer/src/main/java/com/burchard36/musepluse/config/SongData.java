@@ -1,5 +1,6 @@
 package com.burchard36.musepluse.config;
 
+import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.musepluse.utils.ItemUtils;
 import lombok.Getter;
 import org.bukkit.Material;
@@ -29,6 +30,8 @@ public class SongData {
     @Getter
     @Nullable
     protected final String permission;
+    @Getter
+    protected final String youTubeLink;
 
     public SongData(final ConfigurationSection config, final String songLocalKey) {
         this.minutes = config.getInt("Length.Minutes");
@@ -37,6 +40,8 @@ public class SongData {
         this.artistName = config.getString("Details.Artist");
         this.guiMaterial = Material.valueOf(config.getString("Details.GuiMaterial"));
         this.permission = config.getString("Details.Permission");
+        this.youTubeLink = config.getString("YouTubeLink");
+        if (this.youTubeLink == null) throw new MusePluseConfigurationException("All songs need a YouTube link now! %s doesnt!".formatted(this.songDisplayName));
         this.localKey = songLocalKey;
     }
 

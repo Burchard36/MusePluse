@@ -3,6 +3,7 @@
 ## IMPORTANT!!!! IMPORTANT!!!! IMPORTANT!!!!
 # This right here is the KEY used to play the sound, if this key is not
 # present in your sounds.yml then the player will not hear anything!
+#
 skaga:
   Details:
     # Song name, supports color codes
@@ -18,15 +19,19 @@ skaga:
   Length:
     Minutes: 5
     Seconds: 35
+    # Currently only youtube is supported
+  YouTubeLink: https://www.youtube.com/watch?v=Wyx_XYITisE
 greenlands:
   Length:
     Minutes: 3
-    Seconds: 0
+    Seconds: 1
+  YouTubeLink: https://www.youtube.com/watch?v=fvLlZnxKcoI
   Details:
     SongName: Greenlands
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_CAT
 leavingforvalhalla:
+  YouTubeLink: https://www.youtube.com/watch?v=Yv25O4XhXW0
   Length:
     Minutes: 6
     Seconds: 23
@@ -35,14 +40,16 @@ leavingforvalhalla:
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_BLOCKS
 forestwalk:
+  YouTubeLink: https://www.youtube.com/watch?v=2VULXGuNByc
   Length:
     Minutes: 3
-    Seconds: 38
+    Seconds: 39
   Details:
     SongName: Forest Walk
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_CHIRP
 nomadicdawn:
+  YouTubeLink: https://www.youtube.com/watch?v=jI9eDm2zaRg
   Length:
     Minutes: 4
     Seconds: 49
@@ -51,22 +58,25 @@ nomadicdawn:
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_FAR
 nowweride:
+  YouTubeLink: https://www.youtube.com/watch?v=6PD080KKfFQ
   Length:
     Minutes: 5
-    Seconds: 5
+    Seconds: 6
   Details:
     SongName: Now We Ride
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_MALL
 villageambience:
+  YouTubeLink: https://www.youtube.com/watch?v=V6GTmGlJCiA
   Length:
     Minutes: 6
-    Seconds: 17
+    Seconds: 18
   Details:
     SongName: Village Ambience
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_MELLOHI
 adventure:
+  YouTubeLink: https://www.youtube.com/watch?v=85OzamAVirs
   Length:
     Minutes: 4
     Seconds: 37
@@ -75,14 +85,16 @@ adventure:
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_STAL
 entertainment:
+  YouTubeLink: https://www.youtube.com/watch?v=hOGLCoYangU
   Length:
     Minutes: 2
-    Seconds: 40
+    Seconds: 41
   Details:
     SongName: Entertainment
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_STRAD
 traveler:
+  YouTubeLink: https://www.youtube.com/watch?v=5EU4d9xMOqQ
   Length:
     Minutes: 4
     Seconds: 7
@@ -91,6 +103,7 @@ traveler:
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_WARD
 legend:
+  YouTubeLink: https://www.youtube.com/watch?v=yj_wyw6Xrq4
   Length:
     Minutes: 3
     Seconds: 46
@@ -99,14 +112,16 @@ legend:
     Artist: Adrian von Ziegler
     GuiMaterial: MUSIC_DISC_WAIT
 forestflute:
+  YouTubeLink: https://www.youtube.com/watch?v=tyrdJ8Vm3Nc
   Length:
     Minutes: 3
-    Seconds: 32
+    Seconds: 33
   Details:
     SongName: Forest Flute
     Artist: Adrian von Ziegler
     GuiMaterial: MUSIC_DISC_OTHERSIDE
 thegael:
+  YouTubeLink: https://www.youtube.com/watch?v=zNnzufK0nVE
   Length:
     Minutes: 5
     Seconds: 40
@@ -115,6 +130,7 @@ thegael:
     Artist: The Last of the Mohicans
     GuiMaterial: MUSIC_DISC_WARD
 snowfall:
+  YouTubeLink: https://www.youtube.com/watch?v=LlN8MPS7KQs
   Length:
     Minutes: 2
     Seconds: 3
@@ -123,14 +139,16 @@ snowfall:
     Artist: oneheart x reidenshi
     GuiMaterial: MUSIC_DISC_MELLOHI
 interstellar:
+  YouTubeLink: https://www.youtube.com/watch?v=kpz8lpoLvrA
   Length:
     Minutes: 4
-    Seconds: 3
+    Seconds: 4
   Details:
     SongName: Interstellar Main Theme
     Artist: Hans Zimmer
     GuiMaterial: MUSIC_DISC_BLOCKS
 theway:
+  YouTubeLink: https://www.youtube.com/watch?v=oN2Xs-MvxLw
   Length:
     Minutes: 7
     Seconds: 4
@@ -139,6 +157,7 @@ theway:
     Artist: Zack Hemsey
     GuiMaterial: MUSIC_DISC_MALL
 deathbed:
+  YouTubeLink: https://www.youtube.com/watch?v=jJPMnTXl63E
   Length:
     Minutes: 2
     Seconds: 53
@@ -147,6 +166,7 @@ deathbed:
     Artist: Powfu
     GuiMaterial: MUSIC_DISC_CAT
 gangstarparadise:
+  YouTubeLink: https://www.youtube.com/watch?v=dywM446-vcE
   Length:
     Minutes: 3
     Seconds: 29
@@ -155,6 +175,7 @@ gangstarparadise:
     Artist: Remix by Beedle the Bardcore
     GuiMaterial: MUSIC_DISC_CAT
 songofstorms:
+  YouTubeLink: https://www.youtube.com/watch?v=UtgHZaq0EGs
   Length:
     Minutes: 1
     Seconds: 39
@@ -163,6 +184,7 @@ songofstorms:
     Artist: Zelda Original Soundtrack
     GuiMaterial: MUSIC_DISC_STAL
 breathofthewild:
+  YouTubeLink: https://www.youtube.com/watch?v=GY4WjuVTdvY
   Length:
     Minutes: 2
     Seconds: 0
@@ -171,6 +193,7 @@ breathofthewild:
     Artist: The Legend of Zelda Breath of the Wild
     GuiMaterial: MUSIC_DISC_STAL
 thegreatest:
+  YouTubeLink: https://www.youtube.com/watch?v=YbWkR6mFI6s
   Length:
     Minutes: 3
     Seconds: 29
@@ -179,6 +202,7 @@ thegreatest:
     Artist: Sia
     GuiMaterial: MUSIC_DISC_FAR
 loveneverfeltsogood:
+  YouTubeLink: https://www.youtube.com/watch?v=0wnuTGGuAVs
   Length:
     Minutes: 4
     Seconds: 6
@@ -187,6 +211,7 @@ loveneverfeltsogood:
     Artist: Michael Jackson & Justin Timerlake
     GuiMaterial: MUSIC_DISC_STRAD
 justthetwoofus:
+  YouTubeLink: https://www.youtube.com/watch?v=6POZlJAZsok
   Length:
     Minutes: 7
     Seconds: 19
@@ -195,6 +220,7 @@ justthetwoofus:
     Artist: Grover Washington Jr.
     GuiMaterial: MUSIC_DISC_STRAD
 verbatim:
+  YouTubeLink: https://www.youtube.com/watch?v=nqDGahB3y4I
   Length:
     Minutes: 2
     Seconds: 48

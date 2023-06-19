@@ -7,6 +7,20 @@ import org.bukkit.scheduler.BukkitTask;
 public class TaskRunner {
 
     /**
+     * Quick utility for creating async tasks
+     * @param runnable {@link Runnable} that is ran
+     * @return {@link BukkitTask} for cancelling
+     */
+    public static BukkitTask runAsyncTask(final Runnable runnable) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTaskAsynchronously(MusePlusePlugin.INSTANCE);
+    }
+
+    /**
      * Quick utility for creaking timers
      * @param runnable {@link Runnable} that is ran
      * @param ticks delay time between each timer in minecraft ticks

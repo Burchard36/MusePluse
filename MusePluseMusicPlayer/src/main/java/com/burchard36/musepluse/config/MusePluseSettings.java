@@ -18,8 +18,6 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 public class MusePluseSettings implements Config {
 
     @Getter
-    protected String resourcePack;
-    @Getter
     protected List<String> nextSongMessages = null;
     @Getter
     protected String nextSongMessage = null;
@@ -35,7 +33,13 @@ public class MusePluseSettings implements Config {
     protected boolean needsSkipPermission;
     @Getter
     protected boolean needsForcePlayPermission;
-    protected boolean autoUpdateResourcePack;
+    @Getter
+    protected int resourcePackServerPort;
+    @Getter
+    protected boolean resourcePackServerEnabled;
+    protected String resourcePack;
+    @Getter
+    protected boolean autoGenerateResourcePack;
 
     @Override
     public @NonNull String getFileName() {
@@ -45,23 +49,15 @@ public class MusePluseSettings implements Config {
     @SneakyThrows
     @Override
     public void deserialize(FileConfiguration configuration) {
-        this.autoUpdateResourcePack = configuration.getBoolean("AutoUpdateResourcePack", true);
-        if (!configuration.isSet("AutoUpdateResourcePack")) {
-            configuration.set("AutoUpdateResourcePack", true);
-            configuration.setComments("AutoUpdateResourcePack", List.of("Should the resource pack url be force updated every update?"));
-        }
-
-        if (this.autoUpdateResourcePack) {
-            this.resourcePack = "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip";
-            configuration.set("ResourcePack", this.resourcePack);
-        } else {
-            this.resourcePack = configuration.getString("ResourcePack", "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip");
-        }
         this.playOnJoin = configuration.getBoolean("JoinSettings.PlayOnJoin", true);
         this.sendNextSongMessage = configuration.getBoolean("Notifications.SongStarted.Send");
         this.needsPermissionToPlayOnJoin = configuration.getBoolean("JoinSettings.NeedsPermission", true);
         this.needsSkipPermission = configuration.getBoolean("QueueSettings.NeedsSkipPermission", false);
         this.needsForcePlayPermission = configuration.getBoolean("QueueSettings.NeedsForcePlayPermission", false);
+        this.resourcePackServerPort = configuration.getInt("ResourcePackServer.Port", 67699);
+        this.resourcePackServerEnabled = configuration.getBoolean("ResourcePackServer.Enabled", true);
+        this.resourcePack = configuration.getString("ResourcePackServer.Host", "localhost");
+        this.autoGenerateResourcePack = configuration.getBoolean("AutoGenerateResourcePack", true);
         this.loadNextSongMessage(configuration);
 
         configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
@@ -90,5 +86,9 @@ public class MusePluseSettings implements Config {
             if (textMessageRaw == null) throw new MusePluseConfigurationException("Uh Ohh! Why is \"Notifications.SongStarted.ActionBar\" not a string? Silly! Only one string!");
             this.nextSongMessage = convert(textMessageRaw);
         }
+    }
+
+    public String getResourcePack() {
+        return "http://%s:%s/resource_pack.zip".formatted(this.resourcePack, this.resourcePackServerPort);
     }
 }

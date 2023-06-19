@@ -8,6 +8,8 @@ import com.burchard36.musepluse.events.JoinEvent;
 import com.burchard36.musepluse.events.SongEndedEvent;
 import com.burchard36.musepluse.events.TexturePackLoadEvent;
 import com.burchard36.musepluse.module.PluginModule;
+import com.burchard36.musepluse.resource.ResourcePackFactory;
+import com.burchard36.musepluse.resource.ResourcePackServer;
 import lombok.Getter;
 
 public final class MusePluseMusicPlayer implements PluginModule {
@@ -17,6 +19,8 @@ public final class MusePluseMusicPlayer implements PluginModule {
     private MusePluseSettings musePluseSettings;
     @Getter
     private MusePluseConfig musicListConfig;
+    @Getter
+    private ResourcePackFactory resourcePackFactory;
     @Getter
     private MusicPlayer musicPlayer;
 
@@ -30,8 +34,12 @@ public final class MusePluseMusicPlayer implements PluginModule {
 
     @Override
     public void enableModule() {
+        this.resourcePackFactory = new ResourcePackFactory(this);
         MusePlusePlugin.registerCommand("skipsong", new SkipSongCommand(this));
         MusePlusePlugin.registerCommand("musicgui", new MusicGuiCommand(this));
+
+        if (this.musePluseSettings.isResourcePackServerEnabled() && !this.resourcePackFactory.hasResourcePackBeenCreated())
+            ResourcePackServer.startServer(this);
 
         MusePlusePlugin.registerEvent(new JoinEvent(this));
         MusePlusePlugin.registerEvent(new SongEndedEvent(this));
