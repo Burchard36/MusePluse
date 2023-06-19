@@ -4,8 +4,6 @@ import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.ffmpeg.FFMPEGDownloader;
 import com.burchard36.musepluse.ffmpeg.events.FFMPEGInitializedEvent;
 import com.burchard36.musepluse.utils.TaskRunner;
-import com.burchard36.musepluse.youtube.events.VideoDownloadedEvent;
-import com.burchard36.musepluse.youtube.events.VideoInformationReceivedEvent;
 import com.github.kiulian.downloader.Config;
 import com.github.kiulian.downloader.YoutubeDownloader;
 import com.github.kiulian.downloader.downloader.YoutubeCallback;
@@ -26,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
@@ -45,9 +44,11 @@ public class YoutubeProcessor implements Listener {
     protected final File m4aOutput;
     protected FFmpeg ffmpeg;
     protected FFprobe ffprobe;
+    protected Executor workStealingPool;
 
     public YoutubeProcessor(final MusePlusePlugin pluginInstance) {
         MusePlusePlugin.registerEvent(this);
+        this.workStealingPool = Executors.newWorkStealingPool();
         this.queuedOGGConversions = new ArrayList<>();
         this.youtubeConfiguration = new Config.Builder()
                 .executorService(Executors.newCachedThreadPool())
@@ -71,46 +72,49 @@ public class YoutubeProcessor implements Listener {
      */
     public final void downloadYouTubeAudioAsOGG(final VideoInfo videoInfo, String newFileName, final Consumer<File> callback) {
         if (!newFileName.endsWith(".ogg")) newFileName = newFileName + ".ogg";
-        CompletableFuture.runAsync(() -> {
-            final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
-                    .callback(new YoutubeProgressCallback<>() {
-                        @Override
-                        public void onDownloading(int progress) {
+        /* For use in Async */
+        final String finalNewFileName = newFileName;
+        this.oggOutput.mkdirs();
+        this.m4aOutput.mkdirs();
+        final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
+                .callback(new YoutubeProgressCallback<>() {
+                    @Override
+                    public void onDownloading(int progress) {
 
+                    }
+
+                    @Override
+                    public void onFinished(File data) {
+                        Bukkit.getConsoleSender().sendMessage(convert("&fYouTube video &b%s&f has finished downloading!").formatted(finalNewFileName));
+                        Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to convert &b%s&f to OGG file format...").formatted(data.getPath()));
+                        FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
+                                .setInput(data.getPath())
+                                .overrideOutputFiles(true)
+                                .addOutput(oggOutput.getPath() + "\\%s".formatted(finalNewFileName))
+                                .setFormat("ogg")
+                                .done();
+                        if (ffmpegDownloader.isDownloading()) {
+                            Bukkit.getConsoleSender().sendMessage(convert("&fPausing conversion of file &b%s&f as it appears FFMPEG is not initializated! (is it still installing?\nThis task will automatically resume! This is not an error!"));
+                            queuedOGGConversions.add(new PausedOGGConversion(ffmpegBuilder, data, callback));
+                        } else {
+                            fFmpegExecutor.createJob(ffmpegBuilder).run();
+                            Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
+                            if (data.delete())
+                                Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
+                            callback.accept(data);
                         }
 
-                        @Override
-                        public void onFinished(File data) {
-                            Bukkit.getConsoleSender().sendMessage(convert("&fYouTube video &b%s&f has finished downloading!").formatted(newFileName));
-                            Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to convert &b%s&f to OGG file format...").formatted(data.getPath()));
-                            FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
-                                    .setInput(data.getPath())
-                                    .overrideOutputFiles(true)
-                                    .addOutput(oggOutput.getPath())
-                                    .setFormat("ogg")
-                                    .done();
-                            if (ffmpegDownloader.isDownloading()) {
-                                Bukkit.getConsoleSender().sendMessage(convert("&fPausing conversion of file &b%s&f as it appears FFMPEG is not initializated! (is it still installing?\nThis task will automatically resume! This is not an error!"));
-                                queuedOGGConversions.add(new PausedOGGConversion(ffmpegBuilder, data, callback));
-                            } else {
-                                fFmpegExecutor.createJob(ffmpegBuilder).run();
-                                Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(newFileName));
-                                if (data.delete()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(newFileName));
-                            }
+                    }
 
-                            TaskRunner.runSyncTask(() -> callback.accept(data));
-                        }
-
-                        @Override
-                        public void onError(Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
-                    })
-                    .saveTo(this.m4aOutput)
-                    .renameTo(newFileName)
-                    .async();
-            this.youtubeRequester.downloadVideoFile(downloadRequest);
-        });
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                })
+                .saveTo(this.m4aOutput)
+                .renameTo(finalNewFileName)
+                .async();
+        this.youtubeRequester.downloadVideoFile(downloadRequest);
     }
 
     /**
@@ -120,24 +124,22 @@ public class YoutubeProcessor implements Listener {
      * @param callback A callback to accept the {@link VideoInfo} that was requested
      */
     public final void getVideoInformation(final String youtubeLink, final Consumer<VideoInfo> callback) {
-        CompletableFuture.runAsync(() -> {
-            final RequestVideoInfo videoInfoRequest = new RequestVideoInfo(this.getVideoId(youtubeLink))
-                    .callback(new YoutubeCallback<>() {
-                        @Override
-                        public void onFinished(VideoInfo videoInfo) {
-                            Bukkit.getConsoleSender().sendMessage(convert("&fVideo information for song &b%s&f received!").formatted(youtubeLink));
-                            TaskRunner.runSyncTask(() -> callback.accept(videoInfo));
-                        }
+        final RequestVideoInfo videoInfoRequest = new RequestVideoInfo(this.getVideoId(youtubeLink))
+                .callback(new YoutubeCallback<>() {
+                    @Override
+                    public void onFinished(VideoInfo videoInfo) {
+                        Bukkit.getConsoleSender().sendMessage(convert("&fVideo information for song &b%s&f received!").formatted(youtubeLink));
+                        callback.accept(videoInfo);
+                    }
 
-                        @Override
-                        public void onError(Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
-                    })
-                    .async();
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                })
+                .async();
 
-            this.youtubeRequester.getVideoInfo(videoInfoRequest);
-        });
+        this.youtubeRequester.getVideoInfo(videoInfoRequest);
     }
 
 
@@ -182,6 +184,6 @@ public class YoutubeProcessor implements Listener {
                 Bukkit.getConsoleSender().sendMessage(convert("&fSuccessfully converted file &b%s&f! Cleaning up...").formatted(entry.convertedFile().getPath()));
                 TaskRunner.runSyncTask(() -> entry.callback().accept(entry.convertedFile()));
             });
-        });
+        }, this.workStealingPool);
     }
 }

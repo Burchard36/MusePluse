@@ -70,7 +70,7 @@ public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
         registerEvent(this.guiEvents);
         Bukkit.getConsoleSender().sendMessage(convert("&fSending &bonEnable&f to all registered modules..."));
         this.moduleLoader.onServerEnable();
-        if (this.ffmpegDownloader.ffmpegIsInstalled())
+        if (this.ffmpegDownloader.ffmpegIsInstalled() && !this.ffmpegDownloader.isDownloading())
             Bukkit.getPluginManager().callEvent(new FFMPEGInitializedEvent()); // we need to make sure this event gets fired on enable
         Bukkit.getConsoleSender().sendMessage(convert("&aDone&f! &bCloudLiteCore&f has finished its onEnable initialization!"));
         Bukkit.getConsoleSender().sendMessage(convert("&fIf there was any &cerrors&f please review your configs before contacting a &bdeveloper&f."));

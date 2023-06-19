@@ -4,6 +4,7 @@ import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.config.MusePluseConfig;
 import com.burchard36.musepluse.config.MusePluseSettings;
+import com.burchard36.musepluse.config.SongData;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
 import com.burchard36.musepluse.resource.events.RestServerStartedEvent;
 import com.burchard36.musepluse.utils.TaskRunner;
@@ -78,49 +79,44 @@ public class ResourcePackFactory extends YoutubeProcessor {
      * THis will block any resource packs being sent to the client until conversion is complete
      */
     @SneakyThrows
-    public final void createTexturePack()  {
-        if (!this.resourcePackFile.createNewFile()) throw new RuntimeException("Could not create resource-pack file!");
-        CompletableFuture.runAsync(() -> {
-            AtomicInteger downloadedSongs = new AtomicInteger(0);
-            final int totalSongsToDownload = this.moduleInstance.getMusicListConfig().getSongDataList().size();
-            flushOGGDirectory();
-            flushM4ADirectory();
-            moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
-                final String youTubeLink = song.getYouTubeLink();
-                int currentDownloadCount = downloadedSongs.incrementAndGet();
-                this.getVideoInformation(youTubeLink, (videoInfo) -> {
-                    song.setSeconds(videoInfo.details().lengthSeconds());
-                    this.downloadYouTubeAudioAsOGG(videoInfo, song.getLocalKey(), (createdFile) -> {
-                        Bukkit.getConsoleSender().sendMessage(convert("Successfully downloaded & converted &b%s&f there is &b%s&f songs to download left!".formatted(youTubeLink, totalSongsToDownload - currentDownloadCount)));
-
-                        if (currentDownloadCount == totalSongsToDownload) {
-                            CompletableFuture.runAsync(() -> {
-                                Bukkit.getConsoleSender().sendMessage(convert("&fAll songs have been downloaded! Writing &bsounds.json&f to &b/temp/assets/musepluse/sounds.json"));
-                                writeSoundsJson();
-                                Bukkit.getConsoleSender().sendMessage(convert("&aComplete!&f Creating pack.mcmeta file to &b/temp/assets/pack.mcmeta"));
-                                writeMCMetaFile();
-                                Bukkit.getConsoleSender().sendMessage(convert("&aComplete! &fCopying OGG Files to &b/temp/assets/minecraft/sounds/music"));
-                                copyOGGToPack();
-                                Bukkit.getConsoleSender().sendMessage(convert("&aComplete! &fZipping resources to /resource-pack/resource_pack.zip"));
-                                zipResourcePack();
-                                Bukkit.getConsoleSender().sendMessage(convert("&aSuccess! &fYour resource path is now created in &b/resource-pack/resource_pack.zip&f !"));
-                                Bukkit.getConsoleSender().sendMessage(convert("&fCleaning up temp files & downloaded files..."));
-                                this.resourcePackTempFiles.delete();
-                                this.mediaDirectory.delete();
-                                this.creatingTexturePack.set(false);
-                                Bukkit.getConsoleSender().sendMessage("&aCleanup Complete!&f");
-                                if (this.moduleSettings.isResourcePackServerEnabled()) {
-                                    Bukkit.getConsoleSender().sendMessage(convert("&fIf appears the resource-pack server option is enabled in the config"));
-                                    Bukkit.getConsoleSender().sendMessage(convert("&fServer will now start."));
-                                    TaskRunner.runSyncTask(() -> ResourcePackServer.startServer(this.moduleInstance));
-                                } else TaskRunner.runSyncTask(() ->
-                                        Bukkit.getPluginManager().callEvent(new MusePluseResourcePackLoadedEvent()));
-                            });
-                        }
-                    });
+    public final void createTexturePack() {
+        if (!this.resourcePackFile.createNewFile())
+            throw new RuntimeException("Could not create resource-pack file!");
+        AtomicInteger downloadedSongs = new AtomicInteger(0);
+        final int totalSongsToDownload = this.moduleInstance.getMusicListConfig().getSongDataList().size();
+        flushOGGDirectory();
+        flushM4ADirectory();
+        for (final SongData song : this.moduleInstance.getMusicListConfig().getSongDataList()) {
+            final String youTubeLink = song.getYouTubeLink();
+            this.getVideoInformation(youTubeLink, (videoInfo) -> {
+                song.setSeconds(videoInfo.details().lengthSeconds());
+                this.downloadYouTubeAudioAsOGG(videoInfo, song.getLocalKey(), (createdFile) -> {
+                    int currentDownloadCount = downloadedSongs.incrementAndGet();
+                    Bukkit.getConsoleSender().sendMessage(convert("Successfully downloaded & converted &b%s&f there is &b%s&f songs to download left!".formatted(youTubeLink, totalSongsToDownload - currentDownloadCount)));
+                    if (currentDownloadCount == totalSongsToDownload) {
+                        Bukkit.getConsoleSender().sendMessage(convert("&fAll songs have been downloaded! Writing &bsounds.json&f to &b/temp/assets/musepluse/sounds.json"));
+                        writeSoundsJson();
+                        Bukkit.getConsoleSender().sendMessage(convert("&aComplete!&f Creating pack.mcmeta file to &b/temp/assets/pack.mcmeta"));
+                        writeMCMetaFile();
+                        Bukkit.getConsoleSender().sendMessage(convert("&aComplete! &fCopying OGG Files to &b/temp/assets/minecraft/sounds/music"));
+                        copyOGGToPack();
+                        Bukkit.getConsoleSender().sendMessage(convert("&aComplete! &fZipping resources to /resource-pack/resource_pack.zip"));
+                        zipResourcePack();
+                        Bukkit.getConsoleSender().sendMessage(convert("&aSuccess! &fYour resource path is now created in &b/resource-pack/resource_pack.zip&f !"));
+                        Bukkit.getConsoleSender().sendMessage(convert("&fCleaning up temp files & downloaded files..."));
+                        this.cleanupOutputs();
+                        this.creatingTexturePack.set(false);
+                        Bukkit.getConsoleSender().sendMessage("&aCleanup Complete!&f");
+                        if (this.moduleSettings.isResourcePackServerEnabled()) {
+                            Bukkit.getConsoleSender().sendMessage(convert("&fIf appears the resource-pack server option is enabled in the config"));
+                            Bukkit.getConsoleSender().sendMessage(convert("&fServer will now start."));
+                            ResourcePackServer.startServer(this.moduleInstance);
+                        } else TaskRunner.runSyncTask(() ->
+                                Bukkit.getPluginManager().callEvent(new MusePluseResourcePackLoadedEvent()));
+                    }
                 });
             });
-        });
+        }
     }
 
     @EventHandler

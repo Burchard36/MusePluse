@@ -51,6 +51,10 @@ public class SongData {
         return this.getSeconds() * 20L;
     }
 
+    public final int getMinutes() {
+        return this.seconds / 60;
+    }
+
     /**
      * Gets the display ItemStack for this item to be used
      * in the songs gui
@@ -62,7 +66,7 @@ public class SongData {
                 convert("&fSong: &b%s".formatted(this.songDisplayName)),
                 "&f ",
                 "&eSong By: &f%s".formatted(this.artistName),
-                "&eSong Length: &f%sm %ss".formatted(this.minutes, this.seconds),
+                "&eSong Length: &f%sm %ss".formatted(this.getMinutes(), this.seconds % 60),
                 "&f "
         );
         final ItemMeta itemMeta = itemStack.getItemMeta();
