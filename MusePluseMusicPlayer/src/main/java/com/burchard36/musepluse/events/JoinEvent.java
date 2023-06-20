@@ -11,7 +11,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+<<<<<<< Updated upstream
 import java.io.File;
+=======
+import java.io.*;
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -60,7 +64,13 @@ public class JoinEvent implements Listener {
                 if (this.musePluseSettings.isResourcePackServerEnabled()) {
                     final File file = this.resourcePackEngine.resourcePackFileFromDisk();
                     if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
+<<<<<<< Updated upstream
                     TaskRunner.runSyncTask(() -> player.setResourcePack(this.musePluseSettings.getResourcePack(file)));
+=======
+                    TaskRunner.runSyncTask(() -> {
+                        player.setResourcePack(this.musePluseSettings.getResourcePack(file));
+                    });
+>>>>>>> Stashed changes
 
                 } else Bukkit.broadcastMessage("Not enabled");
             }

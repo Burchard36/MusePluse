@@ -36,12 +36,27 @@ public class ResourcePackEngine extends OGGFileWriter {
         this.youtubeProcessor = new YoutubeProcessor(moduleInstance.getPluginInstance());
 
         this.tryAutoGenerate(false, (v) -> {
-            Bukkit.broadcastMessage("pack exists: " + this.resourcePackExists());
-            Bukkit.broadcastMessage("pack enabled: " + this.pluginSettings.isResourcePackServerEnabled());
-            if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
-                Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
-                ResourcePackServer.startServer(this.moduleInstance);
-            }
+            final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
+            final AtomicInteger songInfoReceived = new AtomicInteger(0);
+            /* Ensure times for song data is set */
+            this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
+                final String youTubeLink = song.getYouTubeLink();
+                /* Get information for each song */
+
+                this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
+                    song.setSeconds(videoInfo.details().lengthSeconds());
+                    int received = songInfoReceived.getAndIncrement();
+
+                    if (received == totalSongs) {
+
+                        if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
+                            Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
+                            ResourcePackServer.startServer(this.moduleInstance);
+                        }
+
+                    }
+                });
+            });
         });
     }
 
