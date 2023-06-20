@@ -1,9 +1,3 @@
-## IMPORTANT!!!! IMPORTANT!!!! IMPORTANT!!!!
-## IMPORTANT!!!! IMPORTANT!!!! IMPORTANT!!!!
-## IMPORTANT!!!! IMPORTANT!!!! IMPORTANT!!!!
-# This right here is the KEY used to play the sound, if this key is not
-# present in your sounds.yml then the player will not hear anything!
-#
 skaga:
   Details:
     # Song name, supports color codes
@@ -14,17 +8,9 @@ skaga:
     GuiMaterial: MUSIC_DISC_13
     # Permission is an optional field
     #Permission: "musepluse.skaga"
-  # Due to current limitations of the plugin/spigot API, lengths must be implicitly set by you
-  # Incorrectly setting this will leave to weird stoppages in the middle of the song when auto queuing them
-  Length:
-    Minutes: 5
-    Seconds: 35
     # Currently only youtube is supported
   YouTubeLink: https://www.youtube.com/watch?v=Wyx_XYITisE
 greenlands:
-  Length:
-    Minutes: 3
-    Seconds: 1
   YouTubeLink: https://www.youtube.com/watch?v=fvLlZnxKcoI
   Details:
     SongName: Greenlands
@@ -32,198 +18,132 @@ greenlands:
     GuiMaterial: MUSIC_DISC_CAT
 leavingforvalhalla:
   YouTubeLink: https://www.youtube.com/watch?v=Yv25O4XhXW0
-  Length:
-    Minutes: 6
-    Seconds: 23
   Details:
     SongName: Leaving for Valhalla
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_BLOCKS
 forestwalk:
   YouTubeLink: https://www.youtube.com/watch?v=2VULXGuNByc
-  Length:
-    Minutes: 3
-    Seconds: 39
   Details:
     SongName: Forest Walk
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_CHIRP
 nomadicdawn:
   YouTubeLink: https://www.youtube.com/watch?v=jI9eDm2zaRg
-  Length:
-    Minutes: 4
-    Seconds: 49
   Details:
     SongName: Nomadic Dawn
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_FAR
 nowweride:
   YouTubeLink: https://www.youtube.com/watch?v=6PD080KKfFQ
-  Length:
-    Minutes: 5
-    Seconds: 6
   Details:
     SongName: Now We Ride
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_MALL
 villageambience:
   YouTubeLink: https://www.youtube.com/watch?v=V6GTmGlJCiA
-  Length:
-    Minutes: 6
-    Seconds: 18
   Details:
     SongName: Village Ambience
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_MELLOHI
 adventure:
   YouTubeLink: https://www.youtube.com/watch?v=85OzamAVirs
-  Length:
-    Minutes: 4
-    Seconds: 37
   Details:
     SongName: Adventure
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_STAL
 entertainment:
   YouTubeLink: https://www.youtube.com/watch?v=hOGLCoYangU
-  Length:
-    Minutes: 2
-    Seconds: 41
   Details:
     SongName: Entertainment
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_STRAD
 traveler:
   YouTubeLink: https://www.youtube.com/watch?v=5EU4d9xMOqQ
-  Length:
-    Minutes: 4
-    Seconds: 7
   Details:
     SongName: Traveler
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_WARD
 legend:
   YouTubeLink: https://www.youtube.com/watch?v=yj_wyw6Xrq4
-  Length:
-    Minutes: 3
-    Seconds: 46
   Details:
     SongName: Legend
     Artist: Adrian von Ziegler
     GuiMaterial: MUSIC_DISC_WAIT
 forestflute:
   YouTubeLink: https://www.youtube.com/watch?v=tyrdJ8Vm3Nc
-  Length:
-    Minutes: 3
-    Seconds: 33
   Details:
     SongName: Forest Flute
     Artist: Adrian von Ziegler
     GuiMaterial: MUSIC_DISC_OTHERSIDE
 thegael:
   YouTubeLink: https://www.youtube.com/watch?v=zNnzufK0nVE
-  Length:
-    Minutes: 5
-    Seconds: 40
   Details:
     SongName: The Gael
     Artist: The Last of the Mohicans
     GuiMaterial: MUSIC_DISC_WARD
 snowfall:
   YouTubeLink: https://www.youtube.com/watch?v=LlN8MPS7KQs
-  Length:
-    Minutes: 2
-    Seconds: 3
   Details:
     SongName: Snowfall
     Artist: oneheart x reidenshi
     GuiMaterial: MUSIC_DISC_MELLOHI
 interstellar:
   YouTubeLink: https://www.youtube.com/watch?v=kpz8lpoLvrA
-  Length:
-    Minutes: 4
-    Seconds: 4
   Details:
     SongName: Interstellar Main Theme
     Artist: Hans Zimmer
     GuiMaterial: MUSIC_DISC_BLOCKS
 theway:
   YouTubeLink: https://www.youtube.com/watch?v=oN2Xs-MvxLw
-  Length:
-    Minutes: 7
-    Seconds: 4
   Details:
     SongName: The Way
     Artist: Zack Hemsey
     GuiMaterial: MUSIC_DISC_MALL
 deathbed:
   YouTubeLink: https://www.youtube.com/watch?v=jJPMnTXl63E
-  Length:
-    Minutes: 2
-    Seconds: 53
   Details:
     SongName: Death Bed
     Artist: Powfu
     GuiMaterial: MUSIC_DISC_CAT
 gangstarparadise:
   YouTubeLink: https://www.youtube.com/watch?v=dywM446-vcE
-  Length:
-    Minutes: 3
-    Seconds: 29
   Details:
     SongName: GANGSTA'S PARADISE
     Artist: Remix by Beedle the Bardcore
     GuiMaterial: MUSIC_DISC_CAT
 songofstorms:
   YouTubeLink: https://www.youtube.com/watch?v=UtgHZaq0EGs
-  Length:
-    Minutes: 1
-    Seconds: 39
   Details:
     SongName: Song of Storms
     Artist: Zelda Original Soundtrack
     GuiMaterial: MUSIC_DISC_STAL
 breathofthewild:
   YouTubeLink: https://www.youtube.com/watch?v=GY4WjuVTdvY
-  Length:
-    Minutes: 2
-    Seconds: 0
   Details:
     SongName: Breath of the Wild (Main Theme)
     Artist: The Legend of Zelda Breath of the Wild
     GuiMaterial: MUSIC_DISC_STAL
 thegreatest:
   YouTubeLink: https://www.youtube.com/watch?v=YbWkR6mFI6s
-  Length:
-    Minutes: 3
-    Seconds: 29
   Details:
     SongName: The Greatest
     Artist: Sia
     GuiMaterial: MUSIC_DISC_FAR
 loveneverfeltsogood:
   YouTubeLink: https://www.youtube.com/watch?v=0wnuTGGuAVs
-  Length:
-    Minutes: 4
-    Seconds: 6
   Details:
     SongName: Love Never Felt So Good
     Artist: Michael Jackson & Justin Timerlake
     GuiMaterial: MUSIC_DISC_STRAD
 justthetwoofus:
   YouTubeLink: https://www.youtube.com/watch?v=6POZlJAZsok
-  Length:
-    Minutes: 7
-    Seconds: 19
   Details:
     SongName: Just the Two of Us
     Artist: Grover Washington Jr.
     GuiMaterial: MUSIC_DISC_STRAD
 verbatim:
   YouTubeLink: https://www.youtube.com/watch?v=nqDGahB3y4I
-  Length:
-    Minutes: 2
-    Seconds: 48
   Details:
     SongName: Verbatim
     Artist: Mother Mother
