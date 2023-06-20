@@ -15,21 +15,21 @@ However, MusePluse will need a few steps of configuration before it can work pro
 
 ### Using the integrated server to serve the resource pack (Default & Recommended)
 
-For this, all you need to do is make sure that port `6969` is open on your server! The port needs to be open
-because your server will be the one asynchronously sending the resource pack. This port may be changed in settings.yml,
-However DO NOT make the port longer than 4 integers or your clients won't be able to download your resource pack!
+1) You need to do is make sure that port `6969` is open on your server! The port needs to be open
+because your server will be the one asynchronously sending the resource pack. This port **may** be changed in `settings.yml`,
+However **DO NOT** make the port longer than **4 Numbers** or your clients won't be able to download your resource pack!
 
-Next, you will need to set your server IP in the settings.yml, this will be the IP you use to connect to the server, this should 
-**ONLY** be the IP/Domain of your server ex `123.56.123.45` or `my.awsome.server`
+2) Next, you will need to set your server IP in `the settings.yml`, this will be the IP/Domain you use to connect to the server, this should 
+**ONLY** be the IP/Domain of your server and not include any ports/https/www ex `123.56.123.45` or `my.awsome.server`
 
 Once both are set, simply restart your server!
 
 ### Hosting the resource pack on an external website
 
-For this, ensure that you DISABLE the ResourcePackServer in the settings.yml (Set its `Enabled` to false)
+1) For this, ensure that you **DISABLE** the `ResourcePackServer` in the `settings.yml` (Set its `Enabled` to false)
 
-After this, simple set the link you want in settings.yml's `ResourcePack` field. This must be a direct download link
-to the resource pack, more instructions for this part will be included later
+After this, simply set the link you want in `settings.yml`s `ResourcePack` field. This must be a **direct** download link
+to the resource pack, more instructions for this part will be included later.
 
 ## Your first launch
 
