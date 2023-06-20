@@ -90,6 +90,6 @@ public class MusePluseSettings implements Config {
 
     public String getResourcePack(final File resourcePackFile) {
         final String fileUUID = resourcePackFile.getName().split("\\.")[0];
-        return "http://%s:%s/%s.zip".formatted(this.resourcePack, this.resourcePackServerPort, fileUUID);
+        return "http://%s:%s/resource_pack.zip".formatted(this.resourcePack, this.resourcePackServerPort);
     }
 }

@@ -148,7 +148,7 @@ public class ResourcePackEngine extends OGGFileWriter {
         File[] tempFiles = new File(this.getResourcePackTempFilesDirectory(), "/assets").listFiles();
         if (tempFiles == null) throw new RuntimeException("It appears the /resource-pack directory was null when calling zipResourcePack, maybe restart your server?");
         try {
-            this.resourcePackFile = new File(this.getResourcePackDirectory(), "%s.zip".formatted(UUID.randomUUID().toString()));
+            this.resourcePackFile = new File(this.getResourcePackDirectory(), "resource_pack.zip");
             zipUtility.zip(List.of(tempFiles), this.resourcePackFile.getPath());
         } catch (IOException e) {
             throw new RuntimeException(e);

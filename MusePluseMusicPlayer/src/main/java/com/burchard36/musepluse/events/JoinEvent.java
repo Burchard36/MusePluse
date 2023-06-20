@@ -11,7 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.io.File;
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +49,7 @@ public class JoinEvent implements Listener {
         }
         final File file = this.resourcePackEngine.resourcePackFileFromDisk();
         if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
-        player.setResourcePack(this.musePluseSettings.getResourcePack(file));
+        player.setResourcePack(this.musePluseSettings.getResourcePack(file), createSha1());
     }
 
     @EventHandler
@@ -60,12 +62,31 @@ public class JoinEvent implements Listener {
                 if (this.musePluseSettings.isResourcePackServerEnabled()) {
                     final File file = this.resourcePackEngine.resourcePackFileFromDisk();
                     if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
-                    TaskRunner.runSyncTask(() -> player.setResourcePack(this.musePluseSettings.getResourcePack(file)));
+                    TaskRunner.runSyncTask(() -> {
+                        player.setResourcePack(this.musePluseSettings.getResourcePack(file), createSha1());
+                    });
 
                 } else Bukkit.broadcastMessage("Not enabled");
             }
         });
 
         this.queuedPlayers.clear();
+    }
+
+    public byte[] createSha1() {
+        try (InputStream fis = new BufferedInputStream(new FileInputStream(this.resourcePackEngine.resourcePackFileFromDisk()))) {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            int n = 0;
+            byte[] buffer = new byte[8192];
+            while (n != -1) {
+                n = fis.read(buffer);
+                if (n > 0) {
+                    digest.update(buffer, 0, n);
+                }
+            }
+            return digest.digest();
+        } catch (IOException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
