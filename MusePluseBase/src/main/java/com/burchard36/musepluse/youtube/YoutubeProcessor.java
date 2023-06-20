@@ -74,8 +74,8 @@ public class YoutubeProcessor implements Listener {
         if (!newFileName.endsWith(".ogg")) newFileName = newFileName + ".ogg";
         /* For use in Async */
         final String finalNewFileName = newFileName;
-        this.oggOutput.mkdirs();
-        this.m4aOutput.mkdirs();
+        //this.oggOutput.mkdirs();
+        //this.m4aOutput.mkdirs();
         final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
                 .callback(new YoutubeProgressCallback<>() {
                     @Override
@@ -97,11 +97,13 @@ public class YoutubeProcessor implements Listener {
                             Bukkit.getConsoleSender().sendMessage(convert("&fPausing conversion of file &b%s&f as it appears FFMPEG is not initializated! (is it still installing?\nThis task will automatically resume! This is not an error!"));
                             queuedOGGConversions.add(new PausedOGGConversion(ffmpegBuilder, data, callback));
                         } else {
-                            fFmpegExecutor.createJob(ffmpegBuilder).run();
-                            Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
-                            if (data.delete())
-                                Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
-                            callback.accept(data);
+                            CompletableFuture.runAsync(() -> {
+                                fFmpegExecutor.createJob(ffmpegBuilder).run();
+                                Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
+                                if (data.delete())
+                                    Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
+                                callback.accept(data);
+                            }, workStealingPool);
                         }
 
                     }

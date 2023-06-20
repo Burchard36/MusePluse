@@ -2,7 +2,7 @@ package com.burchard36.musepluse.events;
 
 import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
-import com.burchard36.musepluse.resource.ResourcePackFactory;
+import com.burchard36.musepluse.resource.ResourcePackEngine;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
 import com.burchard36.musepluse.utils.TaskRunner;
 import org.bukkit.Bukkit;
@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,13 +21,13 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 public class JoinEvent implements Listener {
     protected final MusePluseMusicPlayer moduleInstance;
     protected final MusePluseSettings musePluseSettings;
-    protected final ResourcePackFactory resourcePackFactory;
+    protected final ResourcePackEngine resourcePackEngine;
     /* Since the resource pack may not be created when the player joins we need to queue them if the file isnt created yet */
     protected final List<UUID> queuedPlayers;
 
     public JoinEvent(final MusePluseMusicPlayer moduleInstance) {
         this.moduleInstance = moduleInstance;
-        this.resourcePackFactory = this.moduleInstance.getResourcePackFactory();
+        this.resourcePackEngine = this.moduleInstance.getResourcePackEngine();
         this.musePluseSettings = this.moduleInstance.getMusePluseSettings();
         this.queuedPlayers = new ArrayList<>();
     }
@@ -38,15 +39,15 @@ public class JoinEvent implements Listener {
         if (this.musePluseSettings.isNeedsPermissionToPlayOnJoin() && !player.hasPermission("musepluse.playonjoin"))
             return;
 
-        if (this.resourcePackFactory.isCreatingResourcePack()) {
+        if (this.resourcePackEngine.isResourcePackGenerating()) {
             this.queuedPlayers.add(player.getUniqueId());
             player.sendMessage(convert("&cIt appears the server hasn't finished creating the resource pack yet!"));
             player.sendMessage(convert("&cOnce the resource pack creation is finished your game will automagically update!"));
             return;
         }
-
-        player.setResourcePack("", ResourcePackFactory.resourcePackChecksum()); // THIS IS REQUIRED!!! OR ELSE THE PLAYER HAS TO REJOIN TO UPDATE THE HASH
-        player.setResourcePack(this.musePluseSettings.getResourcePack(), ResourcePackFactory.resourcePackChecksum());
+        final File file = this.resourcePackEngine.resourcePackFileFromDisk();
+        if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
+        player.setResourcePack(this.musePluseSettings.getResourcePack(file));
     }
 
     @EventHandler
@@ -57,10 +58,9 @@ public class JoinEvent implements Listener {
             if (player != null) {
                 player.sendMessage(convert("&aThe resource pack has been created! It is being sent to you now."));
                 if (this.musePluseSettings.isResourcePackServerEnabled()) {
-                    TaskRunner.runSyncTaskLater(() -> {
-                        player.setResourcePack("", ResourcePackFactory.resourcePackChecksum()); // THIS IS REQUIRED!!! OR ELSE THE PLAYER HAS TO REJOIN TO UPDATE THE HASH
-                        player.setResourcePack(this.musePluseSettings.getResourcePack(), ResourcePackFactory.resourcePackChecksum());
-                    }, 60);
+                    final File file = this.resourcePackEngine.resourcePackFileFromDisk();
+                    if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
+                    TaskRunner.runSyncTask(() -> player.setResourcePack(this.musePluseSettings.getResourcePack(file)));
 
                 } else Bukkit.broadcastMessage("Not enabled");
             }

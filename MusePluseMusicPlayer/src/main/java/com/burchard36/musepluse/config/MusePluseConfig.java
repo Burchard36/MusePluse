@@ -31,4 +31,9 @@ public class MusePluseConfig implements Config {
             this.songDataList.add(new SongData(songConfig, songLocalKey));
         }
     }
+
+    public void overWriteSongList(final List<SongData> songList) {
+        this.songDataList.clear();
+        this.songDataList.addAll(songList);
+    }
 }

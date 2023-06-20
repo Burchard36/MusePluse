@@ -8,7 +8,7 @@ import com.burchard36.musepluse.events.JoinEvent;
 import com.burchard36.musepluse.events.SongEndedEvent;
 import com.burchard36.musepluse.events.TexturePackLoadEvent;
 import com.burchard36.musepluse.module.PluginModule;
-import com.burchard36.musepluse.resource.ResourcePackFactory;
+import com.burchard36.musepluse.resource.ResourcePackEngine;
 import com.burchard36.musepluse.resource.ResourcePackServer;
 import lombok.Getter;
 
@@ -20,7 +20,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
     @Getter
     private MusePluseConfig musicListConfig;
     @Getter
-    private ResourcePackFactory resourcePackFactory;
+    private ResourcePackEngine resourcePackEngine;
     @Getter
     private MusicPlayer musicPlayer;
 
@@ -34,12 +34,9 @@ public final class MusePluseMusicPlayer implements PluginModule {
 
     @Override
     public void enableModule() {
-        this.resourcePackFactory = new ResourcePackFactory(this);
+        this.resourcePackEngine = new ResourcePackEngine(this);
         MusePlusePlugin.registerCommand("skipsong", new SkipSongCommand(this));
         MusePlusePlugin.registerCommand("musicgui", new MusicGuiCommand(this));
-
-        if (this.musePluseSettings.isResourcePackServerEnabled() && !this.resourcePackFactory.isCreatingResourcePack())
-            ResourcePackServer.startServer(this);
 
         MusePlusePlugin.registerEvent(new JoinEvent(this));
         MusePlusePlugin.registerEvent(new SongEndedEvent(this));
@@ -55,4 +52,5 @@ public final class MusePluseMusicPlayer implements PluginModule {
         this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings(), false);
         this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), true);
     }
+
 }

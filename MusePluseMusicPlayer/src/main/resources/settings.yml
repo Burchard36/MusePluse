@@ -28,6 +28,8 @@ ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResourc
 
 # Should the resource pack be created automagically on server startup?
 # If this is set to false it will also set the FFMPEG installation
+#
+# WARNING Leave this true if you are using the ResourcePackServer option! Otherwise, ignore this message :D
 AutoGenerateResourcePack: true
 
 # This is the internal server used for hosting the server's resource pack

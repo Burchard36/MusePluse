@@ -2,8 +2,6 @@ name: MusePluse
 version: '${project.version}'
 main: com.burchard36.musepluse.MusePluse
 api-version: 1.19
-softdepend:
-  - WorldGuard
 commands:
   skipsong:
     aliases:

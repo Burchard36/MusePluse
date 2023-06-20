@@ -5,6 +5,7 @@ import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.musepluse.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -40,6 +41,7 @@ public class MusePluseSettings implements Config {
     protected String resourcePack;
     @Getter
     protected boolean autoGenerateResourcePack;
+
 
     @Override
     public @NonNull String getFileName() {
@@ -88,7 +90,8 @@ public class MusePluseSettings implements Config {
         }
     }
 
-    public String getResourcePack() {
-        return "http://%s:%s/resource_pack.zip".formatted(this.resourcePack, this.resourcePackServerPort);
+    public String getResourcePack(final File resourcePackFile) {
+        final String fileUUID = resourcePackFile.getName().split("\\.")[0];
+        return "http://%s:%s/%s.zip".formatted(this.resourcePack, this.resourcePackServerPort, fileUUID);
     }
 }
