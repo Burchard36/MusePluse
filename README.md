@@ -22,7 +22,7 @@ However DO NOT make the port longer than 4 integers or your clients won't be abl
 Next, you will need to set your server IP in the settings.yml, this will be the IP you use to connect to the server, this should 
 **ONLY** be the IP/Domain of your server ex `123.56.123.45` or `my.awsome.server`
 
-Once both are set, simple restart your server!
+Once both are set, simply restart your server!
 
 ### Hosting the resource pack on an external website
 
