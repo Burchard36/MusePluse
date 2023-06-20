@@ -67,7 +67,6 @@ skaga:
 
 ***WARNING ABOUT CLIENT-SIDE STORAGE SPACE FOR ADMINISTRATORS OR SERVERS THAT CONSISTANTLY ADD SONGS***
 
-Due to current limitations/bugs within recent minecraft code I am unable to use hash's for updating the resource pack
-for various un-known reasons. This means in order to force an update when you re-generate your resource pack we just send a file with
-a different UUID, meaning minecraft on your client may leave behind a bunch of unused server-sides resource packs located in
-`%appdata%\.minecraft\server-resource-packs`. This is a limitation I will work ASAP to fix.
+Due to current bugs within recent minecraft code I am unable to use hash's for updating the resource pack. This means in order to force an 
+update when you regenerate your resource pack we just send a file with a different UUID, meaning minecraft on your client may leave behind a bunch of unused server-sides 
+resource packs located in `%appdata%\.minecraft\server-resource-packs`. This is a bug within minecraft itself see here: https://bugs.mojang.com/browse/MC-164316
