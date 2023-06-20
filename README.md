@@ -20,7 +20,7 @@ because your server will be the one asynchronously sending the resource pack. Th
 However **DO NOT** make the port longer than **4 Numbers** or your clients won't be able to download your resource pack!
 
 2) Next, you will need to set your server IP in `the settings.yml`, this will be the IP/Domain you use to connect to the server, this should 
-**ONLY** be the IP/Domain of your server and not include any `ports`,`https://`, so one and so forth. For Example: `123.56.123.45` or `my.awsome.server`
+**ONLY** be the IP/Domain of your server and not include any `ports`,`https://`, so on and so forth. For Example: `123.56.123.45` or `my.awsome.server`
 are **valid** but `https://your.awesome.server` or `123.23.123.23:25567` are **not**
 
 Once both are set, simply restart your server!
