@@ -52,12 +52,6 @@ adventure:
     SongName: Adventure
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_STAL
-entertainment:
-  YouTubeLink: https://www.youtube.com/watch?v=hOGLCoYangU
-  Details:
-    SongName: Entertainment
-    Artist: Alexander Nakarada
-    GuiMaterial: MUSIC_DISC_STRAD
 traveler:
   YouTubeLink: https://www.youtube.com/watch?v=5EU4d9xMOqQ
   Details:
@@ -106,12 +100,6 @@ deathbed:
     SongName: Death Bed
     Artist: Powfu
     GuiMaterial: MUSIC_DISC_CAT
-gangstarparadise:
-  YouTubeLink: https://www.youtube.com/watch?v=dywM446-vcE
-  Details:
-    SongName: GANGSTA'S PARADISE
-    Artist: Remix by Beedle the Bardcore
-    GuiMaterial: MUSIC_DISC_CAT
 songofstorms:
   YouTubeLink: https://www.youtube.com/watch?v=UtgHZaq0EGs
   Details:
@@ -147,4 +135,40 @@ verbatim:
   Details:
     SongName: Verbatim
     Artist: Mother Mother
+    GuiMaterial: MUSIC_DISC_MALL
+imstillstanding:
+  YouTubeLink: https://www.youtube.com/watch?v=ZHwVBirqD2s
+  Details:
+    SongName: I'm still standing
+    Artist: Elton John
+    GuiMaterial: MUSIC_DISC_STRAD
+maneater:
+  YouTubeLink: https://www.youtube.com/watch?v=yRYFKcMa_Ek
+  Details:
+    SongName: Maneater
+    Artist: Daryl Hall & John Oates
+    GuiMaterial: MUSIC_DISC_WAIT
+ifyouwereawomanandiwasaman:
+  YouTubeLink: https://www.youtube.com/watch?v=rJOo67DtZAY
+  Details:
+    SongName: If You We're a Woman (And I Was a Man)
+    Artist: Bonnie Tyler
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+heavenisaplaceonearth:
+  YouTubeLink: https://www.youtube.com/watch?v=NOGEyBeoBGM
+  Details:
+    SongName: Heaven is a place on earth
+    Artist: Belinda Carlisle
+    GuiMaterial: MUSIC_DISC_BLOCKS
+maniac:
+  YouTubeLink: https://www.youtube.com/watch?v=AIgJenz0ZK4
+  Details:
+    SongName: Maniac
+    Artist: Micheal Sombello
+    GuiMaterial: MUSIC_DISC_13
+chinesehardbass:
+  YouTubeLink: https://www.youtube.com/watch?v=dPNxVg3W3CE
+  Details:
+    SongName: CHINESE HARDBASS
+    Artist: Jedix
     GuiMaterial: MUSIC_DISC_MALL

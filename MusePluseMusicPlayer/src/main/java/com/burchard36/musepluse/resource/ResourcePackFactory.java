@@ -17,11 +17,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 
 import java.io.*;
+import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -63,10 +66,10 @@ public class ResourcePackFactory extends YoutubeProcessor {
         this.resourcePackTempFiles = new File(this.pluginInstance.getDataFolder(), "/resource-pack/temp");
         this.soundsJson = new File(this.resourcePackTempFiles, "/assets/assets/musepluse/sounds.json");
         this.mcMetaFile = new File(this.resourcePackTempFiles, "/assets/pack.mcmeta");
-        this.resourcePackFile = new File(this.pluginInstance.getDataFolder(), "/resource-pack/resource_pack.zip".formatted(UUID.randomUUID()));
+        this.resourcePackFile = new File(this.pluginInstance.getDataFolder(), "/resource-pack/resource_pack.zip");
 
-        this.soundsJson.mkdirs();
-        this.resourcePackTempFiles.mkdirs();
+        if (this.soundsJson.mkdirs()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fcreated &b/assets/assets/musepluse"));
+        if (this.resourcePackTempFiles.mkdirs()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f created &b/resource-pack/temp"));
 
         if (!this.hasResourcePackBeenCreated() && this.moduleSettings.isAutoGenerateResourcePack()) {
             this.creatingTexturePack.set(true);
@@ -119,12 +122,6 @@ public class ResourcePackFactory extends YoutubeProcessor {
         }
     }
 
-    @EventHandler
-    public void onServerStarted(final RestServerStartedEvent startEvent) {
-        TaskRunner.runSyncTaskLater(() ->
-                Bukkit.getPluginManager().callEvent(new MusePluseResourcePackLoadedEvent()), 20);
-    }
-
     @SneakyThrows
     protected void zipResourcePack() {
         final ZipUtility zipUtility = new ZipUtility();
@@ -136,8 +133,8 @@ public class ResourcePackFactory extends YoutubeProcessor {
     @SneakyThrows
     protected void writeSoundsJson() {
         if (this.soundsJson.exists()) {
-            if (this.soundsJson.delete()) Bukkit.getConsoleSender().sendMessage(convert("Old sounds.json was found, deleting..."));
-            this.soundsJson.createNewFile();
+            if (this.soundsJson.delete()) Bukkit.getConsoleSender().sendMessage(convert("&fOld sounds.json was found, &cdeleting&f..."));
+            if (this.soundsJson.createNewFile()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f created new &bsounds.json"));
         }
 
         final JsonObject soundsJsonData = new JsonObject();
@@ -149,17 +146,16 @@ public class ResourcePackFactory extends YoutubeProcessor {
             soundsJsonData.add(song.getLocalKey(), soundsArray);
         });
 
-        final FileWriter writer = new FileWriter(this.soundsJson);
-        this.gson.toJson(soundsJsonData, writer);
-        writer.flush();
-        writer.close();
+        try (final FileWriter writer = new FileWriter(this.soundsJson)) {
+            this.gson.toJson(soundsJsonData, writer);
+        }
     }
 
     @SneakyThrows
     public void writeMCMetaFile() {
         if (this.mcMetaFile.exists()) {
-            if (this.mcMetaFile.delete()) Bukkit.getConsoleSender().sendMessage(convert("&fOld pack.mcmeta was found, deleting..."));
-            this.mcMetaFile.createNewFile();
+            if (this.mcMetaFile.delete()) Bukkit.getConsoleSender().sendMessage(convert("&fOld pack.mcmeta was found, &cdeleting&f..."));
+            if (this.mcMetaFile.createNewFile()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f created new &bpack.mcmeta"));
         }
 
         JsonObject object = new JsonObject();
@@ -167,10 +163,9 @@ public class ResourcePackFactory extends YoutubeProcessor {
         object.add("pack", subObject);
         subObject.addProperty("pack_format", 13);
         subObject.addProperty("description", "Muse Pluse Resource Pack!");
-        final FileWriter writer = new FileWriter(this.mcMetaFile);
-        this.gson.toJson(object, writer);
-        writer.flush();
-        writer.close();
+        try (final FileWriter writer = new FileWriter(this.mcMetaFile)) {
+            this.gson.toJson(object, writer);
+        }
     }
 
     /**
@@ -193,10 +188,10 @@ public class ResourcePackFactory extends YoutubeProcessor {
         File[] files = this.oggDirectory.listFiles();
         if (files == null) throw new RuntimeException("There was no OGG files found in /media/ogg, if this is intended the plugin will disable.");
         final File musicDirectory = new File(this.resourcePackTempFiles, "/assets/assets/minecraft/sounds/music");
-        if (!musicDirectory.exists()) musicDirectory.mkdirs();
+        if (!musicDirectory.exists()) if (musicDirectory.mkdirs()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f created new &b/assets/assets/minecraft/sounds/music&f directory!"));
         for (File file : files) {
-            Bukkit.getConsoleSender().sendMessage(convert("Flashing OGG File &b%s").formatted(file.getPath()));
-            file.renameTo(new File(musicDirectory, "/%s".formatted(file.getName())));
+            if (file.renameTo(new File(musicDirectory, "/%s".formatted(file.getName()))))
+                Bukkit.getConsoleSender().sendMessage(convert("&fFlashing OGG File &b%s").formatted(file.getPath()));
         }
     }
 
@@ -204,10 +199,7 @@ public class ResourcePackFactory extends YoutubeProcessor {
      * Flushes the MP3 directory so new ones may be written
      */
     protected void flushM4ADirectory() {
-        if (!this.m4aDirectory.exists()) {
-            if (this.m4aDirectory.mkdirs()) return;
-        }
-
+        if (!this.m4aDirectory.exists()) return;
         if (this.m4aDirectory.delete()) Bukkit.getConsoleSender().sendMessage(convert("&fThe MP3 Directory was successfully flushed!"));
     }
 
@@ -215,10 +207,7 @@ public class ResourcePackFactory extends YoutubeProcessor {
      * Flushed the OGG directory so new ones may be written
      */
     protected void flushOGGDirectory() {
-        if (!this.oggDirectory.exists()) {
-            if (this.oggDirectory.mkdirs()) return;
-        }
-
+        if (!this.oggDirectory.exists()) return;
         if (this.oggDirectory.delete()) Bukkit.getConsoleSender().sendMessage(convert("&fThe OGG Directory was successfully flushed!"));
     }
 
@@ -240,7 +229,7 @@ public class ResourcePackFactory extends YoutubeProcessor {
 
     @SneakyThrows
     protected byte[] createSha1(File file) {
-        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        MessageDigest digest = MessageDigest.getInstance("SHA1");
         try (InputStream fis = new FileInputStream(file)) {
             int n = 0;
             byte[] buffer = new byte[8192];
@@ -252,5 +241,15 @@ public class ResourcePackFactory extends YoutubeProcessor {
             }
         }
         return digest.digest();
+    }
+
+    public static byte[] resourcePackChecksum(){
+        final File resourcePackFile = new File(MusePlusePlugin.INSTANCE.getDataFolder(), "/resource-pack/resource_pack.zip");
+        try (BufferedInputStream stream = new BufferedInputStream(new FileInputStream(resourcePackFile))) {
+            return DigestUtils.sha1(stream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

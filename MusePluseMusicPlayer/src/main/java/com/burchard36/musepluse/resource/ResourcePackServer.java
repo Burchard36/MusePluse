@@ -2,7 +2,7 @@ package com.burchard36.musepluse.resource;
 
 import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
-import com.burchard36.musepluse.resource.events.RestServerStartedEvent;
+import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
 import com.burchard36.musepluse.utils.TaskRunner;
 import org.bukkit.Bukkit;
 import spark.Spark;
@@ -36,13 +36,14 @@ public class ResourcePackServer {
 
             Spark.staticFiles.externalLocation(new File(moduleInstance.getPluginInstance().getDataFolder(), "/resource-pack").getPath());
             Spark.init();
+            Spark.awaitInitialization();
 
             /* TODO: If issues arrise later on we may need to delay this further, but in my tests 1 is enough */
             /* The issues is the server starts before the file is completely being un-locked leading to a different SHA-1 hash
              * Triggering this after the spark server has started will ensure the file served is correct, not to mention
              * this event isn't async safe :)
              */
-            TaskRunner.runSyncTaskLater(() -> Bukkit.getPluginManager().callEvent(new RestServerStartedEvent()), 1);
+            TaskRunner.runSyncTask(() -> Bukkit.getPluginManager().callEvent(new MusePluseResourcePackLoadedEvent()));
         });
     }
 

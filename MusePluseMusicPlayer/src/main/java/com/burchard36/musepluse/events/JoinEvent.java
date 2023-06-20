@@ -3,7 +3,6 @@ package com.burchard36.musepluse.events;
 import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.ResourcePackFactory;
-import com.burchard36.musepluse.resource.ResourcePackServer;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
 import com.burchard36.musepluse.utils.TaskRunner;
 import org.bukkit.Bukkit;
@@ -46,7 +45,8 @@ public class JoinEvent implements Listener {
             return;
         }
 
-        player.setResourcePack(this.musePluseSettings.getResourcePack(), this.resourcePackFactory.getResourcePatchHash());
+        player.setResourcePack("", ResourcePackFactory.resourcePackChecksum()); // THIS IS REQUIRED!!! OR ELSE THE PLAYER HAS TO REJOIN TO UPDATE THE HASH
+        player.setResourcePack(this.musePluseSettings.getResourcePack(), ResourcePackFactory.resourcePackChecksum());
     }
 
     @EventHandler
@@ -56,11 +56,13 @@ public class JoinEvent implements Listener {
             final Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 player.sendMessage(convert("&aThe resource pack has been created! It is being sent to you now."));
-                if (this.musePluseSettings.isResourcePackServerEnabled())
-                    ResourcePackServer.startServer(this.moduleInstance);
-                TaskRunner.runSyncTaskLater(() -> {
-                    player.setResourcePack(this.musePluseSettings.getResourcePack(), this.resourcePackFactory.getResourcePatchHash());
-                }, 1);
+                if (this.musePluseSettings.isResourcePackServerEnabled()) {
+                    TaskRunner.runSyncTaskLater(() -> {
+                        player.setResourcePack("", ResourcePackFactory.resourcePackChecksum()); // THIS IS REQUIRED!!! OR ELSE THE PLAYER HAS TO REJOIN TO UPDATE THE HASH
+                        player.setResourcePack(this.musePluseSettings.getResourcePack(), ResourcePackFactory.resourcePackChecksum());
+                    }, 60);
+
+                } else Bukkit.broadcastMessage("Not enabled");
             }
         });
 

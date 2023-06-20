@@ -28,7 +28,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
     public void loadModule(final MusePlusePlugin coreInstance) {
         this.pluginInstance = coreInstance;
         this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings(), false);
-        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), true);
+        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), false);
         this.musicPlayer = new MusicPlayer(this);
     }
 
@@ -38,7 +38,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
         MusePlusePlugin.registerCommand("skipsong", new SkipSongCommand(this));
         MusePlusePlugin.registerCommand("musicgui", new MusicGuiCommand(this));
 
-        if (this.musePluseSettings.isResourcePackServerEnabled() && !this.resourcePackFactory.hasResourcePackBeenCreated())
+        if (this.musePluseSettings.isResourcePackServerEnabled() && !this.resourcePackFactory.isCreatingResourcePack())
             ResourcePackServer.startServer(this);
 
         MusePlusePlugin.registerEvent(new JoinEvent(this));
