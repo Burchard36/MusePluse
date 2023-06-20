@@ -32,11 +32,7 @@ public class TexturePackLoadEvent implements Listener {
         final Player player = changeEvent.getPlayer();
         switch (changeEvent.getStatus()) {
             case DECLINED -> player.sendMessage(convert("&cResource pack loading failed! Try &e/reloadresources&c if you change your mind!"));
-<<<<<<< Updated upstream
             case FAILED_DOWNLOAD -> player.sendMessage(convert("&cDownload failed! Try relogging to fix this!"));
-=======
-            case FAILED_DOWNLOAD -> player.sendMessage(convert("&cPlease re-log to apply resource pack changes!"));
->>>>>>> Stashed changes
             case SUCCESSFULLY_LOADED -> {
                 if (musePluseSettings.isNeedsPermissionToPlayOnJoin() && player.hasPermission("musepluse.playonjoin")) {
                     this.moduleInstance.getMusicPlayer().playRandomQueueFor(player);
