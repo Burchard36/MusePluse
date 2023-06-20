@@ -65,5 +65,9 @@ skaga:
   YouTubeLink: https://www.youtube.com/watch?v=Wyx_XYITisE
 ```
 
-If I have to further explain this config, then why you owning a server lmao
+***WARNING ABOUT CLIENT-SIDE STORAGE SPACE FOR ADMINISTRATORS OR SERVERS THAT CONSISTANTLY ADD SONGS***
 
+Due to current limitations/bugs within recent minecraft code I am unable to use hash's for updating the resource pack
+for various un-known reasons. This means in order to force an update when you re-generate your resource pack we just send a file with
+a different UUID, meaning minecraft on your client may leave behind a bunch of unused server-sides resource packs located in
+`%appdata%\.minecraft\server-resource-packs`. This is a limitation I will work ASAP to fix.

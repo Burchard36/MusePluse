@@ -9,7 +9,6 @@ import com.burchard36.musepluse.events.SongEndedEvent;
 import com.burchard36.musepluse.events.TexturePackLoadEvent;
 import com.burchard36.musepluse.module.PluginModule;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
-import com.burchard36.musepluse.resource.ResourcePackServer;
 import lombok.Getter;
 
 public final class MusePluseMusicPlayer implements PluginModule {
