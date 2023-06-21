@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+import static com.burchard36.musepluse.MusePlusePlugin.THREAD_POOL;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class ResourcePackEngine extends OGGFileWriter {
@@ -46,7 +47,8 @@ public class ResourcePackEngine extends OGGFileWriter {
                 * hand at auto-name generation!
                 */
                 this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
-                    song.setSeconds(videoInfo.details().lengthSeconds());
+                    if (videoInfo != null)
+                        song.setSeconds(videoInfo.details().lengthSeconds());
                     int received = songInfoReceived.incrementAndGet();
                     if (received == totalSongs) {
 
@@ -71,7 +73,7 @@ public class ResourcePackEngine extends OGGFileWriter {
          * false don't try to generate the resource pack
          */
         if (!this.pluginSettings.isAutoGenerateResourcePack() && !force) {
-            CompletableFuture.runAsync(() -> onComplete.accept(null));
+            CompletableFuture.runAsync(() -> onComplete.accept(null), THREAD_POOL);
             return;
         }
         /* If the resource pack exists and were not forcing
@@ -79,7 +81,7 @@ public class ResourcePackEngine extends OGGFileWriter {
          */
         if (this.resourcePackExists() && !force) {
             Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f detected previously created resource pack, enjoy!"));
-            CompletableFuture.runAsync(() -> onComplete.accept(null));
+            CompletableFuture.runAsync(() -> onComplete.accept(null), THREAD_POOL);
             return;
         }
 
@@ -101,6 +103,11 @@ public class ResourcePackEngine extends OGGFileWriter {
             final String youTubeLink = song.getYouTubeLink();
             /* Get information for each song */
             this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
+                if (videoInfo == null) {
+                    downloadedSongs.incrementAndGet(); // prevent the loop from not ending if something failed
+                    Bukkit.getConsoleSender().sendMessage(convert("&fSkipping &b%s&f because it doesn't have video data!".formatted(youTubeLink)));
+                    return;
+                }
                 song.setSeconds(videoInfo.details().lengthSeconds());
                 /* Download the ogg from youtube */
                 this.youtubeProcessor.downloadYouTubeAudioAsOGG(videoInfo, song.getLocalKey(), (file) -> {

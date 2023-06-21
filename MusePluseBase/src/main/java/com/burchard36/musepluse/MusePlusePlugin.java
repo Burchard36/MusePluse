@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
@@ -21,6 +23,7 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
  * Classes wanting to use the API need to extend this class instead
  */
 public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
+    public static Executor THREAD_POOL = Executors.newWorkStealingPool();
 
     public static MusePlusePlugin INSTANCE;
     @Getter

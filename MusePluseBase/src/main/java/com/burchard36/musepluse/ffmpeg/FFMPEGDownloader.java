@@ -16,6 +16,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import static com.burchard36.musepluse.MusePlusePlugin.IS_WINDOWS;
+import static com.burchard36.musepluse.MusePlusePlugin.THREAD_POOL;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class FFMPEGDownloader {
@@ -88,7 +89,7 @@ public class FFMPEGDownloader {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }, THREAD_POOL);
     }
 
     public boolean isDownloading() {
