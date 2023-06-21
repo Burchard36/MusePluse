@@ -2,7 +2,6 @@ package com.burchard36.musepluse.youtube;
 
 import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.ffmpeg.events.FFMPEGInitializedEvent;
-import com.burchard36.musepluse.utils.TaskRunner;
 import com.burchard36.musepluse.youtube.events.VideoDownloadedEvent;
 import com.burchard36.musepluse.youtube.events.VideoInformationReceivedEvent;
 import com.github.kiulian.downloader.Config;
@@ -11,9 +10,7 @@ import com.github.kiulian.downloader.downloader.YoutubeCallback;
 import com.github.kiulian.downloader.downloader.YoutubeProgressCallback;
 import com.github.kiulian.downloader.downloader.request.RequestVideoFileDownload;
 import com.github.kiulian.downloader.downloader.request.RequestVideoInfo;
-import com.github.kiulian.downloader.downloader.request.RequestVideoStreamDownload;
 import com.github.kiulian.downloader.model.videos.VideoInfo;
-import com.github.kiulian.downloader.model.videos.formats.Format;
 import lombok.SneakyThrows;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
@@ -28,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
@@ -96,7 +94,7 @@ public abstract class YoutubeGetRequester implements Listener {
         FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
                 .setInput(file.getPath())
                 .overrideOutputFiles(true)
-                .addOutput(this.outputDirectory.getPath() + "\\ogg\\" + downloadedEvent.getOutputFileName() + ".ogg")
+                .addOutput(this.outputDirectory.getPath() + "/ogg/" + downloadedEvent.getOutputFileName() + ".ogg")
                 .setFormat("ogg")
                 .done();
         if (this.plugin.getFfmpegDownloader().isDownloading()) {

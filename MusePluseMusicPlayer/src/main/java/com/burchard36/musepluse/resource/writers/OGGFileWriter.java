@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 
 import java.io.File;
 
+import static com.burchard36.musepluse.MusePlusePlugin.IS_WINDOWS;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public abstract class OGGFileWriter extends SoundsJsonWriter{
@@ -21,7 +22,11 @@ public abstract class OGGFileWriter extends SoundsJsonWriter{
         final File musicDirectory = new File(this.getResourcePackTempFilesDirectory(), "/assets/assets/minecraft/sounds/music");
         if (!musicDirectory.exists()) if (musicDirectory.mkdirs()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f created new &b/assets/assets/minecraft/sounds/music&f directory!"));
         for (File file : files) {
-            if (file.renameTo(new File(musicDirectory, "/%s".formatted(file.getName()))))
+            String fileName = file.getName();
+            if (!IS_WINDOWS) {
+                fileName = fileName.replace("\\", "/");
+            }
+            if (file.renameTo(new File(musicDirectory, "/%s".formatted(fileName))))
                 Bukkit.getConsoleSender().sendMessage(convert("&fFlashing OGG File &b%s").formatted(file.getPath()));
         }
     }

@@ -3,16 +3,23 @@ package com.burchard36.musepluse.config;
 import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.musepluse.utils.StringUtils;
+import com.burchard36.musepluse.utils.TaskRunner;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.IOException;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
@@ -96,20 +103,26 @@ public class MusePluseSettings implements Config {
      * Safely gets the URL for the resource pack, cant automatically determine if
      * it needs to return the internal or external URL
      * @param resourcePackFile A File to the resource pack
-     * @return a direct download link to a resource pack
      */
-    public String getResourcePack(final File resourcePackFile) {
-        if (!this.isResourcePackServerEnabled()) return this.selfHostedResourcePackAddress;
-        final String fileUUID = resourcePackFile.getName().split("\\.")[0];
-        try {
-            final InetAddress address = InetAddress.getLocalHost();
-            String externalAddress = address.getHostAddress();
-            if (externalAddress.equals("127.0.0.1") && this.resourcePackHostAddress == null) {
-                throw new RuntimeException("Hey there! MusePluse has encountered a error and needs you to supply your servers IP Address manually. Yes, this message is confirmation for you to go ahead and uncomment & set the \'ResourcePackServer.Host\" configuration field in your settings.yml! After this is set please restart your server.");
-            } else if (externalAddress.equals("127.0.0.1")) externalAddress = this.resourcePackHostAddress;
-            return "http://%s:%s/%s.zip".formatted(externalAddress, this.resourcePackServerPort, fileUUID);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+    public final void getResourcePack(final File resourcePackFile, Consumer<String> callback) {
+        if (!this.isResourcePackServerEnabled()) {
+            TaskRunner.runSyncTask(() -> callback.accept(this.selfHostedResourcePackAddress));
+            return;
         }
+        CompletableFuture.runAsync(() -> {
+            final String fileUUID = resourcePackFile.getName().split("\\.")[0];
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI("https://ifconfig.me/ip"))
+                        .build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                String externalAddress = response.body();
+                TaskRunner.runSyncTask(() ->
+                        callback.accept("http://%s:%s/%s.zip".formatted(externalAddress, this.resourcePackServerPort, fileUUID)));
+            } catch (IOException | URISyntaxException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

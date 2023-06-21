@@ -38,7 +38,6 @@ public class TexturePackLoadEvent implements Listener {
                     this.moduleInstance.getMusicPlayer().playRandomQueueFor(player);
                 }
             }
-
         }
     }
 }

@@ -44,11 +44,9 @@ public class YoutubeProcessor implements Listener {
     protected final File m4aOutput;
     protected FFmpeg ffmpeg;
     protected FFprobe ffprobe;
-    protected Executor workStealingPool;
 
     public YoutubeProcessor(final MusePlusePlugin pluginInstance) {
         MusePlusePlugin.registerEvent(this);
-        this.workStealingPool = Executors.newWorkStealingPool();
         this.queuedOGGConversions = new ArrayList<>();
         this.youtubeConfiguration = new Config.Builder()
                 .executorService(Executors.newCachedThreadPool())
@@ -90,7 +88,7 @@ public class YoutubeProcessor implements Listener {
                         FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
                                 .setInput(data.getPath())
                                 .overrideOutputFiles(true)
-                                .addOutput(oggOutput.getPath() + "\\%s".formatted(finalNewFileName))
+                                .addOutput(oggOutput.getPath() + "/%s".formatted(finalNewFileName))
                                 .setFormat("ogg")
                                 .done();
                         if (ffmpegDownloader.isDownloading()) {
@@ -103,7 +101,7 @@ public class YoutubeProcessor implements Listener {
                                 if (data.delete())
                                     Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
                                 callback.accept(data);
-                            }, workStealingPool);
+                            });
                         }
 
                     }
@@ -174,8 +172,12 @@ public class YoutubeProcessor implements Listener {
             this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffmpeg.exe");
             this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffprobe.exe");
         } else { // Only support windows and linux, this will likely throw errors on apple and solaris systems but fuck em for now
-            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg");
-            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffprobe");
+            final File ffmpegForLinux = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffmpeg");
+            final File ffprobeForLinux = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffprobe");
+            ffmpegForLinux.setExecutable(true);
+            ffprobeForLinux.setExecutable(true);
+            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffmpeg");
+            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffprobe/ffprobe");
         }
 
         this.fFmpegExecutor = new FFmpegExecutor(this.ffmpeg, this.ffprobe);
