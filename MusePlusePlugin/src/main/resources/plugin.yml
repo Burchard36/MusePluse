@@ -19,3 +19,5 @@ commands:
       - songgui
       - songui
     description: "Displays the Songs GUI"
+libraries:
+  - 'net.bramp.ffmpeg:ffmpeg:0.7.0'

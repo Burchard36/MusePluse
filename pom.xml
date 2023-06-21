@@ -113,6 +113,7 @@
             <groupId>net.bramp.ffmpeg</groupId>
             <artifactId>ffmpeg</artifactId>
             <version>0.7.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sparkjava</groupId>
