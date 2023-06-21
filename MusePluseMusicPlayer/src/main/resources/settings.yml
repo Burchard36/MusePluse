@@ -50,8 +50,14 @@ AutoGenerateResourcePack: true
 ResourcePackServer:
   Enabled: true
   Port: 25572
-  # This should be the IP Of your server, it can be a domain!
-  Host: localhost
+  # This should be the IP Of your server, it can be a domain! Examples are listed below
+  #
+  # This should remain commented unless console tells you to!!!!!!!!!!!!!!
+  # This is used as a fallback in case MusePluse is unable to find your servers IP Address
+  # This is really only in rare circumstances where you may have a weird networking configuration
+  # I SWEAR TO GOD if you uncomment this without console telling you
+  #Host: your.awesome.server
+  #Host: 10.100.98.228 # Only uncomment one if console tells you to uncomment
 
 # Settings for when the player joins the server
 JoinSettings:

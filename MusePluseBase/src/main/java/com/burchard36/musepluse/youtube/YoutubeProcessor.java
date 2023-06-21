@@ -174,8 +174,8 @@ public class YoutubeProcessor implements Listener {
             this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffmpeg.exe");
             this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffprobe.exe");
         } else { // Only support windows and linux, this will likely throw errors on apple and solaris systems but fuck em for now
-            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\ffmpeg");
-            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\ffprobe");
+            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg");
+            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffprobe");
         }
 
         this.fFmpegExecutor = new FFmpegExecutor(this.ffmpeg, this.ffprobe);

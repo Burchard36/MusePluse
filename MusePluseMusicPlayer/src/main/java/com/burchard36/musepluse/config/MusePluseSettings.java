@@ -38,6 +38,7 @@ public class MusePluseSettings implements Config {
     protected int resourcePackServerPort;
     @Getter
     protected boolean resourcePackServerEnabled;
+    protected String resourcePackHostAddress;
     protected String selfHostedResourcePackAddress;
     @Getter
     protected boolean autoGenerateResourcePack;
@@ -58,6 +59,7 @@ public class MusePluseSettings implements Config {
         this.needsForcePlayPermission = configuration.getBoolean("QueueSettings.NeedsForcePlayPermission", false);
         this.resourcePackServerPort = configuration.getInt("ResourcePackServer.Port", 67699);
         this.resourcePackServerEnabled = configuration.getBoolean("ResourcePackServer.Enabled", true);
+        this.resourcePackHostAddress = configuration.getString("ResourcePackServer.Host", "localhost");
         this.autoGenerateResourcePack = configuration.getBoolean("AutoGenerateResourcePack", true);
         this.selfHostedResourcePackAddress = configuration.getString("ResourcePack");
         this.loadNextSongMessage(configuration);
@@ -101,7 +103,11 @@ public class MusePluseSettings implements Config {
         final String fileUUID = resourcePackFile.getName().split("\\.")[0];
         try {
             final InetAddress address = InetAddress.getLocalHost();
-            return "http://%s:%s/%s.zip".formatted(address.getHostAddress(), this.resourcePackServerPort, fileUUID);
+            String externalAddress = address.getHostAddress();
+            if (externalAddress.equals("127.0.0.1") && this.resourcePackHostAddress == null) {
+                throw new RuntimeException("Hey there! MusePluse has encountered a error and needs you to supply your servers IP Address manually. Yes, this message is confirmation for you to go ahead and uncomment & set the \'ResourcePackServer.Host\" configuration field in your settings.yml! After this is set please restart your server.");
+            } else if (externalAddress.equals("127.0.0.1")) externalAddress = this.resourcePackHostAddress;
+            return "http://%s:%s/%s.zip".formatted(externalAddress, this.resourcePackServerPort, fileUUID);
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }

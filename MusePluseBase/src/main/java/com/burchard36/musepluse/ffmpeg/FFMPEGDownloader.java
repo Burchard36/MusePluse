@@ -29,7 +29,7 @@ public class FFMPEGDownloader {
     public FFMPEGDownloader(final JavaPlugin plugin) {
         try {
             this.windowsDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-windows.zip");
-            this.linuxDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/raw/ffmpeg-6.0.zip");
+            this.linuxDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-linux.zip");
         } catch (MalformedURLException ex) {
             throw new RuntimeException(ex);
         }
