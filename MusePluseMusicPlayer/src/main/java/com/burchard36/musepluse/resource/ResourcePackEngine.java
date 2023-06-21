@@ -41,14 +41,13 @@ public class ResourcePackEngine extends OGGFileWriter {
             /* Ensure times for song data is set */
             this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
                 final String youTubeLink = song.getYouTubeLink();
-                /* Get information for each song */
-
+                /* Get information for each song
+                * We basically just do this to get the langeth of the video however later on i may try my
+                * hand at auto-name generation!
+                */
                 this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
                     song.setSeconds(videoInfo.details().lengthSeconds());
                     int received = songInfoReceived.incrementAndGet();
-
-                    Bukkit.broadcastMessage("%s".formatted(received));
-                    Bukkit.broadcastMessage("%s".formatted(totalSongs));
                     if (received == totalSongs) {
 
                         if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
@@ -165,7 +164,7 @@ public class ResourcePackEngine extends OGGFileWriter {
         File[] tempFiles = new File(this.getResourcePackTempFilesDirectory(), "/assets").listFiles();
         if (tempFiles == null) throw new RuntimeException("It appears the /resource-pack directory was null when calling zipResourcePack, maybe restart your server?");
         try {
-            this.resourcePackFile = new File(this.getResourcePackDirectory(), "resource_pack.zip");
+            this.resourcePackFile = new File(this.getResourcePackDirectory(), "%s.zip".formatted(UUID.randomUUID().toString()));
             zipUtility.zip(List.of(tempFiles), this.resourcePackFile.getPath());
         } catch (IOException e) {
             throw new RuntimeException(e);

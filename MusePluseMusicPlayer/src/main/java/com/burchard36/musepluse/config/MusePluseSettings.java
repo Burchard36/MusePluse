@@ -9,6 +9,8 @@ import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class MusePluseSettings implements Config {
     protected int resourcePackServerPort;
     @Getter
     protected boolean resourcePackServerEnabled;
-    protected String resourcePack;
+    protected String selfHostedResourcePackAddress;
     @Getter
     protected boolean autoGenerateResourcePack;
 
@@ -56,8 +58,8 @@ public class MusePluseSettings implements Config {
         this.needsForcePlayPermission = configuration.getBoolean("QueueSettings.NeedsForcePlayPermission", false);
         this.resourcePackServerPort = configuration.getInt("ResourcePackServer.Port", 67699);
         this.resourcePackServerEnabled = configuration.getBoolean("ResourcePackServer.Enabled", true);
-        this.resourcePack = configuration.getString("ResourcePackServer.Host", "localhost");
         this.autoGenerateResourcePack = configuration.getBoolean("AutoGenerateResourcePack", true);
+        this.selfHostedResourcePackAddress = configuration.getString("ResourcePack");
         this.loadNextSongMessage(configuration);
 
         configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
@@ -88,8 +90,20 @@ public class MusePluseSettings implements Config {
         }
     }
 
+    /**
+     * Safely gets the URL for the resource pack, cant automatically determine if
+     * it needs to return the internal or external URL
+     * @param resourcePackFile A File to the resource pack
+     * @return a direct download link to a resource pack
+     */
     public String getResourcePack(final File resourcePackFile) {
+        if (!this.isResourcePackServerEnabled()) return this.selfHostedResourcePackAddress;
         final String fileUUID = resourcePackFile.getName().split("\\.")[0];
-        return "http://%s:%s/%s.zip".formatted(this.resourcePack, this.resourcePackServerPort, fileUUID);
+        try {
+            final InetAddress address = InetAddress.getLocalHost();
+            return "http://%s:%s/%s.zip".formatted(address.getHostAddress(), this.resourcePackServerPort, fileUUID);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
