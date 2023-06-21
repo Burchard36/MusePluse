@@ -24,12 +24,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-import static com.burchard36.musepluse.MusePlusePlugin.IS_WINDOWS;
-import static com.burchard36.musepluse.MusePlusePlugin.THREAD_POOL;
+import static com.burchard36.musepluse.MusePlusePlugin.*;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class YoutubeProcessor implements Listener {
@@ -50,7 +48,7 @@ public class YoutubeProcessor implements Listener {
         MusePlusePlugin.registerEvent(this);
         this.queuedOGGConversions = new ArrayList<>();
         this.youtubeConfiguration = new Config.Builder()
-                .executorService(Executors.newCachedThreadPool())
+                .executorService((ExecutorService) MAIN_THREAD_POOL)
                 .maxRetries(0)
                 .build();
         this.youtubeRequester = new YoutubeDownloader(this.youtubeConfiguration);
@@ -73,8 +71,6 @@ public class YoutubeProcessor implements Listener {
         if (!newFileName.endsWith(".ogg")) newFileName = newFileName + ".ogg";
         /* For use in Async */
         final String finalNewFileName = newFileName;
-        //this.oggOutput.mkdirs();
-        //this.m4aOutput.mkdirs();
         final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
                 .callback(new YoutubeProgressCallback<>() {
                     @Override
@@ -101,17 +97,16 @@ public class YoutubeProcessor implements Listener {
                                 Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
                                 if (data.delete())
                                     Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
-                                CompletableFuture.runAsync(() -> callback.accept(data)); // use a different executor for callbacks
-                            }, THREAD_POOL);
+                                callback.accept(data); // use a different executor for callbacks
+                            }, MAIN_THREAD_POOL);
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         Bukkit.getConsoleSender().sendMessage(convert("&cERROR WITH %s".formatted(finalNewFileName)));
                         throwable.printStackTrace();
-                        CompletableFuture.runAsync(() -> callback.accept(null), THREAD_POOL);
+                        callback.accept(null);
                     }
                 })
                 .saveTo(this.m4aOutput)
@@ -132,14 +127,14 @@ public class YoutubeProcessor implements Listener {
                     @Override
                     public void onFinished(VideoInfo videoInfo) {
                         Bukkit.getConsoleSender().sendMessage(convert("&fVideo information for song &b%s&f received!").formatted(youtubeLink));
-                        CompletableFuture.runAsync(() -> callback.accept(videoInfo)); // callbacks happen off the main thread executor
+                        callback.accept(videoInfo); // callbacks happen off the main thread executor
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         Bukkit.getConsoleSender().sendMessage(convert("&cERROR WITH &b%s".formatted(youtubeLink)));
                         throwable.printStackTrace();
-                        CompletableFuture.runAsync(() -> callback.accept(null)); // callbacks happen off the main thread executor
+                        callback.accept(null); // callbacks happen off the main thread executor
                     }
                 })
                 .async();
@@ -191,8 +186,8 @@ public class YoutubeProcessor implements Listener {
                     Bukkit.getConsoleSender().sendMessage(convert("Resuming OGG File conversion for &b%s&f".formatted(entry.convertedFile().getPath())));
                     this.fFmpegExecutor.createJob(entry.builder()).run();
                     Bukkit.getConsoleSender().sendMessage(convert("&fSuccessfully converted file &b%s&f! Cleaning up...").formatted(entry.convertedFile().getPath()));
-                    CompletableFuture.runAsync(() -> entry.callback().accept(entry.convertedFile()));
-                }, THREAD_POOL);
-        });
+                    entry.callback().accept(entry.convertedFile());
+                }, MAIN_THREAD_POOL);
+            });
     }
 }

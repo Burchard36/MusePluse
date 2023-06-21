@@ -3,6 +3,7 @@ package com.burchard36.musepluse.resource;
 import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.writers.OGGFileWriter;
+import com.burchard36.musepluse.utils.TaskRunner;
 import com.burchard36.musepluse.utils.ZipUtility;
 import com.burchard36.musepluse.youtube.YoutubeProcessor;
 import com.google.gson.GsonBuilder;
@@ -18,7 +19,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-import static com.burchard36.musepluse.MusePlusePlugin.THREAD_POOL;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class ResourcePackEngine extends OGGFileWriter {
@@ -73,21 +73,22 @@ public class ResourcePackEngine extends OGGFileWriter {
          * false don't try to generate the resource pack
          */
         if (!this.pluginSettings.isAutoGenerateResourcePack() && !force) {
-            CompletableFuture.runAsync(() -> onComplete.accept(null), THREAD_POOL);
+            onComplete.accept(null); // callbacks get put into a seperate thread pool
             return;
         }
         /* If the resource pack exists and were not forcing
          * don't try to generate the resoruce pack
          */
         if (this.resourcePackExists() && !force) {
-            Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f detected previously created resource pack, enjoy!"));
-            CompletableFuture.runAsync(() -> onComplete.accept(null), THREAD_POOL);
+            Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f detected previously created resource pack, enjoy! Delete this file if you want to regenerate it!"));
+            onComplete.accept(null); // callbacks get put into a different thread pool
             return;
         }
 
         if (resourcePackExists()) {
             Bukkit.getConsoleSender().sendMessage(convert("&fDeleteing old resource_pack! (Resource pack generation is currently being forced!)"));
-            if (this.getResourcePackDirectory().delete()) Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f forcefully creating resource pack..."));
+            if (this.getResourcePackDirectory().delete())
+                Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f forcefully creating resource pack..."));
         } else Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to generate fresh resource pack!"));
 
         this.creatingTexturePack.set(true);
@@ -128,8 +129,8 @@ public class ResourcePackEngine extends OGGFileWriter {
                         this.cleanUp();
 
                         Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f Your resource pack is located at &b%s&f".formatted(this.resourcePackFile.getPath())));
-                        onComplete.accept(null);
                         this.creatingTexturePack.set(false);
+                        onComplete.accept(null); // callbacks async already
                     }
                 });
             });

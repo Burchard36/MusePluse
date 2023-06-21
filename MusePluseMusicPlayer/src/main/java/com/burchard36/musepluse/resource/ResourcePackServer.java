@@ -9,8 +9,8 @@ import spark.Spark;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 
-import static com.burchard36.musepluse.MusePlusePlugin.THREAD_POOL;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 /**
@@ -45,7 +45,7 @@ public class ResourcePackServer {
              * this event isn't async safe :)
              */
             TaskRunner.runSyncTask(() -> Bukkit.getPluginManager().callEvent(new MusePluseResourcePackLoadedEvent()));
-        }, THREAD_POOL);
+        }, Executors.newSingleThreadExecutor());
     }
 
 }

@@ -15,6 +15,7 @@ public final class MusePluse extends MusePlusePlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        new BStatsImpl(this);
     }
 
     /**

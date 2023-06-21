@@ -268,3 +268,9 @@ vivalavida:
     SongName: Viva la Vida
     Artist: Coldplay
     GuiMaterial: MUSIC_DISC_OTHERSIDE
+arabiancat:
+  YouTubeLink: https://www.youtube.com/watch?v=5ngWIDkPP3o
+  Details:
+    SongName: Arabian Cat
+    Artist: Panjabi MC
+    GuiMaterial: MUSIC_DISC_WAIT

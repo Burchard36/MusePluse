@@ -23,8 +23,8 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
  * Classes wanting to use the API need to extend this class instead
  */
 public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
-    public static Executor THREAD_POOL = Executors.newWorkStealingPool();
-
+    /* Thread pool to use for heavy tasks */
+    public static Executor MAIN_THREAD_POOL = Executors.newFixedThreadPool((int) (Runtime.getRuntime().availableProcessors() * 3));
     public static MusePlusePlugin INSTANCE;
     @Getter
     private FFMPEGDownloader ffmpegDownloader;

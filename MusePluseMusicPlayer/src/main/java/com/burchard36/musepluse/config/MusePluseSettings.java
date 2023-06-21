@@ -7,7 +7,6 @@ import com.burchard36.musepluse.utils.TaskRunner;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+import static com.burchard36.musepluse.MusePlusePlugin.MAIN_THREAD_POOL;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class MusePluseSettings implements Config {
@@ -100,7 +100,7 @@ public class MusePluseSettings implements Config {
     }
 
     /**
-     * Safely gets the URL for the resource pack, cant automatically determine if
+     * Safely gets the URL for the resource pack, can't automatically determine if
      * it needs to return the internal or external URL
      * @param resourcePackFile A File to the resource pack
      */
@@ -123,6 +123,6 @@ public class MusePluseSettings implements Config {
             } catch (IOException | URISyntaxException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }, MAIN_THREAD_POOL);
     }
 }

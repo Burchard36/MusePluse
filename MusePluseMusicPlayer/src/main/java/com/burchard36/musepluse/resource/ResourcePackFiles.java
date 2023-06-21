@@ -2,8 +2,11 @@ package com.burchard36.musepluse.resource;
 
 import com.burchard36.musepluse.MusePlusePlugin;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 
 import java.io.File;
+
+import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class ResourcePackFiles {
 
@@ -34,7 +37,21 @@ public class ResourcePackFiles {
         this.mcMetaFile = new File(this.resourcePackTempFilesDirectory, "/assets/pack.mcmeta");
     }
 
+    /**
+     * Creates new directory's recursively as well as clearing any existing ones!
+     */
     public void mkdirs() {
+        if (this.mediaFilesDirectory.exists()) {
+            Bukkit.getConsoleSender().sendMessage(convert("&cDetected an old /media directory, cleaning..."));
+            this.deleteDir(this.mediaFilesDirectory);
+        }
+
+        if (this.resourcePackTempFilesDirectory.exists()) {
+            Bukkit.getConsoleSender().sendMessage(convert("&cDetected an old temporary resource pack directory, deleteing..."));
+            this.deleteDir(this.resourcePackTempFilesDirectory);
+        }
+
+
         this.oggDirectory.mkdirs();
         this.m4aDirectory.mkdirs();
         this.soundsJsonFile.mkdirs();

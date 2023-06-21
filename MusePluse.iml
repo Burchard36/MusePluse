@@ -81,5 +81,7 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-client:9.4.48.v20220622" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-servlet:9.4.48.v20220622" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.48.v20220622" level="project" />
+    <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.bstats:bstats-base:3.0.2" level="project" />
   </component>
 </module>

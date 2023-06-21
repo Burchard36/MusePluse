@@ -4,7 +4,6 @@ import com.burchard36.musepluse.MusePluseMusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
-import com.burchard36.musepluse.utils.TaskRunner;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,7 +60,7 @@ public class JoinEvent implements Listener {
                     final File file = this.resourcePackEngine.resourcePackFileFromDisk();
                     if (file == null) throw new RuntimeException("The resource pack in /resource-pack does not exist! Why? Did you delete it? Restart your server!");
                     this.musePluseSettings.getResourcePack(file, player::setResourcePack);
-                } else Bukkit.broadcastMessage("Not enabled");
+                } else Bukkit.getConsoleSender().sendMessage(convert("&cSeems the embedded resource pack serer is disabled, the resource pack set in the settings.yml will be sent to your players isntead!"));
             }
         });
 
