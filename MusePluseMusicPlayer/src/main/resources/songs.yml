@@ -58,24 +58,12 @@ traveler:
     SongName: Traveler
     Artist: Alexander Nakarada
     GuiMaterial: MUSIC_DISC_WARD
-legend:
-  YouTubeLink: https://www.youtube.com/watch?v=yj_wyw6Xrq4
-  Details:
-    SongName: Legend
-    Artist: Adrian von Ziegler
-    GuiMaterial: MUSIC_DISC_WAIT
-forestflute:
-  YouTubeLink: https://www.youtube.com/watch?v=tyrdJ8Vm3Nc
-  Details:
-    SongName: Forest Flute
-    Artist: Adrian von Ziegler
-    GuiMaterial: MUSIC_DISC_OTHERSIDE
 thegael:
   YouTubeLink: https://www.youtube.com/watch?v=zNnzufK0nVE
   Details:
     SongName: The Gael
     Artist: The Last of the Mohicans
-    GuiMaterial: MUSIC_DISC_WARD
+    GuiMaterial: MUSIC_DISC_13
 snowfall:
   YouTubeLink: https://www.youtube.com/watch?v=LlN8MPS7KQs
   Details:
@@ -105,7 +93,7 @@ songofstorms:
   Details:
     SongName: Song of Storms
     Artist: Zelda Original Soundtrack
-    GuiMaterial: MUSIC_DISC_STAL
+    GuiMaterial: MUSIC_DISC_WAIT
 breathofthewild:
   YouTubeLink: https://www.youtube.com/watch?v=GY4WjuVTdvY
   Details:
@@ -123,7 +111,7 @@ loveneverfeltsogood:
   Details:
     SongName: Love Never Felt So Good
     Artist: Michael Jackson & Justin Timerlake
-    GuiMaterial: MUSIC_DISC_STRAD
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
 justthetwoofus:
   YouTubeLink: https://www.youtube.com/watch?v=6POZlJAZsok
   Details:
@@ -172,3 +160,111 @@ chinesehardbass:
     SongName: CHINESE HARDBASS
     Artist: Jedix
     GuiMaterial: MUSIC_DISC_MALL
+buddyholly:
+  YouTubeLink: https://www.youtube.com/watch?v=kemivUKb4f4
+  Details:
+    SongName: Buddy Holly
+    Artist: Weezer
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+thisishowitfeels:
+  YouTubeLink: https://www.youtube.com/watch?v=J-fX0UbpZls
+  Details:
+    SongName: This is How it Feels
+    Artist: Inspiral Carpets
+    GuiMaterial: MUSIC_DISC_STRAD
+boulevardofbrokendreams:
+  YouTubeLink: https://www.youtube.com/watch?v=51XzW98wEDg
+  Details:
+    SongName: Boulevard of Broken Dreams
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_CAT
+staywithme:
+  YouTubeLink: https://www.youtube.com/watch?v=moR4uw-NWLY
+  Details:
+    SongName: Stay With Me
+    Artist: Miki Matsubara
+    GuiMaterial: MUSIC_DISC_FAR
+dejavu:
+  YouTubeLink: https://www.youtube.com/watch?v=dv13gl0a-FA
+  Details:
+    SongName: Deja VU
+    Artist: Initial D
+    GuiMaterial: MUSIC_DISC_MELLOHI
+boysinthehood:
+  YouTubeLink: https://www.youtube.com/watch?v=mYn6Vz9X0VQ
+  Details:
+    SongName: Boyz in the Hood
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_CHIRP
+fukdapolice:
+  YouTubeLink: https://www.youtube.com/watch?v=qZuxPKUVGiw
+  Details:
+    SongName: Fuk Da Police
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_13
+straightoutaacompton:
+  YouTubeLink: https://www.youtube.com/watch?v=TMZi25Pq3T8
+  Details:
+    SongName: Straight Outta Compton
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_FAR
+robbery:
+  YouTubeLink: https://www.youtube.com/watch?v=iI34LYmJ1Fs
+  Details:
+    SongName: Robbery
+    Artist: Juice World
+    GuiMaterial: MUSIC_DISC_MALL
+bandit:
+  YouTubeLink: https://www.youtube.com/watch?v=Sw5fNI400E4
+  Details:
+    SongName: Bandit
+    Artist: Juice World Ft. NBA Youngboy
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+lucidreams:
+  YouTubeLink: https://www.youtube.com/watch?v=mzB1VGEGcSU
+  Details:
+    SongName: Lucid Dreams
+    Artist: Juice World
+    GuiMaterial: MUSIC_DISC_WAIT
+cantfightthemoonlight:
+  YouTubeLink: https://www.youtube.com/watch?v=gDLaEYewiQg
+  Details:
+    SongName: Can't Fight the Moonlight
+    Artist: Coyote Ugly - LeAnn Rimes
+    GuiMaterial: MUSIC_DISC_CHIRP
+whenyousaynothingatall:
+  YouTubeLink: https://www.youtube.com/watch?v=1SCOimBo5tg
+  Details:
+    SongName: When you Say nothing at All
+    Artist: Alison Krauss
+    GuiMaterial: MUSIC_DISC_STRAD
+runaroundsue:
+  YouTubeLink: https://www.youtube.com/watch?v=nFch8vH81ks
+  Details:
+    SongName: Runaround Sue
+    Artist: Dion
+    GuiMaterial: MUSIC_DISC_13
+clocks:
+  YouTubeLink: https://www.youtube.com/watch?v=PFW2uSCZ0uE
+  Details:
+    SongName: Clocks
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_BLOCKS
+askyfullofstars:
+  YouTubeLink: https://www.youtube.com/watch?v=zp7NtW_hKJI
+  Details:
+    SongName: A Sky Full of Stars
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_CAT
+thescientist:
+  YouTubeLink: https://www.youtube.com/watch?v=zVyvpladEms
+  Details:
+    SongName: The Scientist
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_FAR
+vivalavida:
+  YouTubeLink: https://www.youtube.com/watch?v=y4zdDXPYo0I
+  Details:
+    SongName: Viva la Vida
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
