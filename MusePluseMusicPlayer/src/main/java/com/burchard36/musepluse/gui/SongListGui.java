@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
@@ -34,9 +35,11 @@ public class SongListGui extends PaginatedInventory {
         this.musicPlayer = this.moduleInstance.getMusicPlayer();
         this.guiManager = moduleInstance.getPluginInstance().getGuiManager();
         final List<SongData> permissibleSongs = musicPlayer.getPermissibleSongsFor(this.player);
-        int totalPages = permissibleSongs.size() / 45;
+        int totalPages = (int) Math.ceil((double) permissibleSongs.size() / 45D);
         if (totalPages == 0) totalPages = 1;
 
+        AtomicInteger itemsAdded = new AtomicInteger(0);
+        AtomicInteger itemsLeftToAdd = new AtomicInteger(permissibleSongs.size());
         for (int currentPage = 0; currentPage < totalPages; currentPage++) {
             final int finalCurrentPage = currentPage;
             int finalTotalPages = totalPages;
@@ -57,11 +60,9 @@ public class SongListGui extends PaginatedInventory {
 
                 @Override
                 public void fillButtons() {
-                    int startAt = finalCurrentPage * 45; // only display 45 songs per page
-                    for (int x = 0; x < permissibleSongs.size(); x++) {
-                        if (startAt > x) continue;
-
-                        final SongData songData = permissibleSongs.get(x);
+                    for (int x = 0; x < 45; x++) {
+                        if (itemsAdded.get() >= permissibleSongs.size()) continue;
+                        final SongData songData = permissibleSongs.get(itemsAdded.getAndAdd(1));
                         this.addButton(x, new InventoryButton(getSongDataDisplayItem(songData.getDisplayItem())) {
                             @Override
                             public void onClick(InventoryClickEvent clickEvent) {

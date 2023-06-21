@@ -274,3 +274,9 @@ arabiancat:
     SongName: Arabian Cat
     Artist: Panjabi MC
     GuiMaterial: MUSIC_DISC_WAIT
+aplacewithnoname:
+  YouTubeLink: https://www.youtube.com/watch?v=PbZq7Ze0Bqk
+  Details:
+    SongName: A Place With No name
+    Artist: Micheal Jackson
+    GuiMaterial: MUSIC_DISC_13
