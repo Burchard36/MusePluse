@@ -45,6 +45,10 @@ public class JoinEvent implements Listener {
         if (this.musePluseSettings.isNeedsPermissionToPlayOnJoin() && !player.hasPermission("musepluse.playonjoin"))
             return;
 
+        if (this.musePluseSettings.isDoItYourselfMode()) {
+            return; // server owners are managing themselves let them do theyre thing
+        }
+
         if (this.resourcePackEngine.isResourcePackGenerating()) {
             this.queuedPlayers.add(player.getUniqueId());
             player.sendMessage(convert("&cIt appears the server hasn't finished creating the resource pack yet!"));

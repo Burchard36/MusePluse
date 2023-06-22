@@ -50,6 +50,7 @@ public class ResourcePackEngine extends OGGFileWriter {
                     int received = songInfoReceived.incrementAndGet();
                     if (received == totalSongs) {
 
+                        if (this.pluginSettings.isDoItYourselfMode()) return;
                         if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
                             Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
                             ResourcePackServer.startServer(this.moduleInstance);
@@ -107,6 +108,7 @@ public class ResourcePackEngine extends OGGFileWriter {
         this.getResourcePackDirectory().delete(); // Just as a fail safe in case this method is directly called (EG in reload command)
         final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
         final AtomicInteger downloadedSongs = new AtomicInteger(0);
+        final AtomicInteger erroredSongs = new AtomicInteger(0);
         /* Loop through all songs */
         this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
             final String youTubeLink = song.getYouTubeLink();
@@ -115,12 +117,14 @@ public class ResourcePackEngine extends OGGFileWriter {
                 if (videoInfo == null) {
                     downloadedSongs.incrementAndGet(); // prevent the loop from not ending if something failed
                     Bukkit.getConsoleSender().sendMessage(convert("&fSkipping &b%s&f because it doesn't have video data!".formatted(youTubeLink)));
+                    this.moduleInstance.getMusicListConfig().getSongDataList().remove(song);
+                    erroredSongs.incrementAndGet();
                     return;
                 }
                 song.setSeconds(videoInfo.details().lengthSeconds());
                 /* Download the ogg from youtube */
                 this.youtubeProcessor.downloadYouTubeAudioAsOGG(videoInfo, song.getLocalKey(), (file) -> {
-                    int currentVideosReceived = downloadedSongs.incrementAndGet();
+                    int currentVideosReceived = downloadedSongs.incrementAndGet() - erroredSongs.get();
 
                     if (currentVideosReceived == totalSongs) {
                         Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f All %s songs have been downloaded!".formatted(totalSongs)));

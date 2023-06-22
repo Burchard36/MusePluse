@@ -133,7 +133,8 @@ public class YoutubeProcessor implements Listener {
                     @Override
                     public void onError(Throwable throwable) {
                         Bukkit.getConsoleSender().sendMessage(convert("&cERROR WITH &b%s".formatted(youtubeLink)));
-                        throwable.printStackTrace();
+                        Bukkit.getConsoleSender().sendMessage(convert("&cThe plugin will attempt to skips this song and continue loading!"));
+                        Bukkit.getConsoleSender().sendMessage(convert("&cIf you encounter any issues, please try removing this song from songs.yml first!"));
                         callback.accept(null); // callbacks happen off the main thread executor
                     }
                 })
