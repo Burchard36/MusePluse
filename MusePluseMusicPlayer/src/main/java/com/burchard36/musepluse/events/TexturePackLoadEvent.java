@@ -1,6 +1,8 @@
 package com.burchard36.musepluse.events;
 
 import com.burchard36.musepluse.MusePluseMusicPlayer;
+import com.burchard36.musepluse.MusicListener;
+import com.burchard36.musepluse.MusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
 import org.bukkit.entity.Player;
@@ -18,10 +20,12 @@ public class TexturePackLoadEvent implements Listener {
     protected final MusePluseMusicPlayer moduleInstance;
     protected final MusePluseSettings musePluseSettings;
     protected final ResourcePackEngine resourcePackEngine;
+    protected final MusicPlayer musicPlayer;
     protected final List<UUID> hasFailed;
 
     public TexturePackLoadEvent(final MusePluseMusicPlayer moduleInstance) {
         this.moduleInstance = moduleInstance;
+        this.musicPlayer = this.moduleInstance.getMusicPlayer();
         this.musePluseSettings = this.moduleInstance.getMusePluseSettings();
         this.resourcePackEngine = this.moduleInstance.getResourcePackEngine();
         this.hasFailed = new ArrayList<>();
@@ -35,7 +39,8 @@ public class TexturePackLoadEvent implements Listener {
             case FAILED_DOWNLOAD -> player.sendMessage(convert("&cDownload failed! Try relogging to fix this!"));
             case SUCCESSFULLY_LOADED -> {
                 if (musePluseSettings.isNeedsPermissionToPlayOnJoin() && player.hasPermission("musepluse.playonjoin")) {
-                    this.moduleInstance.getMusicPlayer().playRandomQueueFor(player);
+                    if (!this.musicPlayer.hasAutoPlayEnabled(player)) return;
+                    this.musicPlayer.playNextSong(player);
                 }
             }
         }

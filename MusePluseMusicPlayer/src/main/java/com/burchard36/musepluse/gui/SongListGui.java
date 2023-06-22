@@ -1,6 +1,7 @@
 package com.burchard36.musepluse.gui;
 
 import com.burchard36.musepluse.MusePluseMusicPlayer;
+import com.burchard36.musepluse.MusicListener;
 import com.burchard36.musepluse.MusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.config.SongData;
@@ -11,11 +12,13 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,7 +42,6 @@ public class SongListGui extends PaginatedInventory {
         if (totalPages == 0) totalPages = 1;
 
         AtomicInteger itemsAdded = new AtomicInteger(0);
-        AtomicInteger itemsLeftToAdd = new AtomicInteger(permissibleSongs.size());
         for (int currentPage = 0; currentPage < totalPages; currentPage++) {
             final int finalCurrentPage = currentPage;
             int finalTotalPages = totalPages;
@@ -76,7 +78,7 @@ public class SongListGui extends PaginatedInventory {
                                         if (musePluseSettings.isNeedsSkipPermission()
                                                 && !player.hasPermission("musepluse.queue.skip")) return;
 
-                                        musicPlayer.playSongTo(player, songData);
+                                        moduleInstance.getMusicPlayer().playSongTo(player, songData);
                                         clickedInventory.setItem(49, getNextSongButton());
                                         player.updateInventory();
                                     }
@@ -96,7 +98,6 @@ public class SongListGui extends PaginatedInventory {
 
                     this.addButton(46, backgroundItem());
                     this.addButton(47, backgroundItem());
-                    this.addButton(48, backgroundItem());
                     this.addButton(50, backgroundItem());
                     this.addButton(51, backgroundItem());
                     this.addButton(52, backgroundItem());
@@ -131,10 +132,29 @@ public class SongListGui extends PaginatedInventory {
                         }
                     });
 
+                    this.addButton(48, new InventoryButton(getStopButton()) {
+                        @Override
+                        public void onClick(InventoryClickEvent clickEvent) {
+                            final Inventory clickedInventory = clickEvent.getClickedInventory();
+                            assert clickedInventory != null;
+                            if (musicPlayer.hasAutoPlayEnabled(player)) {
+                                musicPlayer.stopFor(player);
+                                musicPlayer.setAutoPlayEnabled(player, false);
+                            } else {
+                                musicPlayer.playNextSong(player);
+                                musicPlayer.setAutoPlayEnabled(player, true);
+                            }
+
+                            clickedInventory.setItem(clickEvent.getSlot(), getStopButton());
+                            clickedInventory.setItem(49, getNextSongButton());
+                            player.updateInventory();
+                        }
+                    });
                     this.addButton(49, new InventoryButton(getNextSongButton()) {
                         @Override
                         public void onClick(InventoryClickEvent clickEvent) {
                             final Player player = ((Player) clickEvent.getWhoClicked());
+
                             final Inventory clickedInventory = clickEvent.getClickedInventory();
                             assert clickedInventory != null;
                             musicPlayer.playNextSong(player);
@@ -164,6 +184,16 @@ public class SongListGui extends PaginatedInventory {
     }
     private ItemStack getPreviousButton() {
         return ItemUtils.createSkull("f006ec1eca2f2685f70e65411cfe8808a088f7cf08087ad8eece9618361070e3", "&a&lPREVIOUS PAGE", null);
+    }
+
+    private ItemStack getStopButton() {
+        if (this.musicPlayer.hasAutoPlayEnabled(player)) {
+            return ItemUtils.createItemStack(Material.BARRIER, "&cDisable Auto-Play",
+                    "&f",
+                    "&eLeft-Click&7 To start playing music again!");
+        } return ItemUtils.createItemStack(Material.BARRIER, "&aEnable Auto-Play",
+                "&f",
+                    "&eLeft-Click&7 To disable & stop all playing music!");
     }
 
     private ItemStack getNextSongButton() {

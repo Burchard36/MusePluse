@@ -62,6 +62,15 @@ public class ResourcePackEngine extends OGGFileWriter {
     }
 
     /**
+     * Song times need to be received from YouTube in order for them to properly play
+     */
+    public void loadSongTimes(Consumer<Void> callback) {
+        this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
+
+        });
+    }
+
+    /**
      * Will attempt to create the resource pack when called
      * @param force if true it will ignore most config options and regenerate an already existing resource pack (if exists)
      * @param onComplete the callback (Is async)
@@ -83,7 +92,7 @@ public class ResourcePackEngine extends OGGFileWriter {
             return;
         }
 
-        if (resourcePackExists()) {
+        if (resourcePackExists() && force) {
             Bukkit.getConsoleSender().sendMessage(convert("&fDeleteing old resource_pack! (Resource pack generation is currently being forced!)"));
             if (this.getResourcePackDirectory().delete())
                 Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f forcefully creating resource pack..."));
@@ -95,6 +104,7 @@ public class ResourcePackEngine extends OGGFileWriter {
 
     public final void createResourcePack(final Consumer<Void> onComplete) {
         this.mkdirs();
+        this.getResourcePackDirectory().delete(); // Just as a fail safe in case this method is directly called (EG in reload command)
         final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
         final AtomicInteger downloadedSongs = new AtomicInteger(0);
         /* Loop through all songs */

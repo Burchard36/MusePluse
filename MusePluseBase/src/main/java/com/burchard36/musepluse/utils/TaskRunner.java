@@ -59,6 +59,7 @@ public class TaskRunner {
             @Override
             public void run() {
                 runnable.run();
+                this.cancel();
             }
         }.runTaskLater(MusePlusePlugin.INSTANCE, ticks);
     }

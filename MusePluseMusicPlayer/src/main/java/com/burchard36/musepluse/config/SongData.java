@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
-public class SongData {
+public class SongData implements Cloneable{
 
     @Getter
     @Setter
@@ -75,5 +75,16 @@ public class SongData {
             itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
+    }
+
+    @Override
+    public SongData clone() {
+        try {
+            SongData clone = (SongData) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

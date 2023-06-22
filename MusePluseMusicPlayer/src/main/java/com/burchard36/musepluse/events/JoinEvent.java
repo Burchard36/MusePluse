@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +30,12 @@ public class JoinEvent implements Listener {
         this.resourcePackEngine = this.moduleInstance.getResourcePackEngine();
         this.musePluseSettings = this.moduleInstance.getMusePluseSettings();
         this.queuedPlayers = new ArrayList<>();
+    }
+
+    @EventHandler
+    public final void onPlayerLeave(final PlayerQuitEvent quitEvent) {
+        final Player quitter = quitEvent.getPlayer();
+        this.moduleInstance.getMusicPlayer().clear(quitter);
     }
 
     @EventHandler
