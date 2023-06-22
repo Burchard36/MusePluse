@@ -280,3 +280,21 @@ aplacewithnoname:
     SongName: A Place With No name
     Artist: Micheal Jackson
     GuiMaterial: MUSIC_DISC_13
+pastlives:
+  YouTubeLink: https://www.youtube.com/watch?v=-TXtyYZIiWc
+  Details:
+    SongName: Pastlives
+    Artist: Sapientdream
+    GuiMaterial: MUSIC_DISC_STRAD
+dilemma:
+  YouTubeLink: https://www.youtube.com/watch?v=WwJm5hnWv6E
+  Details:
+    SongName: Dilemma
+    Artist: Nelly
+    GuiMaterial: MUSIC_DISC_BLOCKS
+brokenhearted:
+  YouTubeLink: https://www.youtube.com/watch?v=s8cbak34DR0
+  Details:
+    SongName: Broken Hearted
+    Artist: Karmin
+    GuiMaterial: MUSIC_DISC_CHIRP
