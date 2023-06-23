@@ -5,6 +5,7 @@ import com.burchard36.musepluse.MusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
+import com.burchard36.musepluse.utils.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,6 +45,10 @@ public class JoinEvent implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent joinEvent) {
         final Player player = joinEvent.getPlayer();
+
+        if (player.isOp() || player.hasPermission("musepluse.update.notify")) {
+            UpdateChecker.checkVersion(player, (v) -> {});
+        }
 
         // prevent rest of startup and play empty music to player until they load the pack themselves
         if (this.musePluseSettings.isDoItYourselfMode() && this.musePluseSettings.isPlayOnJoin()) {
