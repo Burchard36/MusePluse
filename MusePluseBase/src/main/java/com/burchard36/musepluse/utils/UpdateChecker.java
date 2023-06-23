@@ -1,6 +1,5 @@
 package com.burchard36.musepluse.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -17,7 +16,7 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class UpdateChecker {
 
-    private final static String VERSION = "2.0.2";
+    private final static String VERSION = "2.0.3";
 
     public static void checkVersion(final Player player, final Consumer<Void> callback) {
         CompletableFuture.runAsync(() -> {

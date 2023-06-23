@@ -15,14 +15,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static com.burchard36.musepluse.MusePlusePlugin.IS_WINDOWS;
-import static com.burchard36.musepluse.MusePlusePlugin.MAIN_THREAD_POOL;
+import static com.burchard36.musepluse.MusePlusePlugin.*;
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class FFMPEGDownloader {
 
     protected final URL linuxDownloadLink;
     protected final URL windowsDownloadLink;
+    protected final URL arm64DownloadLink;
+    protected final URL macDownloadLink;
     protected final File ffmpegInstallationDirectory;
     @Getter
     protected final AtomicBoolean downloading = new AtomicBoolean(false);
@@ -31,6 +32,8 @@ public class FFMPEGDownloader {
         try {
             this.windowsDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-windows.zip");
             this.linuxDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-linux.zip");
+            this.arm64DownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-linux-arm64.zip");
+            this.macDownloadLink = new URL("https://github.com/CloudLiteMC/ffmpeg-as-zip/raw/main/ffmpeg-mac.zip");
         } catch (MalformedURLException ex) {
             throw new RuntimeException(ex);
         }
@@ -98,7 +101,10 @@ public class FFMPEGDownloader {
 
     public URL getURL() {
         if (IS_WINDOWS) return this.windowsDownloadLink;
-        return this.linuxDownloadLink;
+        if (IS_MAC) return this.macDownloadLink;
+        if (IS_AARCH_64 || IS_ARM_64) {
+            return this.arm64DownloadLink;
+        } else return this.linuxDownloadLink;
     }
 
 

@@ -42,9 +42,11 @@ public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
 
     protected static String OS = System.getProperty("os.name").toLowerCase();
     public static boolean IS_WINDOWS = (OS.contains("win"));
-    protected static boolean IS_MAC = (OS.contains("mac"));
+    public static boolean IS_MAC = (OS.contains("mac"));
     public static boolean IS_UNIX = (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
     protected static boolean IS_SOLARIS = (OS.contains("sunos"));
+    public static boolean IS_AARCH_64 = System.getProperty("os.arch").startsWith("aarch");
+    public static boolean IS_ARM_64 = System.getProperty("os.arch").startsWith("arm");
 
     @Override
     public void onLoad() {
