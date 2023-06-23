@@ -1,6 +1,7 @@
 package com.burchard36.musepluse.events;
 
 import com.burchard36.musepluse.MusePluseMusicPlayer;
+import com.burchard36.musepluse.MusicPlayer;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
 import com.burchard36.musepluse.resource.events.MusePluseResourcePackLoadedEvent;
@@ -21,12 +22,14 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 public class JoinEvent implements Listener {
     protected final MusePluseMusicPlayer moduleInstance;
     protected final MusePluseSettings musePluseSettings;
+    protected final MusicPlayer musicPlayer;
     protected final ResourcePackEngine resourcePackEngine;
     /* Since the resource pack may not be created when the player joins we need to queue them if the file isnt created yet */
     protected final List<UUID> queuedPlayers;
 
     public JoinEvent(final MusePluseMusicPlayer moduleInstance) {
         this.moduleInstance = moduleInstance;
+        this.musicPlayer = this.moduleInstance.getMusicPlayer();
         this.resourcePackEngine = this.moduleInstance.getResourcePackEngine();
         this.musePluseSettings = this.moduleInstance.getMusePluseSettings();
         this.queuedPlayers = new ArrayList<>();
@@ -41,13 +44,15 @@ public class JoinEvent implements Listener {
     @EventHandler
     public final void onPlayerJoin(final PlayerJoinEvent joinEvent) {
         final Player player = joinEvent.getPlayer();
-        if (!this.musePluseSettings.isPlayOnJoin()) return;
-        if (this.musePluseSettings.isNeedsPermissionToPlayOnJoin() && !player.hasPermission("musepluse.playonjoin"))
-            return;
 
-        if (this.musePluseSettings.isDoItYourselfMode()) {
-            return; // server owners are managing themselves let them do theyre thing
-        }
+        // prevent rest of startup and play empty music to player until they load the pack themselves
+        if (this.musePluseSettings.isDoItYourselfMode() && this.musePluseSettings.isPlayOnJoin()) {
+            if (musePluseSettings.isNeedsPermissionToPlayOnJoin() && player.hasPermission("musepluse.playonjoin")) {
+                if (!this.musicPlayer.hasAutoPlayEnabled(player)) return;
+                this.musicPlayer.playNextSong(player);
+            }
+            return; // server owners are managing themselves let them do they're thing
+        } else if (this.musePluseSettings.isDoItYourselfMode()) return; // prevent rest of startup
 
         if (this.resourcePackEngine.isResourcePackGenerating()) {
             this.queuedPlayers.add(player.getUniqueId());

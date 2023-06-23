@@ -74,7 +74,8 @@ public class MusePluseSettings implements Config {
         if (!configuration.isSet("DoItYourselfMode")) {
             configuration.set("DoItYourselfMode", false);
             configuration.setComments("DoItYourselfMode", List.of("If you use this mode, packs still stop being sent ENTIRELY, meaning you want your users to manually install & ",
-                    "download the pack themselves. If this mode is enabled, songs will play for the users as normal, they just wont hear them until they load the pack themself!"));
+                    "download the pack themselves. If this mode is enabled, songs will play for the users as normal, they just wont hear them until they load the pack themself!",
+                    "This will also override the ResourcePackServer if its set to true! Meaning it wont be enabled."));
         }
 
         this.doItYourselfMode = configuration.getBoolean("DoItYourselfMode");

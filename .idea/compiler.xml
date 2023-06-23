@@ -20,10 +20,10 @@
       <module name="BlockDropsEditor" target="17" />
       <module name="CropRegrower" target="17" />
       <module name="MMOItemsLevelUp" target="17" />
-      <module name="MusePluse" target="17" />
-      <module name="MusePluseBase" target="17" />
-      <module name="MusePluseMusicPlayer" target="17" />
-      <module name="MusePlusePlugin" target="17" />
+      <module name="MusePluse" target="16" />
+      <module name="MusePluseBase" target="16" />
+      <module name="MusePluseMusicPlayer" target="16" />
+      <module name="MusePlusePlugin" target="16" />
       <module name="RapidCropRegrowth" target="1.8" />
     </bytecodeTargetLevel>
   </component>

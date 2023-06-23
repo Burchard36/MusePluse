@@ -1,6 +1,7 @@
 package com.burchard36.musepluse;
 
 import com.burchard36.musepluse.commands.MusicGuiCommand;
+import com.burchard36.musepluse.commands.ReloadMusicCommand;
 import com.burchard36.musepluse.commands.SkipSongCommand;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.config.MusePluseConfig;
@@ -36,6 +37,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
         this.resourcePackEngine = new ResourcePackEngine(this);
         MusePlusePlugin.registerCommand("skipsong", new SkipSongCommand(this));
         MusePlusePlugin.registerCommand("musicgui", new MusicGuiCommand(this));
+        MusePlusePlugin.registerCommand("reloadmusic", new ReloadMusicCommand(this));
 
         MusePlusePlugin.registerEvent(new JoinEvent(this));
         MusePlusePlugin.registerEvent(new SongEndedEvent(this));
@@ -49,7 +51,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
     @Override
     public void reload() {
         this.musePluseSettings = this.pluginInstance.getConfigManager().getConfig(new MusePluseSettings(), false);
-        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), true);
+        this.musicListConfig = this.pluginInstance.getConfigManager().getConfig(new MusePluseConfig(), false);
     }
 
 }

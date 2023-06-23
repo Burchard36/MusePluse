@@ -37,6 +37,8 @@ ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResourc
 # WARNING If you don't want to use the resource pack generator but still want to
 # use the ResourcePackServer, your file must be uploaded into /plugins/MusePluse/resource-pack
 # For now it can be any name, make sure its a .zip :)
+#
+# Using this is NOT RECCOMENDED
 AutoGenerateResourcePack: true
 
 # This is the internal server used for hosting the server's resource pack

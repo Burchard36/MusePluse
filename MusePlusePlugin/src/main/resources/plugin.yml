@@ -1,7 +1,7 @@
 name: MusePluse
 version: '${project.version}'
 main: com.burchard36.musepluse.MusePluse
-api-version: 1.19
+api-version: 1.17
 commands:
   skipsong:
     aliases:
@@ -19,5 +19,11 @@ commands:
       - songgui
       - songui
     description: "Displays the Songs GUI"
+  reloadmusic:
+    aliases:
+      - reloadmuseyplusey
+      - reloadmusepluse
+      - reloadsongs
+    description: "Reloads the songs from config and rebuilds the resource pack, will automatically resend to your players if enabled."
 libraries:
   - 'net.bramp.ffmpeg:ffmpeg:0.7.0'

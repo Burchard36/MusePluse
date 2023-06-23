@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,39 +36,38 @@ public class ResourcePackEngine extends OGGFileWriter {
         this.youtubeProcessor = new YoutubeProcessor(moduleInstance.getPluginInstance());
 
         this.tryAutoGenerate(false, (v) -> {
-            final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
-            final AtomicInteger songInfoReceived = new AtomicInteger(0);
-            /* Ensure times for song data is set */
-            this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
-                final String youTubeLink = song.getYouTubeLink();
-                /* Get information for each song
-                * We basically just do this to get the langeth of the video however later on i may try my
-                * hand at auto-name generation!
-                */
-                this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
-                    if (videoInfo != null)
-                        song.setSeconds(videoInfo.details().lengthSeconds());
-                    int received = songInfoReceived.incrementAndGet();
-                    if (received == totalSongs) {
-
-                        if (this.pluginSettings.isDoItYourselfMode()) return;
-                        if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
-                            Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
-                            ResourcePackServer.startServer(this.moduleInstance);
-                        }
-
-                    }
-                });
-            });
+            if (this.pluginSettings.isDoItYourselfMode()) return;
+            if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
+                Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
+                ResourcePackServer.startServer(this.moduleInstance);
+            }
         });
     }
 
     /**
      * Song times need to be received from YouTube in order for them to properly play
      */
-    public void loadSongTimes(Consumer<Void> callback) {
+    public void loadSongTimes(final Consumer<List<VideoInformationResponse>> callback) {
+        final AtomicInteger receivedVideoInformation = new AtomicInteger(0);
+        final AtomicInteger failedVideoInformation = new AtomicInteger(0);
+        final List<VideoInformationResponse> videoInformationList = new ArrayList<>();
+        final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
         this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
+            this.youtubeProcessor.getVideoInformation(song.getYouTubeLink(), (videoInfo) -> {
+                if (videoInfo == null) {
+                    failedVideoInformation.incrementAndGet();
+                    this.moduleInstance.getMusicListConfig().getSongDataList().remove(song);
+                    Bukkit.getConsoleSender().sendMessage(convert("&fSkipping &b%s&f because it doesn't have video data!".formatted(song.getYouTubeLink())));
+                } else {
+                    receivedVideoInformation.incrementAndGet();
+                    song.setSeconds(videoInfo.details().lengthSeconds());
+                    videoInformationList.add(new VideoInformationResponse(videoInfo, song));
+                }
 
+                if ((receivedVideoInformation.get()) + failedVideoInformation.get() == totalSongs) {
+                    callback.accept(videoInformationList);
+                }
+            });
         });
     }
 
@@ -81,7 +81,7 @@ public class ResourcePackEngine extends OGGFileWriter {
          * false don't try to generate the resource pack
          */
         if (!this.pluginSettings.isAutoGenerateResourcePack() && !force) {
-            onComplete.accept(null); // callbacks get put into a seperate thread pool
+            this.loadSongTimes((songList) -> onComplete.accept(null));
             return;
         }
         /* If the resource pack exists and were not forcing
@@ -89,6 +89,7 @@ public class ResourcePackEngine extends OGGFileWriter {
          */
         if (this.resourcePackExists() && !force) {
             Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f detected previously created resource pack, enjoy! Delete this file if you want to regenerate it!"));
+            this.loadSongTimes((songList) -> onComplete.accept(null));
             onComplete.accept(null); // callbacks get put into a different thread pool
             return;
         }
@@ -100,53 +101,41 @@ public class ResourcePackEngine extends OGGFileWriter {
         } else Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to generate fresh resource pack!"));
 
         this.creatingTexturePack.set(true);
-        this.createResourcePack(onComplete);
+        this.loadSongTimes((songList) -> this.createResourcePack(songList, onComplete));
     }
 
-    public final void createResourcePack(final Consumer<Void> onComplete) {
+    public final void createResourcePack(final List<VideoInformationResponse> videoInformationList, final Consumer<Void> onComplete) {
         this.mkdirs();
         this.getResourcePackDirectory().delete(); // Just as a fail safe in case this method is directly called (EG in reload command)
-        final int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
         final AtomicInteger downloadedSongs = new AtomicInteger(0);
-        final AtomicInteger erroredSongs = new AtomicInteger(0);
         /* Loop through all songs */
-        this.moduleInstance.getMusicListConfig().getSongDataList().forEach((song) -> {
-            final String youTubeLink = song.getYouTubeLink();
-            /* Get information for each song */
-            this.youtubeProcessor.getVideoInformation(youTubeLink, (videoInfo) -> {
-                if (videoInfo == null) {
-                    downloadedSongs.incrementAndGet(); // prevent the loop from not ending if something failed
-                    Bukkit.getConsoleSender().sendMessage(convert("&fSkipping &b%s&f because it doesn't have video data!".formatted(youTubeLink)));
-                    this.moduleInstance.getMusicListConfig().getSongDataList().remove(song);
-                    erroredSongs.incrementAndGet();
-                    return;
+        for (int x = 0; x < this.moduleInstance.getMusicListConfig().getSongDataList().size(); x++) {
+            final VideoInformationResponse response = videoInformationList.get(x);
+            this.youtubeProcessor.downloadYouTubeAudioAsOGG(response.videoInfo(), response.songData().getLocalKey(), (file) -> {
+                int currentVideosReceived = downloadedSongs.incrementAndGet();
+
+                /* Always recheck total song count just in case one gets removed */
+                int totalSongs = this.moduleInstance.getMusicListConfig().getSongDataList().size();
+                if (currentVideosReceived == totalSongs) {
+                    Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f All %s songs have been downloaded!".formatted(totalSongs)));
+
+                    Bukkit.getConsoleSender().sendMessage(convert("&fWriting &bpack.mcmeta&f..."));
+                    this.writeMcMeta();
+                    Bukkit.getConsoleSender().sendMessage(convert("&fWriting &bsounds.json&f..."));
+                    this.writeSoundsJson(this.moduleInstance.getMusicListConfig());
+                    Bukkit.getConsoleSender().sendMessage(convert("&fFlashing OGG Files into resource pack..."));
+                    this.flashOGGFilesToTempDirectory();
+                    Bukkit.getConsoleSender().sendMessage(convert("&fCompressing temp files..."));
+                    this.zipResourcePack();
+                    Bukkit.getConsoleSender().sendMessage(convert("&fCleaning up leftover files & directories..."));
+                    this.cleanUp();
+
+                    Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f Your resource pack is located at &b%s&f".formatted(this.resourcePackFile.getPath())));
+                    this.creatingTexturePack.set(false);
+                    onComplete.accept(null); // callbacks async already
                 }
-                song.setSeconds(videoInfo.details().lengthSeconds());
-                /* Download the ogg from youtube */
-                this.youtubeProcessor.downloadYouTubeAudioAsOGG(videoInfo, song.getLocalKey(), (file) -> {
-                    int currentVideosReceived = downloadedSongs.incrementAndGet() - erroredSongs.get();
-
-                    if (currentVideosReceived == totalSongs) {
-                        Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f All %s songs have been downloaded!".formatted(totalSongs)));
-
-                        Bukkit.getConsoleSender().sendMessage(convert("&fWriting &bpack.mcmeta&f..."));
-                        this.writeMcMeta();
-                        Bukkit.getConsoleSender().sendMessage(convert("&fWriting &bsounds.json&f..."));
-                        this.writeSoundsJson(this.moduleInstance.getMusicListConfig());
-                        Bukkit.getConsoleSender().sendMessage(convert("&fFlashing OGG Files into resource pack..."));
-                        this.flashOGGFilesToTempDirectory();
-                        Bukkit.getConsoleSender().sendMessage(convert("&fCompressing temp files..."));
-                        this.zipResourcePack();
-                        Bukkit.getConsoleSender().sendMessage(convert("&fCleaning up leftover files & directories..."));
-                        this.cleanUp();
-
-                        Bukkit.getConsoleSender().sendMessage(convert("&aSuccess!&f Your resource pack is located at &b%s&f".formatted(this.resourcePackFile.getPath())));
-                        this.creatingTexturePack.set(false);
-                        onComplete.accept(null); // callbacks async already
-                    }
-                });
             });
-        });
+        }
     }
 
     /**
@@ -180,6 +169,12 @@ public class ResourcePackEngine extends OGGFileWriter {
     }
 
     protected void zipResourcePack() {
+        final File file = this.resourcePackFileFromDisk();
+        if (file != null) {
+            if (file.delete()) {
+                Bukkit.getConsoleSender().sendMessage(convert("&cDeleted a pre-existing resource pack before zipping"));
+            }
+        }
         final ZipUtility zipUtility = new ZipUtility();
         File[] tempFiles = new File(this.getResourcePackTempFilesDirectory(), "/assets").listFiles();
         if (tempFiles == null) throw new RuntimeException("It appears the /resource-pack directory was null when calling zipResourcePack, maybe restart your server?");

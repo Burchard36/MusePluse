@@ -77,7 +77,6 @@ public class SongListGui extends PaginatedInventory {
                                     case LEFT -> {
                                         if (musePluseSettings.isNeedsSkipPermission()
                                                 && !player.hasPermission("musepluse.queue.skip")) return;
-
                                         moduleInstance.getMusicPlayer().playSongTo(player, songData);
                                         clickedInventory.setItem(49, getNextSongButton());
                                         player.updateInventory();
