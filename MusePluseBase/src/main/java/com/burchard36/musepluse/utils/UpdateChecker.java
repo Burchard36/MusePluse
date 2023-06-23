@@ -35,6 +35,7 @@ public class UpdateChecker {
                         TaskRunner.runSyncTaskLater(() -> {
                             player.playSound(player, Sound.ENTITY_VILLAGER_YES, 1.0f, 1.0f);
                             player.sendMessage(convert("&a&lA new update is out (%s)! &ehttps://www.spigotmc.org/resources/musepluse-youtube-music-player-massive-update.110536/".formatted(versionString)));
+                            player.sendMessage(convert("&cOnly server operators and those with musepluse.update will see this message!"));
                         }, 35);
                     }, 60);
                 }

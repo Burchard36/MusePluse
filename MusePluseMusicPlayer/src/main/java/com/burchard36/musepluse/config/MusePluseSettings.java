@@ -51,6 +51,8 @@ public class MusePluseSettings implements Config {
     protected boolean autoGenerateResourcePack;
     @Getter
     protected boolean doItYourselfMode;
+    @Getter
+    protected boolean usingUpdateChecker;
 
 
     @Override
@@ -78,8 +80,13 @@ public class MusePluseSettings implements Config {
                     "This will also override the ResourcePackServer if its set to true! Meaning it wont be enabled."));
         }
 
-        this.doItYourselfMode = configuration.getBoolean("DoItYourselfMode");
+        if (!configuration.isSet("UpdateChecker")) {
+            configuration.set("UpdateChecker", true);
+            configuration.setComments("UpdateChecker", List.of("Set this to false if you find the auto-update message annoying!"));
+        }
 
+        this.doItYourselfMode = configuration.getBoolean("DoItYourselfMode");
+        this.usingUpdateChecker = configuration.getBoolean("UpdateChecker");
         this.loadNextSongMessage(configuration);
 
         configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));

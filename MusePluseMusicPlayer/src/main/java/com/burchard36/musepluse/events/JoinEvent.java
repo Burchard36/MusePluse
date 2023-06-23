@@ -46,7 +46,7 @@ public class JoinEvent implements Listener {
     public final void onPlayerJoin(final PlayerJoinEvent joinEvent) {
         final Player player = joinEvent.getPlayer();
 
-        if (player.isOp() || player.hasPermission("musepluse.update.notify")) {
+        if (this.musePluseSettings.isUsingUpdateChecker() && (player.isOp() || player.hasPermission("musepluse.update.notify"))) {
             UpdateChecker.checkVersion(player, (v) -> {});
         }
 
