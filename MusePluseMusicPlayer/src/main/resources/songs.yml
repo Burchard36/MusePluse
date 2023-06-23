@@ -298,3 +298,75 @@ brokenhearted:
     SongName: Broken Hearted
     Artist: Karmin
     GuiMaterial: MUSIC_DISC_CHIRP
+americanidiot:
+  YouTubeLink: https://www.youtube.com/watch?v=Ee_uujKuJMI
+  Details:
+    SongName: American Idiot
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_13
+whenseptemberends:
+  YouTubeLink: https://www.youtube.com/watch?v=rdpBZ5_b48g
+  Details:
+    SongName: Wake Me Up, When September Ends
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_MALL
+stillwaiting:
+  YouTubeLink: https://www.youtube.com/watch?v=Lz7kvJdwPOY
+  Details:
+    SongName: Still Waiting
+    Artist: Sum 41
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+mrsjackson:
+  YouTubeLink: https://www.youtube.com/watch?v=MYxAiK6VnXw
+  Details:
+    SongName: Ms. Jackson
+    Artist: Outkast
+    GuiMaterial: MUSIC_DISC_CAT
+heyya:
+  YouTubeLink: https://www.youtube.com/watch?v=PWgvGjAhvIw
+  Details:
+    SongName: Hey Ya!
+    Artist: Outkast
+    GuiMaterial: MUSIC_DISC_CHIRP
+yougiveloveabadname:
+  YouTubeLink: https://www.youtube.com/watch?v=xNvNHZXp5zk
+  Details:
+    SongName: You Give Love a Bad Name
+    Artist: Bon Jovi
+    GuiMaterial: MUSIC_DISC_STRAD
+livinonaprayer:
+  YouTubeLink: https://www.youtube.com/watch?v=CuUefy9bT9U
+  Details:
+    SongName: Livin' On a Prayer
+    Artist: Bon Jovi
+    GuiMaterial: MUSIC_DISC_WARD
+summerof69:
+  YouTubeLink: https://www.youtube.com/watch?v=eFjjO_lhf9c
+  Details:
+    SongName: Summer of 69'
+    Artist: Bryan Adams
+    GuiMaterial: MUSIC_DISC_BLOCKS
+payphone:
+  YouTubeLink: https://www.youtube.com/watch?v=fuP4Lkt1vAo
+  Details:
+    SongName: Payphone
+    Artist: Maroon 5
+    GuiMaterial: MUSIC_DISC_CHIRP
+takeonme:
+  YouTubeLink: https://www.youtube.com/watch?v=II4sfbrsdn4
+  Details:
+    SongName: Take On Me
+    Artist: a-ha
+    GuiMaterial: MUSIC_DISC_13
+nevergonnagiveyouup:
+  YouTubeLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  Details:
+    SongName: Never Gonna Give You Up
+    Artist: Rick Astley
+    GuiMaterial: MUSIC_DISC_BLOCKS
+myheartwillgoon:
+  YouTubeLink: https://www.youtube.com/watch?v=p79GmLNLMrY
+  Details:
+    SongName: My Heart Will Go On
+    Artist: Celine Dion
+    GuiMaterial: MUSIC_DISC_WAIT

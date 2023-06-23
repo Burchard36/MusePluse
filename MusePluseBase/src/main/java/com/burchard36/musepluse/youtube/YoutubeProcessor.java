@@ -75,7 +75,7 @@ public class YoutubeProcessor implements Listener {
                 .callback(new YoutubeProgressCallback<>() {
                     @Override
                     public void onDownloading(int progress) {
-                        Bukkit.getConsoleSender().sendMessage("Song downloading... %s Progress: %s".formatted(finalNewFileName, progress));
+                        //Bukkit.getConsoleSender().sendMessage("Song downloading... %s Progress: %s".formatted(finalNewFileName, progress));
                     }
 
                     @Override

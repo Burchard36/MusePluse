@@ -20,6 +20,7 @@ commands:
       - songui
     description: "Displays the Songs GUI"
   reloadmusic:
+    permission: "musepluse.reload"
     aliases:
       - reloadmuseyplusey
       - reloadmusepluse
