@@ -62,7 +62,7 @@ public class JoinEvent implements Listener {
         if (this.resourcePackEngine.isResourcePackGenerating()) {
             this.queuedPlayers.add(player.getUniqueId());
             player.sendMessage(convert("&cIt appears the server hasn't finished creating the resource pack yet!"));
-            player.sendMessage(convert("&cOnce the resource pack creation is finished your game will automagically update!"));
+            player.sendMessage(convert("&cOnce the resource pack creation is finished your game will automatically update!"));
             return;
         }
         final File file = this.resourcePackEngine.resourcePackFileFromDisk();
