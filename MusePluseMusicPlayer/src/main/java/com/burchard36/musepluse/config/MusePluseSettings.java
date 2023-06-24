@@ -53,7 +53,8 @@ public class MusePluseSettings implements Config {
     protected boolean doItYourselfMode;
     @Getter
     protected boolean usingUpdateChecker;
-
+    @Getter
+    protected int downloadTimeoutSeconds;
 
     @Override
     public @NonNull String getFileName() {
@@ -85,8 +86,14 @@ public class MusePluseSettings implements Config {
             configuration.setComments("UpdateChecker", List.of("Set this to false if you find the auto-update message annoying!"));
         }
 
+        if (!configuration.isSet("DownloadTimeoutSeconds")) {
+            configuration.set("DownloadTimeoutSeconds", 25);
+            configuration.setComments("DownloadTimeoutSeconds", List.of("Sets the max time a song may spend downloading, the song/resource pack will attempt to rebuild if this happens."));
+        }
+
         this.doItYourselfMode = configuration.getBoolean("DoItYourselfMode");
         this.usingUpdateChecker = configuration.getBoolean("UpdateChecker");
+        this.downloadTimeoutSeconds = configuration.getInt("DownloadTimeoutSeconds");
         this.loadNextSongMessage(configuration);
 
         configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));

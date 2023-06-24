@@ -1,9 +1,10 @@
 package com.burchard36.musepluse.youtube;
 
 import com.burchard36.musepluse.MusePlusePlugin;
+import com.burchard36.musepluse.ffmpeg.FFExecutor;
 import com.burchard36.musepluse.ffmpeg.FFMPEGDownloader;
+import com.burchard36.musepluse.ffmpeg.FFTask;
 import com.burchard36.musepluse.ffmpeg.events.FFMPEGInitializedEvent;
-import com.burchard36.musepluse.utils.TaskRunner;
 import com.github.kiulian.downloader.Config;
 import com.github.kiulian.downloader.YoutubeDownloader;
 import com.github.kiulian.downloader.downloader.YoutubeCallback;
@@ -12,10 +13,6 @@ import com.github.kiulian.downloader.downloader.request.RequestVideoFileDownload
 import com.github.kiulian.downloader.downloader.request.RequestVideoInfo;
 import com.github.kiulian.downloader.model.videos.VideoInfo;
 import lombok.SneakyThrows;
-import net.bramp.ffmpeg.FFmpeg;
-import net.bramp.ffmpeg.FFmpegExecutor;
-import net.bramp.ffmpeg.FFprobe;
-import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +20,6 @@ import org.bukkit.event.Listener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -35,14 +31,13 @@ public class YoutubeProcessor implements Listener {
     protected final Config youtubeConfiguration;
     protected final YoutubeDownloader youtubeRequester;
     protected final FFMPEGDownloader ffmpegDownloader;
-    protected FFmpegExecutor fFmpegExecutor;
+    protected FFExecutor ffExecutor;
     /* If FFMPEG Is not installed, download requests will be put into a List until it */
-    protected final List<PausedOGGConversion> queuedOGGConversions;
+    protected final List<FFTask> queuedOGGConversions;
     protected final File mediaOutput;
     protected final File oggOutput;
     protected final File m4aOutput;
-    protected FFmpeg ffmpeg;
-    protected FFprobe ffprobe;
+    protected File ffmpegFile;
 
     public YoutubeProcessor(final MusePlusePlugin pluginInstance) {
         MusePlusePlugin.registerEvent(this);
@@ -82,23 +77,17 @@ public class YoutubeProcessor implements Listener {
                     public void onFinished(File data) {
                         Bukkit.getConsoleSender().sendMessage(convert("&fYouTube video &b%s&f has finished downloading!").formatted(finalNewFileName));
                         Bukkit.getConsoleSender().sendMessage(convert("&fAttempting to convert &b%s&f to OGG file format...").formatted(data.getPath()));
-                        FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
-                                .setInput(data.getPath())
-                                .overrideOutputFiles(true)
-                                .addOutput(oggOutput.getPath() + "/%s".formatted(finalNewFileName))
-                                .setFormat("ogg")
-                                .done();
+                        final File outputFile = new File(oggOutput.getPath() + "/%s.ogg".formatted(finalNewFileName));
                         if (ffmpegDownloader.isDownloading()) {
                             Bukkit.getConsoleSender().sendMessage(convert("&fPausing conversion of file &b%s&f as it appears FFMPEG is not initializated! (is it still installing?\nThis task will automatically resume! This is not an error!"));
-                            queuedOGGConversions.add(new PausedOGGConversion(ffmpegBuilder, data, callback));
+                            queuedOGGConversions.add(new FFTask(data, outputFile, callback));
                         } else {
-                            CompletableFuture.runAsync(() -> {
-                                fFmpegExecutor.createJob(ffmpegBuilder).run();
+                            ffExecutor.convertToOgg(data, outputFile, () -> {
                                 Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
-                                if (data.delete())
-                                    Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
+                                //if (data.delete())
+                                    //Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully&f cleaned up file &b%s&f").formatted(finalNewFileName));
                                 callback.accept(data); // use a different executor for callbacks
-                            }, MAIN_THREAD_POOL);
+                            });
                         }
                     }
 
@@ -138,7 +127,7 @@ public class YoutubeProcessor implements Listener {
                         Bukkit.getConsoleSender().sendMessage(convert("&cERROR WITH &b%s".formatted(youtubeLink)));
                         Bukkit.getConsoleSender().sendMessage(convert("&cThe plugin will attempt to skips this song and continue loading!"));
                         Bukkit.getConsoleSender().sendMessage(convert("&cIf you encounter any issues, please try removing this song from songs.yml first!"));
-                        callback.accept(null); // callbacks happen off the main thread executor
+                        callback.accept(null);
                     }
                 })
                 .async();
@@ -173,25 +162,22 @@ public class YoutubeProcessor implements Listener {
     @SneakyThrows
     public void onFFMPEGInitialization(final FFMPEGInitializedEvent initializedEvent) {
         if (IS_WINDOWS) {
-            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffmpeg.exe");
-            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffprobe.exe");
+            this.ffmpegFile = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffmpeg.exe");
         } else { // Only support windows and linux, this will likely throw errors on apple and solaris systems but fuck em for now
             final File ffmpegForLinux = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffmpeg");
             final File ffprobeForLinux = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffprobe");
             ffmpegForLinux.setExecutable(true, false);
             ffprobeForLinux.setExecutable(true, false);
-            this.ffmpeg = new FFmpeg(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffmpeg/ffmpeg");
-            this.ffprobe = new FFprobe(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "/ffprobe/ffprobe");
+            this.ffmpegFile = ffmpegForLinux;
         }
 
-        this.fFmpegExecutor = new FFmpegExecutor(this.ffmpeg, this.ffprobe);
-            this.queuedOGGConversions.forEach((entry) -> {
-                CompletableFuture.runAsync(() -> {
-                    Bukkit.getConsoleSender().sendMessage(convert("Resuming OGG File conversion for &b%s&f".formatted(entry.convertedFile().getPath())));
-                    this.fFmpegExecutor.createJob(entry.builder()).run();
-                    Bukkit.getConsoleSender().sendMessage(convert("&fSuccessfully converted file &b%s&f! Cleaning up...").formatted(entry.convertedFile().getPath()));
-                    entry.callback().accept(entry.convertedFile());
-                }, MAIN_THREAD_POOL);
+        this.ffExecutor = new FFExecutor(this.ffmpegFile);
+        this.queuedOGGConversions.forEach((entry) -> {
+            Bukkit.getConsoleSender().sendMessage(convert("Resuming OGG File conversion for &b%s&f".formatted(entry.to().getPath())));
+            ffExecutor.convertToOgg(entry.from(), entry.to(), () -> {
+                Bukkit.getConsoleSender().sendMessage(convert("&fSuccessfully converted file &b%s&f! Cleaning up...").formatted(entry.to().getPath()));
+                entry.callback().accept(entry.to());
             });
+        });
     }
 }

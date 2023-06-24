@@ -26,5 +26,3 @@ commands:
       - reloadmusepluse
       - reloadsongs
     description: "Reloads the songs from config and rebuilds the resource pack, will automatically resend to your players if enabled."
-libraries:
-  - 'net.bramp.ffmpeg:ffmpeg:0.7.0'
