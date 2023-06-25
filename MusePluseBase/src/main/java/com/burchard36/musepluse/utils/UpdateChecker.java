@@ -16,7 +16,7 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class UpdateChecker {
 
-    private final static String VERSION = "2.0.4";
+    private final static String VERSION = "2.0.5";
 
     public static void checkVersion(final Player player, final Runnable callback) {
         CompletableFuture.runAsync(() -> {

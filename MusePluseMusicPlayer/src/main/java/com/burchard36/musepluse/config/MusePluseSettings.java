@@ -7,6 +7,7 @@ import com.burchard36.musepluse.utils.TaskRunner;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.bukkit.Chunk;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -125,13 +126,13 @@ public class MusePluseSettings implements Config {
     }
 
     /**
-     * Safely gets the URL for the resource pack, can't automatically determine if
+     * Safely gets the URL for the resource pack, can automatically determine if
      * it needs to return the internal or external URL
      * @param resourcePackFile A File to the resource pack
      */
-    public final void getResourcePack(final File resourcePackFile, Consumer<String> callback) {
+    public final void getResourcePack(final File resourcePackFile, Consumer<String> ipAddr) {
         if (!this.isResourcePackServerEnabled()) {
-            TaskRunner.runSyncTask(() -> callback.accept(this.selfHostedResourcePackAddress));
+            TaskRunner.runSyncTask(() -> ipAddr.accept(this.selfHostedResourcePackAddress));
             return;
         }
         CompletableFuture.runAsync(() -> {
@@ -144,7 +145,7 @@ public class MusePluseSettings implements Config {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 String externalAddress = response.body();
                 TaskRunner.runSyncTask(() ->
-                        callback.accept("http://%s:%s/%s.zip".formatted(externalAddress, this.resourcePackServerPort, fileUUID)));
+                        ipAddr.accept("http://%s:%s/%s.zip".formatted(externalAddress, this.resourcePackServerPort, fileUUID)));
             } catch (IOException | URISyntaxException | InterruptedException e) {
                 throw new RuntimeException(e);
             }

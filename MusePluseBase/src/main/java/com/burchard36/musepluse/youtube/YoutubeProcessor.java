@@ -63,7 +63,6 @@ public class YoutubeProcessor implements Listener {
      * @param callback {@link Consumer} the callback used when this video & conversion is finished
      */
     public final void downloadYouTubeAudioAsOGG(final VideoInfo videoInfo, String newFileName, final Consumer<File> callback) {
-        if (!newFileName.endsWith(".ogg")) newFileName = newFileName + ".ogg";
         /* For use in Async */
         final String finalNewFileName = newFileName;
         final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
