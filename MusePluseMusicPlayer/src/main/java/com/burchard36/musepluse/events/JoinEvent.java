@@ -47,7 +47,7 @@ public class JoinEvent implements Listener {
         final Player player = joinEvent.getPlayer();
 
         if (this.musePluseSettings.isUsingUpdateChecker() && (player.isOp() || player.hasPermission("musepluse.update.notify"))) {
-            UpdateChecker.checkVersion(player, (v) -> {});
+            UpdateChecker.checkVersion(player, () -> {});
         }
 
         // prevent rest of startup and play empty music to player until they load the pack themselves

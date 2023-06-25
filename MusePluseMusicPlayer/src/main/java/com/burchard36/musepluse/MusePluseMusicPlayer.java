@@ -5,13 +5,13 @@ import com.burchard36.musepluse.commands.ReloadMusicCommand;
 import com.burchard36.musepluse.commands.SkipSongCommand;
 import com.burchard36.musepluse.config.MusePluseSettings;
 import com.burchard36.musepluse.config.MusePluseConfig;
+import com.burchard36.musepluse.events.RespawnEvent;
 import com.burchard36.musepluse.events.JoinEvent;
 import com.burchard36.musepluse.events.SongEndedEvent;
 import com.burchard36.musepluse.events.TexturePackLoadEvent;
 import com.burchard36.musepluse.module.PluginModule;
 import com.burchard36.musepluse.resource.ResourcePackEngine;
 import lombok.Getter;
-
 public final class MusePluseMusicPlayer implements PluginModule {
     @Getter
     private MusePlusePlugin pluginInstance;
@@ -40,6 +40,7 @@ public final class MusePluseMusicPlayer implements PluginModule {
         MusePlusePlugin.registerCommand("reloadmusic", new ReloadMusicCommand(this));
 
         MusePlusePlugin.registerEvent(new JoinEvent(this));
+        MusePlusePlugin.registerEvent(new RespawnEvent(this));
         MusePlusePlugin.registerEvent(new SongEndedEvent(this));
         MusePlusePlugin.registerEvent(new TexturePackLoadEvent(this));
     }

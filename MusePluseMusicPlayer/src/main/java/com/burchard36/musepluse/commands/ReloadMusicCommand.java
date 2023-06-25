@@ -10,6 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.concurrent.CompletableFuture;
+
 import static com.burchard36.musepluse.utils.StringUtils.convert;
 
 public class ReloadMusicCommand implements CommandExecutor {
@@ -36,7 +38,7 @@ public class ReloadMusicCommand implements CommandExecutor {
 
 
         this.moduleInstance.getPluginInstance().getConfigManager().reloadAll();
-        this.resourcePackEngine.tryAutoGenerate(true, (callback) -> {
+        this.resourcePackEngine.tryAutoGenerate(true, () -> {
 
             if (this.moduleSettings.isDoItYourselfMode()) {
                 sender.sendMessage(convert("&cSeems you have DoItYourself mode enabled! Your players will have to manually download the new resource pack in order to hear new songs!"));

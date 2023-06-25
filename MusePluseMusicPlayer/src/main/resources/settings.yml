@@ -29,7 +29,8 @@ Notifications:
 # See more information about this minecraft bug here: https://bugs.mojang.com/browse/MC-164316
 #
 # Do note, the URL here is only loaded and sent to clients if you have turned off the ResourcePackServer!
-ResourcePack: "https://github.com/Burchard36/MusePluse/raw/main/MusePluseResources1.0.2-SNAPSHOT.zip"
+ResourcePack: "https://www.dropbox.com/s/vbt9laex0lrmoea/8e919492-e1ec-404f-a1ee-f86b26303af6.zip?dl=1"
+
 
 # Should the resource pack be created automatically on server startup?
 # If this is set to false it will also set the FFMPEG installation

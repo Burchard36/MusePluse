@@ -24,7 +24,7 @@ import static com.burchard36.musepluse.utils.StringUtils.convert;
  */
 public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
     /* Thread pool to use for heavy tasks */
-    public static Executor MAIN_THREAD_POOL = Executors.newFixedThreadPool((int) (Runtime.getRuntime().availableProcessors() * 3));
+    public static Executor MAIN_THREAD_POOL = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
     public static MusePlusePlugin INSTANCE;
     @Getter
     private FFMPEGDownloader ffmpegDownloader;
