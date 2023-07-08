@@ -6,8 +6,8 @@
 
     <groupId>com.burchard36.musepluse</groupId>
     <artifactId>MusePluse</artifactId>
-    <version>2.0.5-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <version>2.0.6-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>MusePluse</name>
 
@@ -15,12 +15,6 @@
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <modules>
-        <module>MusePluseBase</module>
-        <module>MusePluseMusicPlayer</module>
-        <module>MusePlusePlugin</module>
-    </modules>
 
     <build>
         <plugins>

@@ -1,0 +1,28 @@
+name: MusePluse
+version: '${project.version}'
+main: com.burchard36.musepluse.MusePlusePlugin
+api-version: 1.17
+commands:
+  skipsong:
+    aliases:
+      - songskip
+      - skip
+      - nextsong
+      - songnext
+    description: "Skips you to the next song in queue"
+  musicgui:
+    aliases:
+      - music
+      - musicgui
+      - songs
+      - songlist
+      - songgui
+      - songui
+    description: "Displays the Songs GUI"
+  reloadmusic:
+    permission: "musepluse.reload"
+    aliases:
+      - reloadmuseyplusey
+      - reloadmusepluse
+      - reloadsongs
+    description: "Reloads the songs from config and rebuilds the resource pack, will automatically resend to your players if enabled."

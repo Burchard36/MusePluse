@@ -21,8 +21,13 @@
         <option value="$PROJECT_DIR$/BlockDropsEditor/pom.xml" />
         <option value="$PROJECT_DIR$/RapidCropRegrowth/pom.xml" />
         <option value="$PROJECT_DIR$/CropRegrower/pom.xml" />
-        <option value="$PROJECT_DIR$/MusePlusePlugin/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/MusePluseBase/pom.xml" />
+        <option value="$PROJECT_DIR$/MusePluseMusicPlayer/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="NullableNotNullManager">
