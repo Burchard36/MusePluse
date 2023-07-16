@@ -7,7 +7,6 @@ import com.burchard36.libs.utils.TaskRunner;
 import com.burchard36.musepluse.resource.SongQuality;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -65,7 +64,7 @@ public class MusePluseSettings implements Config {
         return "settings.yml";
     }
 
-    @SneakyThrows
+
     @Override
     public void deserialize(FileConfiguration configuration) {
         this.playOnJoin = configuration.getBoolean("JoinSettings.PlayOnJoin", true);
@@ -109,7 +108,11 @@ public class MusePluseSettings implements Config {
         this.songGenerationQuality = SongQuality.valueOf(Objects.requireNonNull(configuration.getString("GenerationQuality")).toUpperCase());
         this.loadNextSongMessage(configuration);
 
-        configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
+        try {
+            configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void loadNextSongMessage(final FileConfiguration configuration) {

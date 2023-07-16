@@ -1,7 +1,6 @@
 package com.burchard36.libs.config;
 
 import com.burchard36.libs.utils.StringUtils;
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,7 +19,7 @@ public class ConfigManager {
         this.configurationFiles = new ArrayList<>();
     }
 
-    @SneakyThrows
+
     public <T extends Config> T getConfig(final T config, final boolean overwrite) {
         if (this.configurationFiles.contains(config)) throw new IllegalStateException("Config %s is already registered".formatted(config.getClass().getName()));
         final File configFile = new File(this.pluginInstance.getDataFolder(), config.getFileName());

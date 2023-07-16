@@ -20,19 +20,19 @@ public enum SongQuality {
     public static int getQualityNumber(final SongQuality quality) {
         switch (quality) {
             case HORRIBLE -> {
-                return 16;
+                return 8;
             }
             case LOW -> {
-                return 32;
+                return 16;
             }
             case MEDIUM -> {
-                return 64;
+                return 32;
             }
             case HIGH -> {
-                return 96;
+                return 48;
             }
             case ULTRA -> {
-                return 128;
+                return 64;
             }
         }
         return 0;

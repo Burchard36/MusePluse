@@ -12,7 +12,6 @@ import com.github.kiulian.downloader.downloader.YoutubeProgressCallback;
 import com.github.kiulian.downloader.downloader.request.RequestVideoFileDownload;
 import com.github.kiulian.downloader.downloader.request.RequestVideoInfo;
 import com.github.kiulian.downloader.model.videos.VideoInfo;
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,6 +50,8 @@ public class YoutubeProcessor implements Listener {
         this.mediaOutput = new File(pluginInstance.getDataFolder(), "/media");
         this.oggOutput = new File(this.mediaOutput, "/ogg");
         this.m4aOutput = new File(this.mediaOutput, "/m4a");
+
+        if (this.ffmpegDownloader.ffmpegIsInstalled()) this.initializeFFMPEG();
     }
 
     /**
@@ -83,6 +84,8 @@ public class YoutubeProcessor implements Listener {
                             Bukkit.getConsoleSender().sendMessage(convert("&fPausing conversion of file &b%s&f as it appears FFMPEG is not initializated! (is it still installing?\nThis task will automatically resume! This is not an error!"));
                             queuedOGGConversions.add(new FFTask(data, outputFile, callback));
                         } else {
+                            Bukkit.getLogger().info("Running");
+                            Bukkit.getConsoleSender().sendMessage("Running with console sender....");
                             ffExecutor.convertToOgg(data, outputFile, () -> {
                                 Bukkit.getConsoleSender().sendMessage(convert("&aSuccessfully &fconverted file &b%s&f! Cleaning up...").formatted(finalNewFileName));
                                 //if (data.delete())
@@ -160,8 +163,11 @@ public class YoutubeProcessor implements Listener {
     }
 
     @EventHandler
-    @SneakyThrows
     public void onFFMPEGInitialization(final FFMPEGInitializedEvent initializedEvent) {
+        this.initializeFFMPEG();
+    }
+
+    protected void initializeFFMPEG() {
         if (IS_WINDOWS) {
             this.ffmpegFile = new File(MusePlusePlugin.INSTANCE.getDataFolder().getPath() + "\\ffmpeg\\bin\\ffmpeg.exe");
         } else { // Only support windows and linux, this will likely throw errors on apple and solaris systems but fuck em for now
@@ -173,6 +179,7 @@ public class YoutubeProcessor implements Listener {
         }
 
         this.ffExecutor = new FFExecutor(this.ffmpegFile);
+        Bukkit.getLogger().info(convert("&cFFMPEG Instance successfully set"));
         this.queuedOGGConversions.forEach((entry) -> {
             Bukkit.getConsoleSender().sendMessage(convert("Resuming OGG File conversion for &b%s&f".formatted(entry.to().getPath())));
             ffExecutor.convertToOgg(entry.from(), entry.to(), () -> {
