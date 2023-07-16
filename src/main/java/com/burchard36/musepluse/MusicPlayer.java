@@ -51,13 +51,13 @@ public class MusicPlayer {
      * @param player {@link Player}
      */
     public void playNextSong(final Player player) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         listener.playNext();
     }
 
     public void insertSongIntoQueue(final Player player, final SongData songData) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         listener.insertSongIntoQueue(songData);
     }
@@ -68,14 +68,14 @@ public class MusicPlayer {
      * @param songData {@link SongData} to play to the player
      */
     public void playSongTo(final Player player, final SongData songData) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         listener.playSpecificSong(songData);
     }
 
     public void stopFor(final Player player) {
         new ArrayList<Player>(Bukkit.getOnlinePlayers());
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         listener.stopCurrentSong();
     }
@@ -94,7 +94,7 @@ public class MusicPlayer {
      * @return SongData of the currently playing song the player is listening to, may be null if they currently have the music player stopped
      */
     public final @Nullable SongData getCurrentSong(final Player player) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         return listener.currentSong();
     }
@@ -105,13 +105,13 @@ public class MusicPlayer {
      * @return {@link SongData}
      */
     public final SongData getNextSong(final Player player) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         return listener.nextSong();
     }
 
     public List<SongData> getPermissibleSongsFor(final Player player) {
-        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.moduleInstance));
+        this.musicPlayers.putIfAbsent(player.getUniqueId(), new MusicListener(player, this.pluginInstance));
         final MusicListener listener = this.musicPlayers.get(player.getUniqueId());
         return listener.getPermissibleSongs();
     }

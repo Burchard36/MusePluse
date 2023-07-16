@@ -1,0 +1,87 @@
+Notifications:
+  SongStarted:
+    # Set to false if you never want the player to be notified that they
+    # are listening to a new song
+    Send: true
+    # You may have either ActionBar, or Text
+    # however BOTH are not possible.
+    #
+    # For Text types, putting <center> at the START will send the message centered in chat
+    # You can use the following placeholders
+    # %song_name% - the name of the song playing
+    # %song_artist% - the name of the song artist
+    ActionBar: "&aNow Playing: &r%song_name%"
+    #Text:
+    #  - "<center>&fNow Playing:&b %song_name%"
+    #  - "<center>&fby:&b %song_artist%"
+    #  - "<center>&7(( &b&oMute songs by turning &eVoices&b&o to &eOFF&7 ))"
+    #  - "<center>&7(( &b&oFor the best experience, turn your &eMusic&b&o volume to &eOFF&7 ))"
+    #  - "<center>&fDon't like this song (or don't hear anything)? &b/skipsong"
+
+# IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
+# USE THIS!!!!!! DO NOT USE SERVER.PROPERTIES
+#
+# Due to current limitations in the minecraft client code hash's are non-functional on modern MC versions
+# This means that if you make a change to this resource pack, youll need to change the file/link name
+# in order for changes to be updated for the player
+# You can alternatively just add the hash at the end with the hashtag instead of renaming the file directly (See link below)
+#
+# See more information about this minecraft bug here: https://bugs.mojang.com/browse/MC-164316
+#
+# Do note, the URL here is only loaded and sent to clients if you have turned off the ResourcePackServer!
+ResourcePack: "https://www.dropbox.com/s/vbt9laex0lrmoea/8e919492-e1ec-404f-a1ee-f86b26303af6.zip?dl=1"
+
+
+# Should the resource pack be created automatically on server startup?
+# If this is set to false it will also set the FFMPEG installation
+#
+# WARNING If you don't want to use the resource pack generator but still want to
+# use the ResourcePackServer, your file must be uploaded into /plugins/MusePluse/resource-pack
+# For now it can be any name, make sure its a .zip :)
+#
+# Using this is NOT RECOMMENDED
+AutoGenerateResourcePack: true
+
+# This is the internal server used for hosting the server's resource pack
+# It is HIGHLY recommended to use this compared to github/dropbox/other
+#
+# If this is set to true, the resource pack in /plugins/MusePluse/resource-pack will be automatically served
+# to players on your server, enabling this does not enable the resource pack generator.
+#
+# Do Note: There must ALWAYS be a zipped resource pack in /plugins/MusePluse/resource-pack or your players
+# won't receive any resource pack (Will lead to a 404 on the client)
+ResourcePackServer:
+  Enabled: true
+  Port: 25572
+  # This should be the IP Of your server, it can be a domain! Examples are listed below
+  #
+  # This should remain commented unless console tells you to!!!!!!!!!!!!!!
+  # This is used as a fallback in case MusePluse is unable to find your servers IP Address
+  # This is really only in rare circumstances where you may have a weird networking configuration
+  # I SWEAR TO GOD if you uncomment this without console telling you
+  #Host: your.awesome.server
+  #Host: 10.100.98.228 # Only uncomment one if console tells you to uncomment
+
+# Settings for when the player joins the server
+JoinSettings:
+  # If set to true, the player will get all songs they have permission to (if any are set in the songs.yml)
+  # and have the shuffled into a private queue for them to listen to after their resource pack loads in
+  PlayOnJoin: true
+  # If set to true and PlayOnJoin is true, the player will need the musepluse.playonjoin to have music automatically
+  # play on join
+  #
+  # NOTE: Currently, there is a limitation to where the pack will not be downloaded if you set this to false and the player
+  # does not have the musepluse.playonjoin permission. This will be fixed in future versions! For now /downloadresources exists!
+  NeedsPermission: true
+  # Should the player be disconnected if they reject the resource pack?
+  # I recommend you leave this to false unless you really know how
+  # resource packs works
+  DisconnectOnReject: false
+QueueSettings:
+  # Should the player needs the permission "musepluse.queue.skip" to use skipping features such as /skipqueue?
+  # This will also disable the right click feature in the music gui, and the right click prompt from the item from said menu
+  NeedsSkipPermission: false
+  # Should the player need the permission "musepluse.queue.force" to use the force play features such as the left click
+  # feature in the gui? This will also disable the left click feature in the music gui, and the left click prompt from the item from said menu
+  NeedsForcePlayPermission: false
+

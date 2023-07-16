@@ -44,7 +44,7 @@ public class ResourcePackEngine extends OGGFileWriter {
         this.tryAutoGenerate(false, () -> {
             if (this.pluginSettings.isDoItYourselfMode()) return;
             if (this.pluginSettings.isResourcePackServerEnabled() && this.resourcePackExists()) {
-                Bukkit.getConsoleSender().sendMessage(convert("&fStarting resource pack server..."));
+                Bukkit.getConsoleSender().sendMessage("Starting resource pack server...");
                 ResourcePackServer.startServer(this.pluginInstance);
             }
         });

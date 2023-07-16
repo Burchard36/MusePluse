@@ -1,0 +1,372 @@
+skaga:
+  Details:
+    # Song name, supports color codes
+    SongName: Skaga
+    # Artist name, supports color codes
+    Artist: Alexander Nakarada
+    # This can be any material
+    GuiMaterial: MUSIC_DISC_13
+    # Permission is an optional field
+    #Permission: "musepluse.skaga"
+    # Currently only youtube is supported
+  YouTubeLink: https://www.youtube.com/watch?v=Wyx_XYITisE
+greenlands:
+  YouTubeLink: https://www.youtube.com/watch?v=fvLlZnxKcoI
+  Details:
+    SongName: Greenlands
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_CAT
+leavingforvalhalla:
+  YouTubeLink: https://www.youtube.com/watch?v=Yv25O4XhXW0
+  Details:
+    SongName: Leaving for Valhalla
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_BLOCKS
+forestwalk:
+  YouTubeLink: https://www.youtube.com/watch?v=2VULXGuNByc
+  Details:
+    SongName: Forest Walk
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_CHIRP
+nomadicdawn:
+  YouTubeLink: https://www.youtube.com/watch?v=jI9eDm2zaRg
+  Details:
+    SongName: Nomadic Dawn
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_FAR
+nowweride:
+  YouTubeLink: https://www.youtube.com/watch?v=6PD080KKfFQ
+  Details:
+    SongName: Now We Ride
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_MALL
+villageambience:
+  YouTubeLink: https://www.youtube.com/watch?v=V6GTmGlJCiA
+  Details:
+    SongName: Village Ambience
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_MELLOHI
+adventure:
+  YouTubeLink: https://www.youtube.com/watch?v=85OzamAVirs
+  Details:
+    SongName: Adventure
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_STAL
+traveler:
+  YouTubeLink: https://www.youtube.com/watch?v=5EU4d9xMOqQ
+  Details:
+    SongName: Traveler
+    Artist: Alexander Nakarada
+    GuiMaterial: MUSIC_DISC_WARD
+thegael:
+  YouTubeLink: https://www.youtube.com/watch?v=zNnzufK0nVE
+  Details:
+    SongName: The Gael
+    Artist: The Last of the Mohicans
+    GuiMaterial: MUSIC_DISC_13
+snowfall:
+  YouTubeLink: https://www.youtube.com/watch?v=LlN8MPS7KQs
+  Details:
+    SongName: Snowfall
+    Artist: oneheart x reidenshi
+    GuiMaterial: MUSIC_DISC_MELLOHI
+interstellar:
+  YouTubeLink: https://www.youtube.com/watch?v=kpz8lpoLvrA
+  Details:
+    SongName: Interstellar Main Theme
+    Artist: Hans Zimmer
+    GuiMaterial: MUSIC_DISC_BLOCKS
+theway:
+  YouTubeLink: https://www.youtube.com/watch?v=oN2Xs-MvxLw
+  Details:
+    SongName: The Way
+    Artist: Zack Hemsey
+    GuiMaterial: MUSIC_DISC_MALL
+deathbed:
+  YouTubeLink: https://www.youtube.com/watch?v=jJPMnTXl63E
+  Details:
+    SongName: Death Bed
+    Artist: Powfu
+    GuiMaterial: MUSIC_DISC_CAT
+songofstorms:
+  YouTubeLink: https://www.youtube.com/watch?v=UtgHZaq0EGs
+  Details:
+    SongName: Song of Storms
+    Artist: Zelda Original Soundtrack
+    GuiMaterial: MUSIC_DISC_WAIT
+breathofthewild:
+  YouTubeLink: https://www.youtube.com/watch?v=GY4WjuVTdvY
+  Details:
+    SongName: Breath of the Wild (Main Theme)
+    Artist: The Legend of Zelda Breath of the Wild
+    GuiMaterial: MUSIC_DISC_STAL
+thegreatest:
+  YouTubeLink: https://www.youtube.com/watch?v=YbWkR6mFI6s
+  Details:
+    SongName: The Greatest
+    Artist: Sia
+    GuiMaterial: MUSIC_DISC_FAR
+loveneverfeltsogood:
+  YouTubeLink: https://www.youtube.com/watch?v=0wnuTGGuAVs
+  Details:
+    SongName: Love Never Felt So Good
+    Artist: Michael Jackson & Justin Timberlake
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+justthetwoofus:
+  YouTubeLink: https://www.youtube.com/watch?v=6POZlJAZsok
+  Details:
+    SongName: Just the Two of Us
+    Artist: Grover Washington Jr.
+    GuiMaterial: MUSIC_DISC_STRAD
+verbatim:
+  YouTubeLink: https://www.youtube.com/watch?v=nqDGahB3y4I
+  Details:
+    SongName: Verbatim
+    Artist: Mother Mother
+    GuiMaterial: MUSIC_DISC_MALL
+imstillstanding:
+  YouTubeLink: https://www.youtube.com/watch?v=ZHwVBirqD2s
+  Details:
+    SongName: I'm still standing
+    Artist: Elton John
+    GuiMaterial: MUSIC_DISC_STRAD
+maneater:
+  YouTubeLink: https://www.youtube.com/watch?v=yRYFKcMa_Ek
+  Details:
+    SongName: Maneater
+    Artist: Daryl Hall & John Oates
+    GuiMaterial: MUSIC_DISC_WAIT
+ifyouwereawomanandiwasaman:
+  YouTubeLink: https://www.youtube.com/watch?v=rJOo67DtZAY
+  Details:
+    SongName: If You We're a Woman (And I Was a Man)
+    Artist: Bonnie Tyler
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+heavenisaplaceonearth:
+  YouTubeLink: https://www.youtube.com/watch?v=NOGEyBeoBGM
+  Details:
+    SongName: Heaven is a place on earth
+    Artist: Belinda Carlisle
+    GuiMaterial: MUSIC_DISC_BLOCKS
+maniac:
+  YouTubeLink: https://www.youtube.com/watch?v=AIgJenz0ZK4
+  Details:
+    SongName: Maniac
+    Artist: Micheal Sombello
+    GuiMaterial: MUSIC_DISC_13
+chinesehardbass:
+  YouTubeLink: https://www.youtube.com/watch?v=dPNxVg3W3CE
+  Details:
+    SongName: CHINESE HARDBASS
+    Artist: Jedix
+    GuiMaterial: MUSIC_DISC_MALL
+buddyholly:
+  YouTubeLink: https://www.youtube.com/watch?v=kemivUKb4f4
+  Details:
+    SongName: Buddy Holly
+    Artist: Weezer
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+thisishowitfeels:
+  YouTubeLink: https://www.youtube.com/watch?v=J-fX0UbpZls
+  Details:
+    SongName: This is How it Feels
+    Artist: Inspiral Carpets
+    GuiMaterial: MUSIC_DISC_STRAD
+boulevardofbrokendreams:
+  YouTubeLink: https://www.youtube.com/watch?v=51XzW98wEDg
+  Details:
+    SongName: Boulevard of Broken Dreams
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_CAT
+staywithme:
+  YouTubeLink: https://www.youtube.com/watch?v=moR4uw-NWLY
+  Details:
+    SongName: Stay With Me
+    Artist: Miki Matsubara
+    GuiMaterial: MUSIC_DISC_FAR
+dejavu:
+  YouTubeLink: https://www.youtube.com/watch?v=dv13gl0a-FA
+  Details:
+    SongName: Deja VU
+    Artist: Initial D
+    GuiMaterial: MUSIC_DISC_MELLOHI
+boysinthehood:
+  YouTubeLink: https://www.youtube.com/watch?v=mYn6Vz9X0VQ
+  Details:
+    SongName: Boyz in the Hood
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_CHIRP
+fukdapolice:
+  YouTubeLink: https://www.youtube.com/watch?v=fF3aPT7C51Y
+  Details:
+    SongName: Fuk Da Police
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_13
+straightoutaacompton:
+  YouTubeLink: https://www.youtube.com/watch?v=TMZi25Pq3T8
+  Details:
+    SongName: Straight Outta Compton
+    Artist: N.W.A
+    GuiMaterial: MUSIC_DISC_FAR
+robbery:
+  YouTubeLink: https://www.youtube.com/watch?v=iI34LYmJ1Fs
+  Details:
+    SongName: Robbery
+    Artist: Juice World
+    GuiMaterial: MUSIC_DISC_MALL
+bandit:
+  YouTubeLink: https://www.youtube.com/watch?v=Sw5fNI400E4
+  Details:
+    SongName: Bandit
+    Artist: Juice World Ft. NBA Youngboy
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+lucidreams:
+  YouTubeLink: https://www.youtube.com/watch?v=mzB1VGEGcSU
+  Details:
+    SongName: Lucid Dreams
+    Artist: Juice World
+    GuiMaterial: MUSIC_DISC_WAIT
+cantfightthemoonlight:
+  YouTubeLink: https://www.youtube.com/watch?v=gDLaEYewiQg
+  Details:
+    SongName: Can't Fight the Moonlight
+    Artist: Coyote Ugly - LeAnn Rimes
+    GuiMaterial: MUSIC_DISC_CHIRP
+whenyousaynothingatall:
+  YouTubeLink: https://www.youtube.com/watch?v=1SCOimBo5tg
+  Details:
+    SongName: When you Say nothing at All
+    Artist: Alison Krauss
+    GuiMaterial: MUSIC_DISC_STRAD
+runaroundsue:
+  YouTubeLink: https://www.youtube.com/watch?v=nFch8vH81ks
+  Details:
+    SongName: Runaround Sue
+    Artist: Dion
+    GuiMaterial: MUSIC_DISC_13
+clocks:
+  YouTubeLink: https://www.youtube.com/watch?v=PFW2uSCZ0uE
+  Details:
+    SongName: Clocks
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_BLOCKS
+askyfullofstars:
+  YouTubeLink: https://www.youtube.com/watch?v=zp7NtW_hKJI
+  Details:
+    SongName: A Sky Full of Stars
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_CAT
+thescientist:
+  YouTubeLink: https://www.youtube.com/watch?v=zVyvpladEms
+  Details:
+    SongName: The Scientist
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_FAR
+vivalavida:
+  YouTubeLink: https://www.youtube.com/watch?v=y4zdDXPYo0I
+  Details:
+    SongName: Viva la Vida
+    Artist: Coldplay
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+arabiancat:
+  YouTubeLink: https://www.youtube.com/watch?v=5ngWIDkPP3o
+  Details:
+    SongName: Arabian Cat
+    Artist: Panjabi MC
+    GuiMaterial: MUSIC_DISC_WAIT
+aplacewithnoname:
+  YouTubeLink: https://www.youtube.com/watch?v=PbZq7Ze0Bqk
+  Details:
+    SongName: A Place With No name
+    Artist: Micheal Jackson
+    GuiMaterial: MUSIC_DISC_13
+pastlives:
+  YouTubeLink: https://www.youtube.com/watch?v=-TXtyYZIiWc
+  Details:
+    SongName: Pastlives
+    Artist: Sapientdream
+    GuiMaterial: MUSIC_DISC_STRAD
+dilemma:
+  YouTubeLink: https://www.youtube.com/watch?v=WwJm5hnWv6E
+  Details:
+    SongName: Dilemma
+    Artist: Nelly
+    GuiMaterial: MUSIC_DISC_BLOCKS
+brokenhearted:
+  YouTubeLink: https://www.youtube.com/watch?v=s8cbak34DR0
+  Details:
+    SongName: Broken Hearted
+    Artist: Karmin
+    GuiMaterial: MUSIC_DISC_CHIRP
+americanidiot:
+  YouTubeLink: https://www.youtube.com/watch?v=Ee_uujKuJMI
+  Details:
+    SongName: American Idiot
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_13
+whenseptemberends:
+  YouTubeLink: https://www.youtube.com/watch?v=rdpBZ5_b48g
+  Details:
+    SongName: Wake Me Up, When September Ends
+    Artist: Green Day
+    GuiMaterial: MUSIC_DISC_MALL
+stillwaiting:
+  YouTubeLink: https://www.youtube.com/watch?v=Lz7kvJdwPOY
+  Details:
+    SongName: Still Waiting
+    Artist: Sum 41
+    GuiMaterial: MUSIC_DISC_OTHERSIDE
+mrsjackson:
+  YouTubeLink: https://www.youtube.com/watch?v=MYxAiK6VnXw
+  Details:
+    SongName: Ms. Jackson
+    Artist: Outkast
+    GuiMaterial: MUSIC_DISC_CAT
+heyya:
+  YouTubeLink: https://www.youtube.com/watch?v=PWgvGjAhvIw
+  Details:
+    SongName: Hey Ya!
+    Artist: Outkast
+    GuiMaterial: MUSIC_DISC_CHIRP
+yougiveloveabadname:
+  YouTubeLink: https://www.youtube.com/watch?v=xNvNHZXp5zk
+  Details:
+    SongName: You Give Love a Bad Name
+    Artist: Bon Jovi
+    GuiMaterial: MUSIC_DISC_STRAD
+livinonaprayer:
+  YouTubeLink: https://www.youtube.com/watch?v=CuUefy9bT9U
+  Details:
+    SongName: Livin' On a Prayer
+    Artist: Bon Jovi
+    GuiMaterial: MUSIC_DISC_WARD
+summerof69:
+  YouTubeLink: https://www.youtube.com/watch?v=eFjjO_lhf9c
+  Details:
+    SongName: Summer of 69'
+    Artist: Bryan Adams
+    GuiMaterial: MUSIC_DISC_BLOCKS
+payphone:
+  YouTubeLink: https://www.youtube.com/watch?v=fuP4Lkt1vAo
+  Details:
+    SongName: Payphone
+    Artist: Maroon 5
+    GuiMaterial: MUSIC_DISC_CHIRP
+takeonme:
+  YouTubeLink: https://www.youtube.com/watch?v=II4sfbrsdn4
+  Details:
+    SongName: Take On Me
+    Artist: a-ha
+    GuiMaterial: MUSIC_DISC_13
+nevergonnagiveyouup:
+  YouTubeLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  Details:
+    SongName: Never Gonna Give You Up
+    Artist: Rick Astley
+    GuiMaterial: MUSIC_DISC_BLOCKS
+myheartwillgoon:
+  YouTubeLink: https://www.youtube.com/watch?v=p79GmLNLMrY
+  Details:
+    SongName: My Heart Will Go On
+    Artist: Celine Dion
+    GuiMaterial: MUSIC_DISC_WAIT

@@ -35,7 +35,7 @@ import static com.burchard36.libs.utils.StringUtils.convert;
  *
  * @since 2.1.0
  */
-public abstract class MusePlusePlugin extends JavaPlugin implements Listener {
+public class MusePlusePlugin extends JavaPlugin implements Listener {
     /* Thread pool to use for heavy tasks */
     public static Executor MAIN_THREAD_POOL = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
     public static MusePlusePlugin INSTANCE;
