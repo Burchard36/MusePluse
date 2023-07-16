@@ -9,10 +9,10 @@ public class RadioStation {
 
     @Getter
     protected final UUID ownerUID;
-    //protected final MusicPlayer musicPlayer;
 
     public RadioStation(final Player player) {
         this.ownerUID = player.getUniqueId();
+
     }
 
 

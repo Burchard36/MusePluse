@@ -17,11 +17,15 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.burchard36.libs.utils.StringUtils.convert;
 
+/**
+ * A data class that stores specific data about a Player who is listening to music
+ */
 public class MusicListener {
 
     protected final Player player;
@@ -36,6 +40,7 @@ public class MusicListener {
     protected List<SongData> permissibleSongs;
     protected List<SongData> queuedSongs;
     protected List<SongData> favoriteSongs;
+    protected UUID currentRadioStationUID;
 
     public MusicListener(final Player player, final MusePlusePlugin pluginInstance) {
         this.player = player;
@@ -123,7 +128,7 @@ public class MusicListener {
     /**
      * Plays the next song in the auto-queue for the player
      *
-     * Use this metho to also start
+     * Use this method to also start
      */
     public final void playNext() {
         if (this.isSwitchingSongs.get()) return;
@@ -134,6 +139,7 @@ public class MusicListener {
     /**
      * Gets the next song in line for the player
      * @return {@link SongData}
+     * @since 2.0.6
      */
     public final SongData nextSong() {
         if (this.queuedSongs.isEmpty()) {
@@ -155,6 +161,7 @@ public class MusicListener {
      * Checks if a player is currently listening to/switching to a song
      * In the case of a player switching songs we return tre
      * @return tru if the player is currently listening to a song
+     * @since 2.0.6
      */
     public final boolean isListening() {
         return this.musicTimer != null && !this.musicTimer.isCancelled();
@@ -163,6 +170,7 @@ public class MusicListener {
     /**
      * Checks if a player has the auto-player enabled
      * @return true if the player has the auto player enabled
+     * @since 2.0.6
      */
     public final boolean hasAutoPlayEnabled() {
         final Integer playing = this.dataContainer.get(this.autoPlayKey, PersistentDataType.INTEGER);
@@ -173,6 +181,7 @@ public class MusicListener {
     /**
      * Sets whether or not the player should auto-listen to music when they join the server and when the server reloads
      * @param auto true if you want the player to auto-listen to music when they join and on the server reload
+     * @since 2.0.6
      */
     public final void setAutoPlayEnabled(boolean auto) {
         if (!auto) {
@@ -191,6 +200,7 @@ public class MusicListener {
     /**
      * returns a list of songs that the given player has permissions to, if said song has a permissions set
      * @return List of songs the player has access to
+     * @since 2.0.6
      */
     public List<SongData> getPermissibleSongs() {
         final List<SongData> songs = new ArrayList<>();
@@ -202,5 +212,22 @@ public class MusicListener {
             }
         });
         return songs;
+    }
+
+
+    /**
+     * Returns true if the player is currently attached to a RadioStation
+     * @return tue if current player is linked to a radio station
+     * @since 2.0.7
+     */
+    public final boolean hasAttachedRadioStation() {
+        return this.currentRadioStationUID != null;
+    }
+
+    /**
+     * Sets the linked radio station UID to null
+     */
+    public final void removeAttachedRadioStation() {
+        this.currentRadioStationUID = null;
     }
 }

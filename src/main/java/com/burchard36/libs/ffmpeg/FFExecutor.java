@@ -29,10 +29,9 @@ public class FFExecutor {
     }
 
     public void convertToOgg(final File from, final File to, Runnable onComplete) {
-        Bukkit.getLogger().info("Running ogg conversion method");
         CompletableFuture.runAsync(() -> {
             try {
-                // TODO If this braks the original command we used is this line here
+                // TODO If this breaks the original command we used is this line here
                 final int songQuality = SongQuality.getQualityNumber(this.pluginInstance.getMusePluseSettings().getSongGenerationQuality());
                 //final Process process = runtime.exec("%s -y -v error -i %s %s".formatted(ffmpeg.getPath(), from.getPath(), to.getPath()));
                 //Bukkit.getLogger().info("Running FFMPEG: %s -y -v error -i %s -q:a %sk %s".formatted(ffmpeg.getPath(), from.getPath(), songQuality, to.getPath()));
