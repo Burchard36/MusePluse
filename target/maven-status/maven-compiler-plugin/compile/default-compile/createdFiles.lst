@@ -53,10 +53,12 @@ com\burchard36\libs\ffmpeg\FFTask.class
 com\burchard36\libs\gui\SongListGui$1$3.class
 com\burchard36\musepluse\events\TexturePackLoadEvent$1.class
 com\burchard36\libs\youtube\YoutubeProcessor.class
+com\burchard36\musepluse\resource\SongQuality$1.class
 com\burchard36\musepluse\resource\events\MusePluseResourcePackLoadedEvent.class
 com\burchard36\libs\config\MusePluseSettings.class
 com\burchard36\musepluse\events\JoinEvent.class
 com\burchard36\musepluse\resource\ResourcePackFiles.class
+com\burchard36\musepluse\resource\SongQuality.class
 com\burchard36\musepluse\commands\SkipSongCommand.class
 com\burchard36\musepluse\commands\ReloadMusicCommand.class
 com\burchard36\libs\gui\SongListGui$1.class

@@ -1,5 +1,8 @@
 package com.burchard36.libs.ffmpeg;
 
+import com.burchard36.musepluse.MusePlusePlugin;
+import com.burchard36.musepluse.resource.SongQuality;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -11,15 +14,20 @@ public class FFExecutor {
 
     protected final File ffmpeg;
     protected final Runtime runtime = Runtime.getRuntime();
+    protected final MusePlusePlugin pluginInstance;
 
     public FFExecutor(final File ffmpeg) {
         this.ffmpeg = ffmpeg;
+        this.pluginInstance = MusePlusePlugin.INSTANCE;
     }
 
     public void convertToOgg(final File from, final File to, Runnable onComplete) {
         CompletableFuture.runAsync(() -> {
             try {
-                final Process process = runtime.exec("%s -y -v error -i %s %s".formatted(ffmpeg.getPath(), from.getPath(), to.getPath()));
+                // TODO If this braks the original command we used is this line here
+                final int songQuality = SongQuality.getQualityNumber(this.pluginInstance.getMusePluseSettings().getSongGenerationQuality());
+                //final Process process = runtime.exec("%s -y -v error -i %s %s".formatted(ffmpeg.getPath(), from.getPath(), to.getPath()));
+                final Process process = runtime.exec("%s -y -v error -i %s -map a -b:a %s %s".formatted(ffmpeg.getPath(), from.getPath(), songQuality, to.getPath()));
 
 
                 /*BufferedReader stdInput = new BufferedReader(new

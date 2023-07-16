@@ -65,6 +65,8 @@ public class YoutubeProcessor implements Listener {
     public final void downloadYouTubeAudioAsOGG(final VideoInfo videoInfo, String newFileName, final Consumer<File> callback) {
         /* For use in Async */
         final String finalNewFileName = newFileName;
+        // TODO: There is a videoInfo.details().downloadable() method, maybe this can help solve some issues with people needing to refresh theyre MP Plugin generation
+
         final RequestVideoFileDownload downloadRequest = new RequestVideoFileDownload(videoInfo.bestAudioFormat())
                 .callback(new YoutubeProgressCallback<>() {
                     @Override

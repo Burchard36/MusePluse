@@ -4,6 +4,7 @@ import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.exception.MusePluseConfigurationException;
 import com.burchard36.libs.utils.StringUtils;
 import com.burchard36.libs.utils.TaskRunner;
+import com.burchard36.musepluse.resource.SongQuality;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -17,6 +18,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -55,6 +57,8 @@ public class MusePluseSettings implements Config {
     protected boolean usingUpdateChecker;
     @Getter
     protected int downloadTimeoutSeconds;
+    @Getter
+    protected SongQuality songGenerationQuality;
 
     @Override
     public @NonNull String getFileName() {
@@ -91,9 +95,18 @@ public class MusePluseSettings implements Config {
             configuration.setComments("DownloadTimeoutSeconds", List.of("Sets the max time a song may spend downloading, the song/resource pack will attempt to rebuild if this happens."));
         }
 
+        if (!configuration.isSet("GenerationQuality")) {
+            configuration.set("GenerationQuality", "MEDIUM");
+            configuration.setComments("GenerationQuality", List.of("Set the quality for the audio, set to lower quality if you want a lower size resource pack",
+                    "Do note that vanilla minecraft on 1.18+ Can only automatically load 150MB Resource packs at the most",
+                    "Valid Qualities: HORRIBLE, LOW, MEDIUM, HIGH, ULTRA"));
+
+        }
+
         this.doItYourselfMode = configuration.getBoolean("DoItYourselfMode");
         this.usingUpdateChecker = configuration.getBoolean("UpdateChecker");
         this.downloadTimeoutSeconds = configuration.getInt("DownloadTimeoutSeconds");
+        this.songGenerationQuality = SongQuality.valueOf(Objects.requireNonNull(configuration.getString("GenerationQuality")).toUpperCase());
         this.loadNextSongMessage(configuration);
 
         configuration.save(new File(MusePlusePlugin.INSTANCE.getDataFolder(), this.getFileName()));
@@ -122,6 +135,7 @@ public class MusePluseSettings implements Config {
             if (textMessageRaw == null) throw new MusePluseConfigurationException("Uh Ohh! Why is \"Notifications.SongStarted.ActionBar\" not a string? Silly! Only one string!");
             this.nextSongMessage = convert(textMessageRaw);
         }
+
     }
 
     /**

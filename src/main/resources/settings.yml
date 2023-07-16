@@ -42,6 +42,11 @@ ResourcePack: "https://www.dropbox.com/s/vbt9laex0lrmoea/8e919492-e1ec-404f-a1ee
 # Using this is NOT RECOMMENDED
 AutoGenerateResourcePack: true
 
+# Set the quality for the audio, set to lower quality if you want a lower size resource pack
+# Do note that vanilla minecraft on 1.18+ Can only automatically load 150MB Resource packs at the most
+# Valid Qualities: HORRIBLE, LOW, MEDIUM, HIGH, ULTRA
+GenerationQuality: MEDIUM
+
 # This is the internal server used for hosting the server's resource pack
 # It is HIGHLY recommended to use this compared to github/dropbox/other
 #
