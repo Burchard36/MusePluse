@@ -2,6 +2,7 @@ package com.burchard36.libs.utils;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.io.IOException;
 import java.net.URI;

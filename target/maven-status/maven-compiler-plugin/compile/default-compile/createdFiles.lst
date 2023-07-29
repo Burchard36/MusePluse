@@ -42,6 +42,7 @@ com\burchard36\libs\config\SongData.class
 com\burchard36\libs\utils\TaskRunner$1.class
 com\burchard36\libs\utils\TaskRunner$4.class
 com\burchard36\libs\utils\TaskRunner.class
+com\burchard36\musepluse\commands\RadioStationCommand.class
 com\burchard36\musepluse\events\custom\SongEndedEvent.class
 com\burchard36\musepluse\resource\writers\McMetaWriter.class
 com\burchard36\musepluse\events\TexturePackLoadEvent.class

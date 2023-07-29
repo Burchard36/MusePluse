@@ -3,6 +3,7 @@ package com.burchard36.libs.ffmpeg;
 import com.burchard36.musepluse.MusePlusePlugin;
 import com.burchard36.musepluse.resource.SongQuality;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,9 +34,9 @@ public class FFExecutor {
             try {
                 // TODO If this breaks the original command we used is this line here
                 final int songQuality = SongQuality.getQualityNumber(this.pluginInstance.getMusePluseSettings().getSongGenerationQuality());
-                //final Process process = runtime.exec("%s -y -v error -i %s %s".formatted(ffmpeg.getPath(), from.getPath(), to.getPath()));
+                final Process process = runtime.exec("%s -y -v error -i %s %s".formatted(ffmpeg.getPath(), from.getPath(), to.getPath()));
                 //Bukkit.getLogger().info("Running FFMPEG: %s -y -v error -i %s -q:a %sk %s".formatted(ffmpeg.getPath(), from.getPath(), songQuality, to.getPath()));
-                final Process process = runtime.exec("%s -y -v error -i %s -c:a libvorbis -b:a %sk %s".formatted(ffmpeg.getPath(), from.getPath(), songQuality, to.getPath()));
+                //final Process process = runtime.exec("%s -y -v error -i %s -c:a libvorbis -b:a %sk %s".formatted(ffmpeg.getPath(), from.getPath(), songQuality, to.getPath()));
 
                 BufferedReader stdInput = new BufferedReader(new
                         InputStreamReader(process.getInputStream()));
@@ -48,6 +49,9 @@ public class FFExecutor {
                 while ((s = stdInput.readLine()) != null) {
                     System.out.println(s);
                 }
+
+                Chunk chunk;
+                chunk.getChunkSnapshot()
 
                 System.out.println("Here is the standard error of the command (if any):\n");
                 while ((s = stdError.readLine()) != null) {

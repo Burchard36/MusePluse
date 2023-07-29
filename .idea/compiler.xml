@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="CropRegrower" />
         <module name="AutoCompressor" />
-        <module name="BlockDropsEditor" />
         <module name="MMOItemsLevelUp" />
         <module name="MusePluse" />
+        <module name="BlockDropsEditor" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,7 +18,6 @@
       <module name="BlockDropsEditor" target="17" />
       <module name="CropRegrower" target="17" />
       <module name="MMOItemsLevelUp" target="17" />
-      <module name="MusePluse" target="16" />
       <module name="MusePluseBase" target="16" />
       <module name="MusePluseMusicPlayer" target="16" />
       <module name="MusePlusePlugin" target="16" />

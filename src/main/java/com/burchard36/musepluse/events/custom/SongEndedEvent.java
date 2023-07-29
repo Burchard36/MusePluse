@@ -5,6 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+
+/**
+ * Event that gets played
+ */
 public class SongEndedEvent extends Event {
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     @Getter
